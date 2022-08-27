@@ -13,3 +13,4 @@ files[] = {"path":"Yo3 Renamed.json","metaData":{}}
 files[] = {"path":"index.yaml","metaData":{}}
 
 [relations.apiDefinition.metaData]
+type = openapi:3
