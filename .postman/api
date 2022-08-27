@@ -1,2 +1,15 @@
+id = c0a3717d-8c59-4529-b704-80651a3395ce
+
 [relations]
-Shopigram 2_869033-1eb5ab8e-b89d-4c53-ad79-89b609db3875.json = unclassified
+
+[relations.collections]
+rootDirectory = postman/collections
+
+[relations.collections.metaData]
+
+[relations.apiDefinition]
+rootDirectory = postman/schemas
+files[] = {"path":"Yo3 Renamed.json","metaData":{}}
+files[] = {"path":"index.yaml","metaData":{}}
+
+[relations.apiDefinition.metaData]
