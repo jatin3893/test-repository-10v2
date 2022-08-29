@@ -9,8 +9,8 @@ rootDirectory = postman/collections
 
 [relations.apiDefinition]
 rootDirectory = postman/schemas
-files[] = {"path":"Yo3 Renamed.json","metaData":{}}
 files[] = {"path":"index.yaml","metaData":{}}
+files[] = {"path":"Yo3 Renamed.json","metaData":{}}
 
 [relations.apiDefinition.metaData]
 type = openapi:3
