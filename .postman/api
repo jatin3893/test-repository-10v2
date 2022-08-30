@@ -1,4 +1,4 @@
-id = c0a3717d-8c59-4529-b704-80651a3395ce
+id = 64bb9df8-66a1-4f59-8118-af766dd01d75
 
 [relations]
 
@@ -9,8 +9,7 @@ rootDirectory = postman/collections
 
 [relations.apiDefinition]
 rootDirectory = postman/schemas
-files[] = {"path":"index.yaml","metaData":{}}
-files[] = {"path":"Yo3 Renamed.json","metaData":{}}
+files[] = {"path":"index.json","metaData":{}}
 
 [relations.apiDefinition.metaData]
 type = openapi:3
