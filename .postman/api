@@ -16,11 +16,6 @@ files[] = {"id":"869033-a8646d31-e5da-4748-a15a-cbda8e002ff0","path":"Wordpress 
 
 [relations.apiDefinition]
 rootDirectory = postman/schemas
-files[] = {"path":"index1.json","metaData":{}}
-files[] = {"path":"index2.json","metaData":{}}
-files[] = {"path":"index4.json","metaData":{}}
-files[] = {"path":"index9.json","metaData":{}}
-files[] = {"path":"schema.yaml.yaml","metaData":{}}
 
 [relations.apiDefinition.metaData]
 type = openapi:3
