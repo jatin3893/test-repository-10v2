@@ -4,12 +4,10 @@ id = 6f864e7f-d2bb-47d0-9173-65332e8cf4ff
 
 [relations.collections]
 rootDirectory = postman/collections
-files[] = {"id":"869033-e15d0339-b8e0-4246-9eba-b8a7064485fc","path":"Abc_2a0f58e3-9ed9-4b6f-bc07-ae1c16523af8.json","metaData":{}}
 files[] = {"id":"869033-f3695502-c384-4e47-8e48-8a7022531097","path":"Business Management API.json","metaData":{}}
 files[] = {"id":"869033-444ddb26-3711-496c-991c-1014459b052c","path":"Pardot API v5.json","metaData":{}}
 files[] = {"id":"869033-1c47a6a3-7223-4381-8023-795b4fd8861f","path":"Razorpay APIs.json","metaData":{}}
 files[] = {"id":"869033-ccfda6e4-b2ac-43a0-bb8c-c0ce1b8247af","path":"Stripe API.json","metaData":{}}
-files[] = {"id":"869033-dd455141-559d-44ae-963a-0886e4e86479","path":"Testing_798d8188-d0d9-41b0-a561-3de3181a6114.json","metaData":{}}
 files[] = {"id":"869033-a8646d31-e5da-4748-a15a-cbda8e002ff0","path":"Wordpress API v2.json","metaData":{}}
 
 [relations.collections.metaData]
