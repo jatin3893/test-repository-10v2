@@ -1,12 +1,14 @@
-id = 6f864e7f-d2bb-47d0-9173-65332e8cf4ff
+id = ab84473a-5fed-4d69-87a7-405c31a07448
 
 [relations]
 
 [relations.collections]
 rootDirectory = postman/collections
 files[] = {"id":"869033-f3695502-c384-4e47-8e48-8a7022531097","path":"Business Management API.json","metaData":{}}
+files[] = {"id":"869033-9a2ef6cd-e191-48c2-a3d7-a8413696d10b","path":"Nylas API.json","metaData":{}}
 files[] = {"id":"869033-444ddb26-3711-496c-991c-1014459b052c","path":"Pardot API v5.json","metaData":{}}
 files[] = {"id":"869033-1c47a6a3-7223-4381-8023-795b4fd8861f","path":"Razorpay APIs.json","metaData":{}}
+files[] = {"id":"869033-72077ecc-dc22-44d6-bd4c-70401c69495b","path":"Salesforce Commerce Cloud SLAS Use Cases.json","metaData":{}}
 files[] = {"id":"869033-ccfda6e4-b2ac-43a0-bb8c-c0ce1b8247af","path":"Stripe API.json","metaData":{}}
 files[] = {"id":"869033-a8646d31-e5da-4748-a15a-cbda8e002ff0","path":"Wordpress API v2.json","metaData":{}}
 
