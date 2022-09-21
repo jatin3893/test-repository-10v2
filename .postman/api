@@ -5,11 +5,20 @@ id = ab84473a-5fed-4d69-87a7-405c31a07448
 [relations.collections]
 rootDirectory = postman/collections
 files[] = {"id":"869033-f3695502-c384-4e47-8e48-8a7022531097","path":"Business Management API.json","metaData":{}}
+files[] = {"id":"23232594-0328da9a-cac5-4f16-996d-2c73b65f755e","path":"New Collection.json","metaData":{}}
 files[] = {"id":"869033-9a2ef6cd-e191-48c2-a3d7-a8413696d10b","path":"Nylas API.json","metaData":{}}
 files[] = {"id":"23232594-58b577ca-b363-4fd3-a0ac-9b07c1b0dfb2","path":"Pardot API v5(1).json","metaData":{}}
+files[] = {"id":"23232594-a6654cd4-7cd5-47cc-91d9-1feb72117138","path":"Pardot API v5(2).json","metaData":{}}
 files[] = {"id":"869033-444ddb26-3711-496c-991c-1014459b052c","path":"Pardot API v5.json","metaData":{}}
 files[] = {"id":"869033-1c47a6a3-7223-4381-8023-795b4fd8861f","path":"Razorpay APIs.json","metaData":{}}
 files[] = {"id":"869033-72077ecc-dc22-44d6-bd4c-70401c69495b","path":"Salesforce Commerce Cloud SLAS Use Cases.json","metaData":{}}
+files[] = {"id":"23232594-e8648216-36fe-4401-a5d5-8efa47878858","path":"Shopify.json","metaData":{}}
+files[] = {"id":"23232594-8d511e90-c3c9-47d6-a7cc-3f19a2dbd441","path":"Stripe API(1).json","metaData":{}}
+files[] = {"id":"23232594-bad069b7-5358-48f5-8042-1cd3c1c26e93","path":"Stripe API(2).json","metaData":{}}
+files[] = {"id":"23232594-9110784a-35ca-4599-8f8d-f8e49a2b5c32","path":"Stripe API(3).json","metaData":{}}
+files[] = {"id":"23232594-340278f9-69da-43e4-b871-9ebc608c81fe","path":"Stripe API(4).json","metaData":{}}
+files[] = {"id":"23232594-24c2a180-fdb1-4f4f-981d-dd0cdefa3364","path":"Stripe API(5).json","metaData":{}}
+files[] = {"id":"23232594-ab2f3a6f-fa82-41a7-bb69-8e1b66b80e6e","path":"Stripe API(6).json","metaData":{}}
 files[] = {"id":"869033-ccfda6e4-b2ac-43a0-bb8c-c0ce1b8247af","path":"Stripe API.json","metaData":{}}
 files[] = {"id":"869033-a8646d31-e5da-4748-a15a-cbda8e002ff0","path":"Wordpress API v2.json","metaData":{}}
 
