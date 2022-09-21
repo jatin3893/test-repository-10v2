@@ -1,0 +1,3271 @@
+{
+	"info": {
+		"_postman_id": "f3695502-c384-4e47-8e48-8a7022531097",
+		"name": "Business Management API",
+		"description": "The WhatsApp Business Management API is based on [Facebook's Graph API](https://developers.facebook.com/docs/graph-api/). API calls are versioned, and the availability of each version is detailed in the [Graph API Changelog](https://developers.facebook.com/docs/graph-api/changelog). Some functionality is also available under Facebook's Marketing API, which follows some slightly different rules around versioning but uses the same technical infrastructure and authentication framework. This guide is a brief introduction to making API calls and some architectural decisions you need to consider when building your integration.\n\n# Before You Start\nTo interact with Facebook Graph API, you must have a registered Facebook App. If you already have an App that you want to use with WhatsApp, you can skip the next section. Otherwise, proceed with the next section and register an App.\n\n## Register your App\nWe recommend this setup to be done by someone with an [**admin** role in the Business Manager](https://www.facebook.com/business/help/442345745885606?id=180505742745347) containing your WhatsApp Business Accounts. This avoids permission errors.\n\n1. Register a Facebook app on the [Facebook Developers website](https://developers.facebook.com/) using your personal profile (the app eventually belongs to the Business Manager at the end of the process). Your app type needs to be `Business` or `None` to use the WhatsApp Business Management API. You can find more information on App Types in the [App Development documentation](https://developers.facebook.com/docs/development/create-an-app/app-dashboard/app-types).\n\n2. Go to [https://developers.facebook.com/apps/your-app-id/settings/advanced](https://developers.facebook.com/apps/your-app-id/settings/advanced) to import the app into your Business Manager. The Business Manager you use contains your WhatsApp Business Accounts. Make sure to replace **`your-app-id`** with your actual app ID.\n\n3. Additional instructions many apply to your App location depending on your {geography|locale} and regulations that apply there (e.g. the [European Union's Genera Data Protection Regional or GDPR](https://gdpr-info.eu/)).\n\nFor more information about registering as a developer, creating your app, app roles, app modes, please see the [App Development](https://developers.facebook.com/docs/development) documentation.\n\n## App Review\n\nWhen you initially register your app it will be set to Development mode. Apps in Development mode are automatically approved for all login permissions, features, and product-specific features for testing purposes. However, these permissions are limited as the app can only use those permissions to access data of users with roles in your app, like admins and developers.\n\nIn order to switch your Facebook app from Development mode to Live mode, it must go through App Review. If you want higher rate limits or would like to access a WhatsApp Business Account not in your Business Manager, you need to go through App Review.\n\n## Implementing the API\nTo make calls to this API's endpoints, you need to do the following:\n\n1. Acquire an access token through a System User or [Facebook Login](https://developers.facebook.com/docs/facebook-login/access-tokens).\n2. Use Postman or the tool of your choice to make API calls.\n\nWe recommend [reading Using the Graph API](https://developers.facebook.com/docs/graph-api/using-graph-api) documentation to understand the API's base concepts before consulting the API Reference to perform actions.\n\n# What's New for Business Management API\n\n### September 7th 2022\n\n**Marketing Opt-Out Button Template**\n\nYou can give customers an option to opt-out from your marketing messages. This will prevent certain customers from blocking your business. A new template request in **API Reference**->**Message Templates**->**Send Message Template Opt-Out Button** shows how to implement this feature.\n\nFor more information, see [Best Practices for Marketing Templates](https://developers.facebook.com/docs/whatsapp/business-management-api/message-templates#best-practices-for-marketing-templates).\n\n> Your business must take the necessary steps to stop sending marketing messages to customers who have chosen to opt-out from receiving them. Not doing so will negatively impact your block rate and quality score.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "869033-f3695502-c384-4e47-8e48-8a7022531097"
+	},
+	"item": [
+		{
+			"name": "Guides",
+			"item": [
+				{
+					"name": "Get Account Metrics",
+					"item": [
+						{
+							"name": "Get WABA",
+							"id": "be7bc662-4768-45d3-849a-5254971ac7b3",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://graph.facebook.com/{{Version}}/{{WABA-ID}}?fields=analytics.start(1543543200).end(1544148000).granularity(DAY).phone_numbers([]).country_codes([\"US\", \"BR\"])",
+									"protocol": "https",
+									"host": [
+										"graph",
+										"facebook",
+										"com"
+									],
+									"path": [
+										"{{Version}}",
+										"{{WABA-ID}}"
+									],
+									"query": [
+										{
+											"key": "fields",
+											"value": "analytics.start(1543543200).end(1544148000).granularity(DAY).phone_numbers([]).country_codes([\"US\", \"BR\"])"
+										}
+									]
+								},
+								"description": "To get metrics, make a `GET` call to your WABA-ID and append `fields=analytics` with the  parameters you want to use. The final structure looks something like this:\n\n```https://graph.facebook.com/{{Version}}/{WABA-ID}?fields=analytics.parameter-one(parameter-one-value).parameter-two(parameter-two-value)```\n\nSee available parameters below:\n\n## Fields\n\n| Name          | Description   |\n| ------------- |-------------- |\n| **`start`** <br></br>type: Integer | **Required**. <br/><br/>The start date for the date range you are retrieving analytics for. This date needs to have a timestamp of 12AM local time (based on the associated timezone of the WhatsApp Business Account).|\n| **`end`** <br></br>type: Integer | **Required**. <br/><br/>The end date for the date range you are retrieving analytics for. This date needs to have a timestamp of 12AM local time (based on the associated timezone of the WhatsApp Business Account). |\n| **`granularity`** <br></br>type: String | **Required**. <br/><br/>The granularity by which you would like to retrieve the analytics. <br/><br/>**Options**: `HALF_HOUR`, `DAY`, `MONTH` |\n| **`phone_numbers`** <br></br>type: Array | **Optional**. <br/><br/>An array of phone numbers for which you would like to retrieve analytics. If not provided, all phone numbers of the WhatsApp Business Account are included.|\n| **`product_types`** <br></br>type: Array | **Optional**. <br/><br/>The types of messages (notification messages and/or customer support messages) for which you want to retrieve notifications. Provide an array and include `0` for notification messages and `2` for customer support messages. If not provided, analytics are returned for all messages together.|\n| **`country_codes`** <br></br>type: Array | **Optional**. <br/><br/>The countries for which you would like to retrieve analytics. Provide an array with 2 letter country codes for the countries you would like to include. If not provided, analytics are returned for all countries you have communicated with. |\n\n\n#### Reference\nFor a list of all possible values for each field, see [Graph API reference of the WhatsApp Business Account Analytics field](https://developers.facebook.com/docs/graph-api/reference/waba-analytics/)."
+							},
+							"response": [
+								{
+									"id": "1b89848d-7b2a-4b27-ae0f-32476ff26b93",
+									"name": "Get WABA",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{System-User-Token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "https://graph.facebook.com/{{Version}}/{{WABA-ID}}?fields=analytics.start(1543543200).end(1544148000).granularity(DAY).phone_numbers([]).country_codes([\"US\", \"BR\"])",
+											"protocol": "https",
+											"host": [
+												"graph",
+												"facebook",
+												"com"
+											],
+											"path": [
+												"{{Version}}",
+												"{{WABA-ID}}"
+											],
+											"query": [
+												{
+													"key": "fields",
+													"value": "analytics.start(1543543200).end(1544148000).granularity(DAY).phone_numbers([]).country_codes([\"US\", \"BR\"])"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"analytics\": {\n        \"phone_numbers\": [\n            \"16505550111\",\n            \"16505550112\",\n            \"16505550113\"\n        ],\n        \"country_codes\": [\n            \"US\",\n            \"BR\"\n        ],\n        \"granularity\": \"DAY\",\n        \"data_points\": [\n            {\n                \"start\": 1543543200,\n                \"end\": 1543629600,\n                \"sent\": 196093,\n                \"delivered\": 179715\n            },\n            {\n                \"start\": 1543629600,\n                \"end\": 1543716000,\n                \"sent\": 147649,\n                \"delivered\": 139032\n            },\n            {\n                \"start\": 1543716000,\n                \"end\": 1543802400,\n                \"sent\": 61988,\n                \"delivered\": 58830\n            },\n            {\n                \"start\": 1543802400,\n                \"end\": 1543888800,\n                \"sent\": 132465,\n                \"delivered\": 124392\n            },\n            {\n                \"start\": 1543888800,\n                \"end\": 1543975200,\n                \"sent\": 181002,\n                \"delivered\": 167335\n            },\n            {\n                \"start\": 1543975200,\n                \"end\": 1544061600,\n                \"sent\": 168687,\n                \"delivered\": 157838\n            },\n            {\n                \"start\": 1544061600,\n                \"end\": 1544148000,\n                \"sent\": 161832,\n                \"delivered\": 152383\n            }\n        ]\n    },\n    \"id\": \"952305634918047\"\n}"
+								}
+							]
+						}
+					],
+					"id": "8e531493-7f5a-4834-8172-764ed5e426ad",
+					"description": "Use the `analytics` field to get the number of messages sent and delivered in addition to other metrics of a [WhatsApp Business Account](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account).\n\nFor an example request that uses metrics, see **API Reference**->**WABA Account**->**Get Insights**.\n\nFor more information related to using Account Metrics, see [Get Account Metrics](https://developers.facebook.com/docs/whatsapp/business-management-api/analytics).",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								],
+								"id": "85eb906a-2bd2-4a58-bb15-0fe0e6d0dda2"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								],
+								"id": "7bdecffe-11c0-43b4-95d9-2ff3d9cef61b"
+							}
+						}
+					]
+				},
+				{
+					"name": "Create, Get and Delete Message Templates",
+					"item": [
+						{
+							"name": "Get Message Template Namespace",
+							"id": "952e7734-ed61-45e2-b2f6-073e45133707",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://graph.facebook.com/{{Version}}/{{WABA-ID}}/message_template_namespace",
+									"protocol": "https",
+									"host": [
+										"graph",
+										"facebook",
+										"com"
+									],
+									"path": [
+										"{{Version}}",
+										"{{WABA-ID}}",
+										"message_template_namespace"
+									]
+								},
+								"description": "The message template namespace is required to send messages using the message templates in the WhatsApp business account."
+							},
+							"response": [
+								{
+									"id": "d440ccb6-7b25-4912-8ee6-1eefb1a18a9e",
+									"name": "Get Message Template Namespace",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{System-User-Access-Token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "https://graph.facebook.com/{{Version}}/{{WABA-ID}}/message_template_namespace",
+											"protocol": "https",
+											"host": [
+												"graph",
+												"facebook",
+												"com"
+											],
+											"path": [
+												"{{Version}}",
+												"{{WABA-ID}}",
+												"message_template_namespace"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"id\": \"1972385232742141\",\n    \"message_template_namespace\": \"12abcdefghijk_34lmnop\" \n}"
+								}
+							]
+						},
+						{
+							"name": "Get Message Template",
+							"id": "c66a2e4d-7686-4365-9567-db2d913478a7",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://graph.facebook.com/{{Version}}/{{WABA-ID}}/message_templates",
+									"protocol": "https",
+									"host": [
+										"graph",
+										"facebook",
+										"com"
+									],
+									"path": [
+										"{{Version}}",
+										"{{WABA-ID}}",
+										"message_templates"
+									]
+								},
+								"description": "You can use the WhatsApp Business Management API to get a list of your existing message templates. The limit parameter is optional.\n\n### Pagination\nLooping through all the message templates from a WhatsApp Business Account may require more than one API call. The mechanism for this pagination is described in the [Graph API documentation](https://developers.facebook.com/docs/graph-api/using-graph-api/#paging) and uses the `paging` field in the response. For message templates, when a message template is returned, we always include all translations (if any). Message templates are grouped by the `name` field.\n\n### Fields\n\n| Name          | Description   |\n| ------------- | ------------- |\n| **`limit`**   | **Optional.** <br></br>The Graph API `limit` parameter defines the maximum number of objects returned in a single API call. For message templates, the difference is this limit applies to the maximum number of message template names that may be returned, not the maximum number of objects. If a message template has translations, the number of objects will be larger, as every translation is included in the API response.|"
+							},
+							"response": [
+								{
+									"id": "3cebb0a0-c84e-4b57-9fae-0dc04a7c942f",
+									"name": "Get Message Template",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{System-User-Access-Token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "https://graph.facebook.com/{{Version}}/{{WABA-ID}}/message_templates?limit=3",
+											"protocol": "https",
+											"host": [
+												"graph",
+												"facebook",
+												"com"
+											],
+											"path": [
+												"{{Version}}",
+												"{{WABA-ID}}",
+												"message_templates"
+											],
+											"query": [
+												{
+													"key": "limit",
+													"value": "3"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"data\": [\n    {\n      \"name\": \"hello_world\",\n      \"components\": [{\n          \"type\": \"BODY\",\n          \"text\": \"Hello, {{1}}\"\n      }],\n      \"language\": \"en_US\",\n      \"status\": \"APPROVED\",\n      \"category\": \"ISSUE_RESOLUTION\",\n      \"id\": \"409119052980796\"\n    },\n    {\n      \"name\": \"case_opened\",\n      \"components\": [{\n          \"type\": \"BODY\",\n          \"text\": \"Seu caso {{1}} foi aberto. Entraremos em contato em breve.\"\n      }],\n      \"language\": \"pt_BR\",\n      \"status\": \"APPROVED\",\n      \"category\": \"TICKET_UPDATE\",\n      \"id\": \"718173718589371\"\n    },\n    {\n      \"name\": \"case_opened\",\n      \"components\": [{\n          \"type\": \"BODY\",\n          \"text\": \"Your case {{1}} was opened. We will get in touch soon.\"\n      }],\n      \"language\": \"en_US\",\n      \"status\": \"APPROVED\",\n      \"category\": \"TICKET_UPDATE\",\n      \"id\": \"755551981307120\"\n    }\n  ],\n  \"paging\": {\n    \"cursors\": {\n      \"before\": \"MAZDZD\",\n      \"after\": \"MjQZD\"\n    }\n  }"
+								}
+							]
+						},
+						{
+							"name": "Create Message Template",
+							"id": "0b38351d-5bba-41ee-b094-cc07a5648552",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"category\": \"ISSUE_RESOLUTION\",\n    \"components\": [\n        {\n            \"type\": \"BODY\",\n            \"text\": \"message-text\"\n        }\n    ],\n    \"name\": \"hello_world_template\",\n    \"language\": \"en_US\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://graph.facebook.com/{{Version}}/{{WABA-ID}}/message_templates",
+									"protocol": "https",
+									"host": [
+										"graph",
+										"facebook",
+										"com"
+									],
+									"path": [
+										"{{Version}}",
+										"{{WABA-ID}}",
+										"message_templates"
+									]
+								},
+								"description": "Use the WhatsApp Business Management API to create new message templates, media message templates, or interactive message templates.\n\nFor a list of supported language codes, see [Supported languages](https://developers.facebook.com/docs/whatsapp/business-management-api/message-templates#supported-languages).\n\nIn your `POST` call, include the following message template parameters: \n## Parameters\n| Name          | Description   |\n| ------------- | -----------|\n| **`category`**   |  **Required**. <br/><br/>The type of message template. <br><br> **Values**: `ACCOUNT_UPDATE`, `PAYMENT_UPDATE`, `PERSONAL_FINANCE_UPDATE`, `SHIPPING_UPDATE`, `RESERVATION_UPDATE`, `ISSUE_RESOLUTION`, `APPOINTMENT_UPDATE`, `TRANSPORTATION_UPDATE`, `TICKET_UPDATE`, `ALERT_UPDATE`, `AUTO_REPLY`|\n| **`components`** |  **Required**.  <br/><br/>The parts of the message template. |\n| **`name`** |  **Required**.  <br/><br/>The name of the message template. |\n| **`access_token`** |  **Required**.  <br/><br/>The access token for interacting with the API. |\n| **`language`** |  **Required**.  <br/><br/>The language of the message template. |\n\n### The `components` Parameter\n\n| Name          | Description   |\n| ------------- | -----------|\n| **`type`**   | **Required**. <br></br>**Values**: `BODY`, `HEADER`, `FOOTER`, and `BUTTONS`. The character limit of the `BODY` component is **1024** characters, while the character limits of the `HEADER` and `FOOTER` components is 60 characters each.|\n| **`format`** | **Optional**. <br/><br/>Only applies to the `HEADER` type.<br/><br/> **Values**: `TEXT`, `IMAGE`, `DOCUMENT`, `VIDEO` |\n| **`text`** | **Optional**. <br/><br/>Text of the message being sent. |\n| **`example`** | **Optional**. <br/><br/>Provides an example of possible data for your template. This helps us during the review and approval process, so we can understand what kind of message you plan to send. Make sure these are examples and do not include any confidential or personal information. If you decide to provide variables and examples, please provide the same number of variables and examples. |\n| **`buttons`** | **Optional.** <br/><br/>Only applies to the `BUTTONS` type. The parameters related to the button. |\n\n### The `BUTTONS` Component Type\n| Name          | Description   |\n| ------------- | -----------|\n| **`type`**   | **Required**. <br> </br>**Values**: `PHONE_NUMBER`, `URL`, `QUICK_REPLY`.|\n| **`text`**   | **Required**. <br/><br/>The text to be displayed on the button.|\n| **`url`**   | **Optional**. <br/><br/>The URL that the user is sent to after the button is clicked. Variables can be used to create dynamic links.|\n| **`phone_number`**   | **Optional**. <br/><br/>The phone number that is called on clicking the button.|\n| **`example`**   | **Optional**. <br/><br/>Provides an example of possible data for your template. This helps us during the review and approval process, so we can understand what kind of message you plan to send. Make sure these are examples and do not include any confidential or personal information.|"
+							},
+							"response": [
+								{
+									"id": "5e41cd76-4153-4dd5-ace2-561c956f9a2d",
+									"name": "Create Message Template",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{System-User-Access-Token}}",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"name": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"category\": \"ISSUE_RESOLUTION\",\n    \"components\": [\n        {\n            \"type\": \"BODY\",\n            \"text\": \"message-text\"\n        }\n    ],\n    \"name\": \"hello_world_template\",\n    \"language\": \"en_US\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://graph.facebook.com/{{Version}}/{{WABA-ID}}/message_templates",
+											"protocol": "https",
+											"host": [
+												"graph",
+												"facebook",
+												"com"
+											],
+											"path": [
+												"{{Version}}",
+												"{{WABA-ID}}",
+												"message_templates"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"id\": \"123456789\"\n}"
+								},
+								{
+									"id": "d88ee387-97d8-4f44-97e5-3f6a92808915",
+									"name": "Create Media Message Template",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{System-User-Access-Token}}",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"name": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"category\": \"ISSUE_RESOLUTION\",\n    \"components\": [\n        {\n            \"type\": \"BODY\",\n            \"text\": \"message-text\"\n        },\n        {\n            \"type\": \"HEADER\",\n            \"format\": \"IMAGE\",\n            \"example\": {\n                \"header_handle\": [\n                    \"file-handle\"\n                ]\n            }\n        }\n    ],\n    \"name\": \"hello_world_template\",\n    \"language\": \"en_US\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://graph.facebook.com/{{Version}}/{{WABA-ID}}/message_templates",
+											"protocol": "https",
+											"host": [
+												"graph",
+												"facebook",
+												"com"
+											],
+											"path": [
+												"{{Version}}",
+												"{{WABA-ID}}",
+												"message_templates"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"id\": \"123456789\"\n}"
+								},
+								{
+									"id": "7ce70f30-f0cb-465d-a5c7-31e786bcbded",
+									"name": "Create Interactive Message Template",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{System-User-Access-Token}}",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"name": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"category\": \"ISSUE_RESOLUTION\",\n    \"components\": [\n        {\n            \"type\": \"BODY\",\n            \"text\": \"body-text {{1}} {{2}} {{3}}\",\n            \"example\": {\n                \"body_text\": [\n                    [\n                        \"body-example-1\",\n                        \"body-example-2\",\n                        \"body-example-3\"\n                    ]\n                ]\n            }\n        },\n        {\n            \"type\": \"HEADER\",\n            \"format\": \"TEXT\",\n            \"text\": \"header-text {{1}}\",\n            \"example\": {\n                \"header_text\": [\n                    \"header-example\"\n                ]\n            }\n        },\n        {\n            \"type\": \"FOOTER\",\n            \"text\": \"footer-text\"\n        },\n        {\n            \"type\": \"BUTTONS\",\n            \"buttons\": [\n                {\n                    \"type\": \"PHONE_NUMBER\",\n                    \"text\": \"phone-button-text\",\n                    \"phone_number\": \"+1(650) 555-1111\"\n                }\n            ]\n        },\n        {\n            \"type\": \"URL\",\n            \"text\": \"url-button-text\",\n            \"url\": \"https://www.website.com/{{1}}\",\n            \"example\": [\n                \"https://www.website.com/dynamic-url-example\"\n            ]\n        }\n    ],\n    \"name\": \"hello_world_template\",\n    \"language\": \"en_US\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://graph.facebook.com/{{Version}}/{{WABA-ID}}/message_templates",
+											"protocol": "https",
+											"host": [
+												"graph",
+												"facebook",
+												"com"
+											],
+											"path": [
+												"{{Version}}",
+												"{{WABA-ID}}",
+												"message_templates"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"id\": \"123456789\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Delete Message Template",
+							"id": "b1592f76-4c10-4be8-93db-34733d36673c",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://graph.facebook.com/{{Version}}/{{WABA-ID}}/message_templates?name=template_name",
+									"protocol": "https",
+									"host": [
+										"graph",
+										"facebook",
+										"com"
+									],
+									"path": [
+										"{{Version}}",
+										"{{WABA-ID}}",
+										"message_templates"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "template_name"
+										}
+									]
+								},
+								"description": "You can use the WhatsApp Business Management API to delete your message templates by providing the message template name. Some things to keep in mind before deleting a message template:\n\n1. If that message template name exists in multiple languages, all those languages are deleted.\n2. Messages that have been sent but not delivered will attempt to be delivered for 30 days. An example of this is when the customer's device is offline.\n3. If a message from an approved message template is sent 30 days after deletion, you will receive a \"Structure Unavailable\" error and the customer will not receive the message.\n4. Once deleted, the name of an approved template cannot be used again for 30 days. Use a different name to create future templates.\n\nTo delete a message template, include the template name and your system user access token."
+							},
+							"response": [
+								{
+									"id": "9f1a36ab-5044-46a0-b14a-ac7f4024b56f",
+									"name": "Delete Message Template",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{System-User-Access-Token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "https://graph.facebook.com/{{Version}}/{{WABA-ID}}/message_templates?name=template_name",
+											"protocol": "https",
+											"host": [
+												"graph",
+												"facebook",
+												"com"
+											],
+											"path": [
+												"{{Version}}",
+												"{{WABA-ID}}",
+												"message_templates"
+											],
+											"query": [
+												{
+													"key": "name",
+													"value": "template_name"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"success\": true\n}"
+								}
+							]
+						}
+					],
+					"id": "3815b3fe-6247-4777-ac21-f27fc7b3301f",
+					"description": "For any notifications sent using the WhatsApp Business API, a message template is required. Those templates can be created either in the Business Manager's user interface (`https://business.facebook.com/wa/manage/message-templates/?business_id=your-business-id`) or through the [WhatsApp Business Management API](https://developers.facebook.com/docs/whatsapp/business-management-api).\n\nSome important items to note:\n\n1. We support **create** and **delete**. Editing a template is not yet available.\n2. The **Create** API call allows you to add a message template in a specific language.\n3. The **Delete** API call allows you to delete all translations of a message template you specify by name.\n4. When you create a message template, make sure to be consistent when providing translations.\n   * If you don't do that, you may see a structure unavailable error and notifications won't be delivered.\n   * For more information, see [Why am I seeing `structure unavailable` errors in my callback?](https://developers.facebook.com/docs/whatsapp/faq/#faq_259315284718276).\n\nWe recommend using a test account when learning to use the WhatsApp Business Management API."
+				},
+				{
+					"name": "Read Phone Numbers",
+					"item": [
+						{
+							"name": "Get All Phone Numbers",
+							"id": "bca84636-ff7f-448b-b84e-9f869e43e41a",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://graph.facebook.com/{{Version}}/{{WABA-ID}}/phone_numbers",
+									"protocol": "https",
+									"host": [
+										"graph",
+										"facebook",
+										"com"
+									],
+									"path": [
+										"{{Version}}",
+										"{{WABA-ID}}",
+										"phone_numbers"
+									]
+								},
+								"description": "This example shows how to read all phone numbers belonging to a WhatsApp Business Account.\n\n### Filtering\n\nOptionally, you can query phone numbers and filter them based on their `account_mode`. This filtering option is currently being tested in beta mode. Not all developers have access to it. See our example for more information.\n\nFor a list of all possible values for each field, refer to the Graph API reference of the [Phone Number field](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/phone_numbers).\n\n## Fields\n\n| Name          | Description   |\n| ------------- | ------------- |\n| **`field`**   | **Value:** `account_mode`|\n| **`operator`**   | **Value:** `EQUAL`|\n| **`value`**   | **Value:** `SANDBOX`, `LIVE`|"
+							},
+							"response": [
+								{
+									"id": "135d13b7-e701-4b52-bac0-0139e1b7d71c",
+									"name": "Get All Phone Numbers",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{System-User-Access-Token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "https://graph.facebook.com/{{Version}}/{{WABA-ID}}/phone_numbers",
+											"protocol": "https",
+											"host": [
+												"graph",
+												"facebook",
+												"com"
+											],
+											"path": [
+												"{{Version}}",
+												"{{WABA-ID}}",
+												"phone_numbers"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "[\n    {\n        \"verified_name\": \"Jasper's Market\",\n        \"display_phone_number\": \"+1 631-555-5555\",\n        \"id\": \"1906385232743451\",\n        \"quality_rating\": \"GREEN\"\n    },\n    {\n        \"verified_name\": \"Jasper's Ice Cream\",\n        \"display_phone_number\": \"+1 631-555-5556\",\n        \"id\": \"1913623884432103\",\n        \"quality_rating\": \"NA\"\n    }\n]"
+								},
+								{
+									"id": "51171114-f145-4129-a8c7-508fc87ee9f7",
+									"name": "Filter Phone Numbers by account_mode",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{System-User-Access-Token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "https://graph.facebook.com/{{Version}}/{{WABA-ID}}/phone_numbers?field=account_mode&operator=EQUAL&value=SANDBOX",
+											"protocol": "https",
+											"host": [
+												"graph",
+												"facebook",
+												"com"
+											],
+											"path": [
+												"{{Version}}",
+												"{{WABA-ID}}",
+												"phone_numbers"
+											],
+											"query": [
+												{
+													"key": "field",
+													"value": "account_mode"
+												},
+												{
+													"key": "operator",
+													"value": "EQUAL"
+												},
+												{
+													"key": "value",
+													"value": "SANDBOX"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"data\": [\n    {\n      \"id\": \"1972385232742141\",    \n      \"display_phone_number\": \"+1 631-555-1111\",\n      \"verified_name\": \"John’s Cake Shop\",\n      \"quality_rating\": \"UNKNOWN\"\n    }\n  ],\n  \"paging\": {\n\t\"cursors\": {\n\t\t\"before\": \"abcdefghij\",\n\t\t\"after\": \"klmnopqr\"\n\t}\n   }\n}"
+								}
+							]
+						},
+						{
+							"name": "Get Single Phone Number",
+							"id": "d9fa6791-4f72-49e7-91e5-682cdc515728",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://graph.facebook.com/{{Version}}/{{Phone-Number-ID}}",
+									"protocol": "https",
+									"host": [
+										"graph",
+										"facebook",
+										"com"
+									],
+									"path": [
+										"{{Version}}",
+										"{{Phone-Number-ID}}"
+									]
+								},
+								"description": "When you query all the phone numbers for a WhatsApp Business Account, each phone number has an `id`. You can directly query for a phone number using this `id`.\n\n## Display Name Status\n\nYou can use the `name_status` field to query the status of a display name associated with a specific phone number. The status of your display name can be one of the following:\n\n* `APPROVED`: The name has been approved. You can download your certificate now.\n* `DECLINED`: The name has not been approved. You cannot download your certificate.\n* `EXPIRED`: Your certificate has expired and can no longer be downloaded.\n* `PENDING_REVIEW`: Your name request is under review. You cannot download your certificate.\n* `NONE`: No certificate is available.\n\nThe `name_status` query option is currently being tested in beta mode. Not all developers have access to it."
+							},
+							"response": [
+								{
+									"id": "e2e3a8ce-39eb-49ec-bffa-f1a82bdd0a93",
+									"name": "Get Single Phone Number",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{System-User-Access-Token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "https://graph.facebook.com/{{Version}}/{{Phone-Number-ID}}",
+											"protocol": "https",
+											"host": [
+												"graph",
+												"facebook",
+												"com"
+											],
+											"path": [
+												"{{Version}}",
+												"{{Phone-Number-ID}}"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"verified_name\": \"Jasper's Market\",\n  \"display_phone_number\": \"+1 631-555-5555\",\n  \"id\": \"1906385232743451\",\n  \"quality_rating\": \"GREEN\"\n}"
+								}
+							]
+						}
+					],
+					"id": "276f7bc5-52bf-4061-a3de-cb0542598c80",
+					"description": "The WhatsApp Business Management API does not currently allow associating new phone numbers with a WhatsApp Business Account. This endpoint only allows reading information about phones registered."
+				},
+				{
+					"name": "Manage QR Code Messages",
+					"item": [
+						{
+							"name": "Create Message QRDLS",
+							"id": "df8afd1b-9b2a-43b6-af2a-b2a713a9ea93",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"prefilled_message\": \"message-text\",\n    \"generate_qr_image\": \"image-format\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://graph.facebook.com/{{Version}}/{{Phone-Number-ID}}/message_qrdls",
+									"protocol": "https",
+									"host": [
+										"graph",
+										"facebook",
+										"com"
+									],
+									"path": [
+										"{{Version}}",
+										"{{Phone-Number-ID}}",
+										"message_qrdls"
+									]
+								},
+								"description": "This example shows you how to create a new QR Code message.\n\nThe image format for the `generate_qr_image` field can be either a `svg` or a`png`. The `svg` format is the recommended format for print materials. The `prefilled_message` field has a character limit of 140 characters.\n\n#### Response\n\nIt should be highlighted that the response to the API call includes a field called `deep_link_url`. This is the short link equivalent of your QR Code."
+							},
+							"response": [
+								{
+									"id": "b575164d-3196-47d1-b6db-8be7440a78cd",
+									"name": "Create Message QRDLS",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{System-User-Access-Token}}",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"name": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"prefilled_message\": \"Tell me about your new sale!\",\n    \"generate_qr_image\": \"image/png\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://graph.facebook.com/{{Version}}/{{Phone-Number-ID}}/message_qrdls",
+											"protocol": "https",
+											"host": [
+												"graph",
+												"facebook",
+												"com"
+											],
+											"path": [
+												"{{Version}}",
+												"{{Phone-Number-ID}}",
+												"message_qrdls"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": \"ANOVZ6RINRD7G1\",\n    \"prefilled_message\": \"Tell me about your new sale!\",\n    \"deep_link_url\": \"https://wa.me/message/ANOVZ6RINRD7G1\",\n    \"qr_image_url\": \"https://scontent.xx.fbcdn.net/m1/v/An8Nfi7S69_twTspN_cD1gQNKeqM112SbCc8PIJm0MIH5K9gR2mBaErQsn_0-08fUc7_K3DsYNCHqlzaVLxyeoFNAOH43jRpelso3dkGqxAVcd-VKOMElO-LDwVaMA?efg=eyJ1cmxnZW4iOiJtYW5pZm9sZF9jcHBfdXJsZ2VuL21hbmlmb2xkX2Jsb2JzdG9yZV9zdmMifQ&hnt1=prn&oh=abf392689f0d87771ac6edb0a643684c&oe=5EEC69CF\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Get Message QRDLS",
+							"id": "ba3b986f-5b3e-42d4-895c-00129b66044a",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://graph.facebook.com/{{Version}}/{{Phone-Number-ID}}/message_qrdls?fields=code,prefilled_message,deep_link_url,qr_image_url.format(image-format)",
+									"protocol": "https",
+									"host": [
+										"graph",
+										"facebook",
+										"com"
+									],
+									"path": [
+										"{{Version}}",
+										"{{Phone-Number-ID}}",
+										"message_qrdls"
+									],
+									"query": [
+										{
+											"key": "fields",
+											"value": "code,prefilled_message,deep_link_url,qr_image_url.format(image-format)"
+										}
+									]
+								},
+								"description": "This example shows you how to get a list of QR Code messages.\n\nThe image format for the `qr_image_url.format(image-format)` field can be either `svg` or `png`.\n\n#### Response\n\n```\n{\n    \"data\": [\n        {\n            \"code\": \"ANOVZ6RINRD7G1\",\n            \"prefilled_message\": \"I need help with my account.\",\n            \"deep_link_url\": \"https://wa.me/message/ANOVZ6RINRD7G1\",\n            \"qr_image_url\": \"https://scontent.xx.fbcdn.net/m1/v/An8Nfi7S69_twTspN_cD1gQNKeqM112SbCc8PIJm0MIH5K9gR2mBaErQsn_0-08fUc7_K3DsYNCHqlzaVLxyeoFNAOH43jRpelso3dkGqxAVcd-VKOMElO-LDwVaMA?efg=eyJ1cmxnZW4iOiJtYW5pZm9sZF9jcHBfdXJsZ2VuL21hbmlmb2xkX2Jsb2JzdG9yZV9zdmMifQ&hnt1=prn&oh=abf392689f0d87771ac6edb0a643684c&oe=5EEC69CG\"\n        },\n        {\n            \"code\": \"TNGSHG326AIHH1\",\n            \"prefilled_message\": \"What are your store hours?\",\n            \"deep_link_url\": \"https://wa.me/message/TNGSHG326AIHH1\",\n            \"qr_image_url\": \"https://scontent.xx.fbcdn.net/m1/v/An8FXjwdfiLGtluShN2E5Pk_lJdunhEQf6-FeWaJ3fjDWaGxQ5_F6VlJnXv0Sur_-9GZRpvMS_HuvTGhL0UqkXEhcRq-VB_mJFzM2HzkJM6BcoDQyZ2vXT4bIf76BA?efg=eyJ1cmxnZW4iOiJtYW5pZm9sZF9jcHBfdXJsZ2VuL21hbmlmb2xkX2Jsb2JzdG9yZV9zdmMifQ&hnt1=prn&oh=dada23db9bf3537d27daf67b3e16f3dc&oe=5EEC00A6\"\n        },\n        {\n            \"code\": \"R3LUI5KILJUYA1\",\n            \"prefilled_message\": \"When is the next sale?\",\n            \"deep_link_url\": \"https://wa.me/message/R3LUI5KILJUYA1\",\n            \"qr_image_url\": \"https://scontent.xx.fbcdn.net/m1/v/An8fjbSQzLpLNWoUzyUtAvKPyfzR3QTZEfLYW2DO6i6K1yQd2PDZYe23P3ZfJabhsz7yslM0qSLpIA_TA1ukRofhyNFghCcdDUVFj24SxOgJThE9vIWJ8k4icCWAfw?efg=eyJ1cmxnZW4iOiJtYW5pZm9sZF9jcHBfdXJsZ2VuL21hbmlmb2xkX2Jsb2JzdG9yZV9zdmMifQ&hnt1=prn&oh=4653fd0c09c1cbe3a3c68fdc86ef7a1c&oe=5EEC8240\"\n        },\n  \n    ]\n}\n```"
+							},
+							"response": [
+								{
+									"id": "c3b37c7f-86b1-4117-a532-27712442221a",
+									"name": "Get Message QRDLS",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{System-User-Access-Token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "https://graph.facebook.com/{{Version}}/{{Phone-Number-ID}}/message_qrdls?fields=code,prefilled_message,deep_link_url,qr_image_url.format(image-format)",
+											"protocol": "https",
+											"host": [
+												"graph",
+												"facebook",
+												"com"
+											],
+											"path": [
+												"{{Version}}",
+												"{{Phone-Number-ID}}",
+												"message_qrdls"
+											],
+											"query": [
+												{
+													"key": "fields",
+													"value": "code,prefilled_message,deep_link_url,qr_image_url.format(image-format)"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"data\": [\n        {\n            \"code\": \"ANOVZ6RINRD7G1\",\n            \"prefilled_message\": \"I need help with my account.\",\n            \"deep_link_url\": \"https://wa.me/message/ANOVZ6RINRD7G1\",\n            \"qr_image_url\": \"https://scontent.xx.fbcdn.net/m1/v/An8Nfi7S69_twTspN_cD1gQNKeqM112SbCc8PIJm0MIH5K9gR2mBaErQsn_0-08fUc7_K3DsYNCHqlzaVLxyeoFNAOH43jRpelso3dkGqxAVcd-VKOMElO-LDwVaMA?efg=eyJ1cmxnZW4iOiJtYW5pZm9sZF9jcHBfdXJsZ2VuL21hbmlmb2xkX2Jsb2JzdG9yZV9zdmMifQ&hnt1=prn&oh=abf392689f0d87771ac6edb0a643684c&oe=5EEC69CG\"\n        },\n        {\n            \"code\": \"TNGSHG326AIHH1\",\n            \"prefilled_message\": \"What are your store hours?\",\n            \"deep_link_url\": \"https://wa.me/message/TNGSHG326AIHH1\",\n            \"qr_image_url\": \"https://scontent.xx.fbcdn.net/m1/v/An8FXjwdfiLGtluShN2E5Pk_lJdunhEQf6-FeWaJ3fjDWaGxQ5_F6VlJnXv0Sur_-9GZRpvMS_HuvTGhL0UqkXEhcRq-VB_mJFzM2HzkJM6BcoDQyZ2vXT4bIf76BA?efg=eyJ1cmxnZW4iOiJtYW5pZm9sZF9jcHBfdXJsZ2VuL21hbmlmb2xkX2Jsb2JzdG9yZV9zdmMifQ&hnt1=prn&oh=dada23db9bf3537d27daf67b3e16f3dc&oe=5EEC00A6\"\n        },\n        {\n            \"code\": \"R3LUI5KILJUYA1\",\n            \"prefilled_message\": \"When is the next sale?\",\n            \"deep_link_url\": \"https://wa.me/message/R3LUI5KILJUYA1\",\n            \"qr_image_url\": \"https://scontent.xx.fbcdn.net/m1/v/An8fjbSQzLpLNWoUzyUtAvKPyfzR3QTZEfLYW2DO6i6K1yQd2PDZYe23P3ZfJabhsz7yslM0qSLpIA_TA1ukRofhyNFghCcdDUVFj24SxOgJThE9vIWJ8k4icCWAfw?efg=eyJ1cmxnZW4iOiJtYW5pZm9sZF9jcHBfdXJsZ2VuL21hbmlmb2xkX2Jsb2JzdG9yZV9zdmMifQ&hnt1=prn&oh=4653fd0c09c1cbe3a3c68fdc86ef7a1c&oe=5EEC8240\"\n        },\n  \n    ]\n}"
+								}
+							]
+						},
+						{
+							"name": "Get Message QRDLS By ID",
+							"id": "ecd8e045-2294-4ac4-9f92-3635d504469f",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://graph.facebook.com/{{Version}}/{{Phone-Number-ID}}/message_qrdls?fields=prefilled_message,deep_link_url,qr_image_url.format(image-format)&code={{QR-Code-ID}}",
+									"protocol": "https",
+									"host": [
+										"graph",
+										"facebook",
+										"com"
+									],
+									"path": [
+										"{{Version}}",
+										"{{Phone-Number-ID}}",
+										"message_qrdls"
+									],
+									"query": [
+										{
+											"key": "fields",
+											"value": "prefilled_message,deep_link_url,qr_image_url.format(image-format)"
+										},
+										{
+											"key": "code",
+											"value": "{{QR-Code-ID}}"
+										}
+									]
+								},
+								"description": "This example shows you how to get a single QR Code message.\n\n**Important**: Neither of the previous requests returns the `qr_image_url` parameter.\n\n**If you are using additional fields**\nYou can request the specific fields you want returned. If you need to retrieve the `qr_image_url` field of the message, you must request it in the API call.\n\nThe image format for the `qr_image_url.format(image-format)` field can be either `svg` or `png`.\n\n#### Response\n``` json\n{\n    \"data\": [\n        {\n            \"code\": \"ANOVZ6RINRD7G1\",\n            \"prefilled_message\": \"What are your store hours?\",\n            \"deep_link_url\": \"https://wa.me/message/ANOVZ6RINRD7G1\",\n            # The qr_image_url field is only returned if explicitly requested.\n            \"qr_image_url\": \"https://scontent.xx.fbcdn.net/m1/v/An8Nfi7S69_twTspN_cD1gQNKeqM112SbCc8PIJm0MIH5K9gR2mBaErQsn_0-08fUc7_K3DsYNCHqlzaVLxyeoFNAOH43jRpelso3dkGqxAVcd-VKOMElO-LDwVaMA?efg=eyJ1cmxnZW4iOiJtYW5pZm9sZF9jcHBfdXJsZ2VuL21hbmlmb2xkX2Jsb2JzdG9yZV9zdmMifQ&hnt1=prn&oh=abf392689f0d87771ac6edb0a643684c&oe=5EEC69CG\"\n        }\n    ]\n}\n```"
+							},
+							"response": [
+								{
+									"id": "9a9aee52-9356-40ab-a876-9dc3f24b7bff",
+									"name": "Get Message QRDLS By ID",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{System-User-Access-Token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "https://graph.facebook.com/{{Version}}/{{Phone-Number-ID}}/message_qrdls?fields=prefilled_message,deep_link_url,qr_image_url.format(image-format)&code={{QR-Code-ID}}",
+											"protocol": "https",
+											"host": [
+												"graph",
+												"facebook",
+												"com"
+											],
+											"path": [
+												"{{Version}}",
+												"{{Phone-Number-ID}}",
+												"message_qrdls"
+											],
+											"query": [
+												{
+													"key": "fields",
+													"value": "prefilled_message,deep_link_url,qr_image_url.format(image-format)"
+												},
+												{
+													"key": "code",
+													"value": "{{QR-Code-ID}}"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"data\": [\n        {\n            \"code\": \"ANOVZ6RINRD7G1\",\n            \"prefilled_message\": \"What are your store hours?\",\n            \"deep_link_url\": \"https://wa.me/message/ANOVZ6RINRD7G1\",\n            \"qr_image_url\": \"https://scontent.xx.fbcdn.net/m1/v/An8Nfi7S69_twTspN_cD1gQNKeqM112SbCc8PIJm0MIH5K9gR2mBaErQsn_0-08fUc7_K3DsYNCHqlzaVLxyeoFNAOH43jRpelso3dkGqxAVcd-VKOMElO-LDwVaMA?efg=eyJ1cmxnZW4iOiJtYW5pZm9sZF9jcHBfdXJsZ2VuL21hbmlmb2xkX2Jsb2JzdG9yZV9zdmMifQ&hnt1=prn&oh=abf392689f0d87771ac6edb0a643684c&oe=5EEC69CG\"\n        }\n    ]\n}"
+								}
+							]
+						},
+						{
+							"name": "Update Message QRDLS",
+							"id": "9bde1615-82b3-4335-9489-34f41e75932d",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"prefilled_message\": \"new-message-text\",\n    \"generate_qr_image\": \"image-format\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://graph.facebook.com/{{Version}}/{{Phone-Number-ID}}/message_qrdls?code={{QR-Code-ID}}",
+									"protocol": "https",
+									"host": [
+										"graph",
+										"facebook",
+										"com"
+									],
+									"path": [
+										"{{Version}}",
+										"{{Phone-Number-ID}}",
+										"message_qrdls"
+									],
+									"query": [
+										{
+											"key": "code",
+											"value": "{{QR-Code-ID}}"
+										}
+									]
+								},
+								"description": "This example shows you how to update an existing QR Code message.\n\nYou can either list the code field explicitly or include it as part of the URL of the API call. If you need to generate a new QR code for your message, include the `generate_qr_image` field as well.\n\nThe image format for the `generate_qr_image` field can be either `svg` or `png`. The `svg` format is the recommended format for print materials. The `prefilled_message` field has a character limit of 140 characters.\n\n#### Response\n``` json\n{\n    \"code\": \"ANOVZ6RINRD7G1\",\n    \"prefilled_message\": \"What are your store hours?\",\n    \"deep_link_url\": \"https://wa.me/message/ANOVZ6RINRD7G1\"\n}\n```"
+							},
+							"response": [
+								{
+									"id": "16e690a2-25f3-4740-b757-85824ac7f173",
+									"name": "Update Message QRDLS",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{System-User-Access-Token}}",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"name": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"prefilled_message\": \"new-message-text\",\n    \"generate_qr_image\": \"png\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://graph.facebook.com/{{Version}}/{{Phone-Number-ID}}/message_qrdls?code={{QR-Code-ID}}",
+											"protocol": "https",
+											"host": [
+												"graph",
+												"facebook",
+												"com"
+											],
+											"path": [
+												"{{Version}}",
+												"{{Phone-Number-ID}}",
+												"message_qrdls"
+											],
+											"query": [
+												{
+													"key": "code",
+													"value": "{{QR-Code-ID}}"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": \"ANOVZ6RINRD7G1\",\n    \"prefilled_message\": \"What are your store hours?\",\n    \"deep_link_url\": \"https://wa.me/message/ANOVZ6RINRD7G1\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Delete Message QRDLS",
+							"id": "f5224397-b876-4c3e-a188-24dee04499ca",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://graph.facebook.com/{{Version}}/{{Phone-Number-ID}}/message_qrdls?code={{QR-Code-ID}}",
+									"protocol": "https",
+									"host": [
+										"graph",
+										"facebook",
+										"com"
+									],
+									"path": [
+										"{{Version}}",
+										"{{Phone-Number-ID}}",
+										"message_qrdls"
+									],
+									"query": [
+										{
+											"key": "code",
+											"value": "{{QR-Code-ID}}"
+										}
+									]
+								},
+								"description": "This example shows you how to delete a QR Code message. QR codes do not expire. You must delete a QR code in order to retire it."
+							},
+							"response": [
+								{
+									"id": "cd65dfb6-ad2f-4dcf-ba58-0acdba177af8",
+									"name": "Delete Message QRDLS",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{System-User-Access-Token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "https://graph.facebook.com/{{Version}}/{{Phone-Number-ID}}/message_qrdls?code={{QR-Code-ID}}",
+											"protocol": "https",
+											"host": [
+												"graph",
+												"facebook",
+												"com"
+											],
+											"path": [
+												"{{Version}}",
+												"{{Phone-Number-ID}}",
+												"message_qrdls"
+											],
+											"query": [
+												{
+													"key": "code",
+													"value": "{{QR-Code-ID}}"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"success\": true\n}"
+								}
+							]
+						}
+					],
+					"id": "1f9ea94b-577f-4e13-8aab-b9fb0394794f",
+					"description": "Customers can scan a QR code from their phone to quickly begin a conversation with your business. The WhatsApp Business Management API allows you to create and access these QR codes and associated short links. If you wish to use the Business Manager to manage your QR codes, see [Manage your WhatsApp QR Codes](https://www.facebook.com/business/help/890732351439459).\n\n## Before You Start\n* Register the phone number you are creating the short link/QR code message for\n* Get an access token\n* API calls to the `message_qrdls` edge requires a `phone-number-id`, which is returned as the `id` when you make a [`phone_numbers` request](https://developers.facebook.com/docs/whatsapp/business-management-api/phone-numbers) to the [WhatsApp Business Management API](https://developers.facebook.com/docs/whatsapp/business-management-api).",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								],
+								"id": "2f14fe50-56eb-4673-af75-d7a22177cac1"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								],
+								"id": "f00efa18-0828-4dff-9d00-8a981738dc97"
+							}
+						}
+					]
+				},
+				{
+					"name": "Monitor Quality Signals",
+					"item": [],
+					"id": "58049034-bd5f-4e41-91c7-a0d015206410",
+					"description": "See [How To Monitor Quality Signals](https://developers.facebook.com/docs/whatsapp/guides/how-to-monitor-quality-signals)."
+				},
+				{
+					"name": "Use Webhooks to Track WABA Policy Violations",
+					"item": [
+						{
+							"name": "Step 1: Set up Endpoint and Configure Webhooks",
+							"item": [],
+							"id": "3d589e93-e318-4aff-8aaf-fd3963e1acd4",
+							"description": "Follow our [Webhooks Getting Started](https://developers.facebook.com/docs/graph-api/webhooks/getting-started) guide to create your endpoint and configure your Webhooks."
+						},
+						{
+							"name": "Step 2: Subscribe your App to your WABA",
+							"item": [],
+							"id": "f716484f-22bf-4168-a009-9dc29d86a57f",
+							"description": "You need to subscribe your app to Webhook notifications for the WhatsApp Business Account. You can subscribe in two different ways:\n\n*   [Using API Calls](https://developers.facebook.com/docs/graph-api/webhooks/getting-started/webhooks-for-whatsapp#create-a-subscription)\n*   [Using Graph API Explorer](https://developers.facebook.com/docs/graph-api/webhooks/getting-started/webhooks-for-whatsapp#explorer)"
+						},
+						{
+							"name": "Step 3: Signup for Account Updates",
+							"item": [],
+							"id": "faa24da2-8459-4d00-857f-0e95d25037ad",
+							"description": "Now that your app has signed up to receive Webhooks related to your WABA, you can refine which types of updates you want to receive. To track a WABA’s status, you need to select the account_update option. This way, you will be notified when a WABA has violated WhatsApp policies.\n\nTo select this option, go to your App Dashboard and find the **Settings** option. You will see a Webhooks section with all the information you provided in the previous steps. Find **Webhook fields**, and click **Manage**. A dialog box will appear with all the fields you can subscribe to. Click **Subscribe** for **`account_update`**.\n\nNow, every time your WABA has violated a policy, you will get a notification that looks like the following:\n\n``` json\n{\n  \"object\": \"whatsapp_business_account\",\n  \"entry\": [\n    {\n      \"id\": \"whatsapp-business-account-id\",\n      \"time\": 1604703058,\n      \"changes\": [\n        {\n          \"field\": \"account_update\",\n          \"value\": {\n            \"phone_number\": \"16505551111\",\n            \"event\": \"ACCOUNT_VIOLATION\",\n            \"violation_info\": {\n                \"violation_type\": \"HARASSMENT\",\n            }\n          }\n        }\n      ]\n    }\n  ]\n}\n\n```\n\nSee [WhatsApp Business Platform Policy Violations](https://developers.facebook.com/docs/whatsapp/overview/policy-enforcement/violations) for a listing of all platform policy violations."
+						},
+						{
+							"name": "Step 4: Track WABA Restrictions",
+							"item": [],
+							"id": "123cece5-1f9f-4205-b461-89ae2a95a0d8",
+							"description": "You should keep an eye on your Webhooks to check if your WABA has been restricted due to policy violations. If a restriction has been imposed, you get a Webhook that includes the restriction_info field, inside the value object. The restriction_info field lists all restrictions imposed on your account and when those restrictions expire.\n\n``` json\n{  \n  \"field\": \"account_update\",  \n  \"value\": {  \n    \"phone_number\": \"<PHONE_NUMBER>\",  \n    \"event\": \"<ACCOUNT_RESTRICTION>\",  \n    \"restriction_info\":[  \n      {  \n        \"restriction_type\": \"<RESTRICTION_ON_ADD_PHONE_NUMBER_ACTION>\",  \n        \"expiration\": TIMESTAMP  \n      },  \n    ]  \n  }  \n}\n\n```\n\nYour WABA may receive one or more restrictions due to policy violations. In the following example, the Webhook reports that a WABA has been restricted from adding new phone numbers:\n\n``` json\n{\n  \"field\": \"account_update\",\n  \"value\": {\n    \"phone_number\": \"<PHONE_NUMBER>\",\n    \"event\": \"<ACCOUNT_RESTRICTION>\",\n    \"restriction_info\": [\n      {\n        \"restriction_type\": \"<RESTRICTED_BIZ_INITIATED_MESSAGING>\",\n        \"expiration\": TIMESTAMP\n      },\n    ]\n  }\n}\n\n```\n\nFinally, you see a WABA that is no longer allowed to respond to [user-initiated messages](https://developers.facebook.com/docs/whatsapp/pricing#how-it-works):\n\n``` json\n{\n  \"field\": \"account_update\",\n  \"value\": {\n    \"phone_number\": \"<PHONE_NUMBER>\",\n    \"event\": \"<ACCOUNT_RESTRICTION>\",\n    \"restriction_info\": [{\n        \"restriction_type\": \"<RESTRICTED_CUSTOMER_INITIATED_MESSAGING>\",\n        \"expiration\": TIMESTAMP\n      }\n    ]\n  }\n}\n```"
+						}
+					],
+					"id": "71a0b34e-cac2-4b3f-83c3-f2ee2938a353",
+					"description": "Businesses can integrate with Webhooks to get real-time notifications about changes to a WhatsApp Business Account (WABA), including when a business has [violated a WhatsApp policy](https://developers.facebook.com/docs/whatsapp/overview/policy-enforcement). This guide teaches you how to set up your Webhooks to receive these notifications so your business can quickly adjust behavior to avoid additional warnings and/or enforcement actions.\n\n**Before You Start**\n\nTo complete this guide you need to [register as a Facebook Developer](https://developers.facebook.com/docs/development/register/). Once you are registered, you need to set up a [Facebook Business Manager account](https://www.facebook.com/business/help/1710077379203657) and a [Facebook for Developers](https://www.facebook.com/business/help/1710077379203657) App.\n\nWhen creating your Facebook app, make sure you select the [**Business** type](https://developers.facebook.com/docs/development/create-an-app/app-dashboard/app-types#business) and [link your new app with your Facebook Business Manager](https://www.facebook.com/business/help/2199735813629697).\n\nOnce you have created the app, add WhatsApp as a product to your application. To add WhatsApp as a product:\n\n*   Go to [developers.facebook.com/apps](https://developers.facebook.com/apps) and click app. You will be redirected to the app dashboard for your app.\n*   Once inside the dashboard, find **Products** on the left side panel and click **Add Product**. You will then be presented with a list of Facebook products that can be added to an app.\n*   Find **WhatsApp** and click **Set Up**. *If you don’t see WhatsApp as an option, reach out to your Facebook representative*.\n    \n\nAdditionally, make sure your app has completed [App Review](https://developers.facebook.com/docs/app-review) and requested the **`whatsapp_business_management`** permission.",
+					"auth": {
+						"type": "noauth"
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								],
+								"id": "c83c2b72-f833-4fe5-8dd9-309b5e75d032"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								],
+								"id": "db11a0b6-c278-428f-9c52-82854e4d1469"
+							}
+						}
+					]
+				}
+			],
+			"id": "31fb8b7f-95cc-4968-92d9-bc094a999e95",
+			"description": "Use these guides to help you perform common actions using the WhatsApp Business Management API.",
+			"auth": {
+				"type": "noauth"
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						],
+						"id": "07584c03-d71d-465d-8bb6-cd9c0a57cb3f"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						],
+						"id": "9ea3ae9e-3560-415c-b0bf-59d634109d95"
+					}
+				}
+			]
+		},
+		{
+			"name": "API Reference",
+			"item": [
+				{
+					"name": "WABA Account",
+					"item": [
+						{
+							"name": "Get WABA",
+							"id": "0f75ccf6-ba79-4e86-97ff-7f0442971220",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://graph.facebook.com/{{Version}}/{{WABA-ID}}",
+									"protocol": "https",
+									"host": [
+										"graph",
+										"facebook",
+										"com"
+									],
+									"path": [
+										"{{Version}}",
+										"{{WABA-ID}}"
+									]
+								},
+								"description": "A call to this endpoint returns the account information of a WhatsApp Business Account.\n\n## Fields\n\n| Name          | Description   |\n| ------------- | ------------- |\n| **`id`**   | ID for this WABA.|\n| **`account_review_status`**  | Status from account review process. |\n| **`analytics`**  | Analytics data of the WhatsApp Business Account. |\n| **`currency`**   | WABA's currency.|\n| **`message_template_namespace`**   | Namespace string for the message templates that belong to the WABA.|\n| **`name`**   |WABA's name.|\n| **`on_behalf_of_business_info`**   | Information about On Behalf Of relationships this account is part of.|\n| **`primary_funding_id`**   | A WABA's payment method ID. |\n| **`purchase_order_number`**   | Purchase order number supplied by the business. Used for payment management purposes. |\n| **`timezone_id`**   | Timezone ID for this WABA.|"
+							},
+							"response": [
+								{
+									"id": "8c1e7476-d0bc-4d62-8359-ef0d0b68dada",
+									"name": "Get WABA",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{System-User-Access-Token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "https://graph.facebook.com/{{Version}}/{{WABA-ID}}",
+											"protocol": "https",
+											"host": [
+												"graph",
+												"facebook",
+												"com"
+											],
+											"path": [
+												"{{Version}}",
+												"{{WABA-ID}}"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"id\": \"<YOUR-WHATSAPP-BUSINESS-ACCOUNT-ID>\",\n    \"name\": \"<YOUR-WHATSAPP-BUSINESS-ACCOUNT-NAME>\",\n    \"timezone_id\": \"1\",\n    \"message_template_namespace\": \"05155c78_261e_4b2f_82b3_d7958d4cf75f\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Get Insights",
+							"id": "b4cd77fd-9614-469d-baf9-a217f76cda8c",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://graph.facebook.com/{{Version}}/{{WABA-ID}}?fields=analytics.start(1577865600).end(1580861706).granularity(DAY).phone_numbers([]).country_codes([\"US\", \"BR\"])",
+									"protocol": "https",
+									"host": [
+										"graph",
+										"facebook",
+										"com"
+									],
+									"path": [
+										"{{Version}}",
+										"{{WABA-ID}}"
+									],
+									"query": [
+										{
+											"key": "fields",
+											"value": "analytics.start(1577865600).end(1580861706).granularity(DAY).phone_numbers([]).country_codes([\"US\", \"BR\"])"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "aa9a9257-2536-404f-a97c-0ac4381c4268",
+									"name": "Get Insights (analytics) from the WABA ID for a 24 hour period",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{System-User-Access-Token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "https://graph.facebook.com/{{Version}}/{{WABA-ID}}?fields=analytics.start(1577865600).end(1580861706).granularity(DAY).phone_numbers([]).country_codes([\"US\", \"BR\"])",
+											"protocol": "https",
+											"host": [
+												"graph",
+												"facebook",
+												"com"
+											],
+											"path": [
+												"{{Version}}",
+												"{{WABA-ID}}"
+											],
+											"query": [
+												{
+													"key": "fields",
+													"value": "analytics.start(1577865600).end(1580861706).granularity(DAY).phone_numbers([]).country_codes([\"US\", \"BR\"])"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"analytics\": {\n        \"phone_numbers\": [\n            \"16505550111\",\n            \"16505550112\",\n            \"16505550113\"\n        ],\n        \"country_codes\": [\n            \"US\",\n            \"BR\"\n        ],\n        \"granularity\": \"DAY\",\n        \"data_points\": [\n            {\n                \"start\": 1543543200,\n                \"end\": 1543629600,\n                \"sent\": 196093,\n                \"delivered\": 179715\n            },\n            {\n                \"start\": 1543629600,\n                \"end\": 1543716000,\n                \"sent\": 147649,\n                \"delivered\": 139032\n            },\n            {\n                \"start\": 1543716000,\n                \"end\": 1543802400,\n                \"sent\": 61988,\n                \"delivered\": 58830\n            },\n            {\n                \"start\": 1543802400,\n                \"end\": 1543888800,\n                \"sent\": 132465,\n                \"delivered\": 124392\n            },\n            {\n                \"start\": 1543888800,\n                \"end\": 1543975200,\n                \"sent\": 181002,\n                \"delivered\": 167335\n            },\n            {\n                \"start\": 1543975200,\n                \"end\": 1544061600,\n                \"sent\": 168687,\n                \"delivered\": 157838\n            },\n            {\n                \"start\": 1544061600,\n                \"end\": 1544148000,\n                \"sent\": 161832,\n                \"delivered\": 152383\n            }\n        ]\n    },\n    \"id\": \"952305634918047\"\n}"
+								}
+							]
+						}
+					],
+					"id": "27bfd4b8-86ad-4874-8c15-a03897a87565",
+					"description": "This section presents a list of WhatsApp Business Account APIs available for Postman."
+				},
+				{
+					"name": "Phone Numbers",
+					"item": [
+						{
+							"name": "Get Single Phone Number",
+							"id": "dd1042ac-a84f-4cec-a318-8519d8de5165",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://graph.facebook.com/{{Version}}/{{Phone-Number-ID}}",
+									"protocol": "https",
+									"host": [
+										"graph",
+										"facebook",
+										"com"
+									],
+									"path": [
+										"{{Version}}",
+										"{{Phone-Number-ID}}"
+									]
+								},
+								"description": "When you query all the phone numbers for a WhatsApp Business Account, each phone number has an **`id`**. You can directly query for a phone number using this **`id`**.\n\n## Display Name Status\n\nYou can use the **`name_status`** field to query the status of a display name associated with a specific phone number. The status of your display name can be one of the following:\n\n* `APPROVED`: The name has been approved. You can download your certificate now.\n* `DECLINED`: The name has not been approved. You cannot download your certificate.\n* `EXPIRED`: Your certificate has expired and can no longer be downloaded.\n* `PENDING_REVIEW`: Your name request is under review. You cannot download your certificate.\n* `NONE`: No certificate is available.\n\nThe `name_status` query option is currently being tested in beta mode. Not all developers have access to it."
+							},
+							"response": [
+								{
+									"id": "94d93e3e-cbb7-43b0-a805-722c3a529680",
+									"name": "Get Single Phone Number",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{System-User-Access-Token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "https://graph.facebook.com/{{Version}}/{{Phone-Number-ID}}",
+											"protocol": "https",
+											"host": [
+												"graph",
+												"facebook",
+												"com"
+											],
+											"path": [
+												"{{Version}}",
+												"{{Phone-Number-ID}}"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"verified_name\": \"Jasper's Market\",\n    \"display_phone_number\": \"+1 631-555-5555\",\n    \"id\": \"1906385232743451\",\n    \"quality_rating\": \"GREEN\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Get All Phone Numbers",
+							"id": "2285c4b6-792e-42db-bc30-1ad31deeb6b5",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://graph.facebook.com/{{Version}}/{{WABA-ID}}/phone_numbers",
+									"protocol": "https",
+									"host": [
+										"graph",
+										"facebook",
+										"com"
+									],
+									"path": [
+										"{{Version}}",
+										"{{WABA-ID}}",
+										"phone_numbers"
+									]
+								},
+								"description": "Gets the phone number owned by a WhatsApp Business Account.\n\n## Fields\n\n| Name          | Description   |\n| ------------- | ------------- |\n| **`id`**   | ID for this WABA.|\n| **`account_mode`**  | The account mode of this phone number. |\n| **`certificate`** | The certificate associated with the phone number. |\n| **`display_phone_number`** | The international format representation of the phone number. |\n| **`name_status`** | The current status of the review of your business name. | \n| **`new_certificate`** | The certificate associated with the new business name that was requested. |\n| **`new_name_status`** | The current status of the review of your new business name. | \n| **`quality_score`**  | Quality score of the phone. |"
+							},
+							"response": [
+								{
+									"id": "9e79af2d-a255-464b-8f50-6092c45e1ef4",
+									"name": "Get All Phone Numbers",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{System-User-Access-Token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "https://graph.facebook.com/{{Version}}/{{WABA-ID}}/phone_numbers",
+											"protocol": "https",
+											"host": [
+												"graph",
+												"facebook",
+												"com"
+											],
+											"path": [
+												"{{Version}}",
+												"{{WABA-ID}}",
+												"phone_numbers"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "[\n    {\n        \"verified_name\": \"Jasper's Market\",\n        \"display_phone_number\": \"+1 631-555-5555\",\n        \"id\": \"1906385232743451\",\n        \"quality_rating\": \"GREEN\"\n    },\n    {\n        \"verified_name\": \"Jasper's Ice Cream\",\n        \"display_phone_number\": \"+1 631-555-5556\",\n        \"id\": \"1913623884432103\",\n        \"quality_rating\": \"NA\"\n    }\n]"
+								}
+							]
+						}
+					],
+					"id": "ba82f3fb-cfe7-462a-ab29-8354051daa86",
+					"description": "This section presents a list of Phone Number APIs available for Postman."
+				},
+				{
+					"name": "Message Templates",
+					"item": [
+						{
+							"name": "Get Message Templates",
+							"id": "58b28181-5ae7-4a18-8068-ec15e99733b9",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://graph.facebook.com/{{Version}}/{{WABA-ID}}/message_templates",
+									"protocol": "https",
+									"host": [
+										"graph",
+										"facebook",
+										"com"
+									],
+									"path": [
+										"{{Version}}",
+										"{{WABA-ID}}",
+										"message_templates"
+									]
+								},
+								"description": "Gets the message template associated with the WABA ID.\n\n## Fields\n\n| Name          | Description   |\n| ------------- | ------------- |\n| **`id`**   | The ID for this message template.|\n| **`category`**   | The category type of the message template.|\n| **`components`**   | The array containing all the content of the message template.|\n| **`language`**  | The language, and locale, of the element translation. |\n| **`name`**  | The name of the message template. |\n| **`quality_score`**   | The quality score of the hardware security module (HSM).|\n| **`rejected_reason`**   | The reason the message template was rejected.|\n| **`status`**   | The status of the message template.|\n\nFor examples using Message Templates, see [Create Message Templates](#716cbda9-a04f-420d-ae88-1fc97e44f2f2)."
+							},
+							"response": [
+								{
+									"id": "927aacf2-7a97-40bc-abc0-ceecdc8761f5",
+									"name": "Get Message Templates",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{System-User-Access-Token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "https://graph.facebook.com/{{Version}}/{{WABA-ID}}/message_templates?fields=name,category,content,language,name_or_content,status",
+											"protocol": "https",
+											"host": [
+												"graph",
+												"facebook",
+												"com"
+											],
+											"path": [
+												"{{Version}}",
+												"{{WABA-ID}}",
+												"message_templates"
+											],
+											"query": [
+												{
+													"key": "fields",
+													"value": "name,category,content,language,name_or_content,status"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "[\n    {\n        \"name\": \"hello_world\",\n        \"components\": [\n            {\n                \"type\": \"BODY\",\n                \"text\": \"Hello, {{1}}\"\n            }\n        ],\n        \"language\": \"en_US\",\n        \"status\": \"APPROVED\",\n        \"category\": \"ISSUE_RESOLUTION\",\n        \"id\": \"409119052980796\"\n    },\n    {\n        \"name\": \"case_opened\",\n        \"components\": [\n            {\n                \"type\": \"BODY\",\n                \"text\": \"Seu caso {{1}} foi aberto. Entraremos em contato em breve.\"\n            }\n        ],\n        \"language\": \"pt_BR\",\n        \"status\": \"APPROVED\",\n        \"category\": \"TICKET_UPDATE\",\n        \"id\": \"718173718589371\"\n    },\n    {\n        \"name\": \"case_opened\",\n        \"components\": [\n            {\n                \"type\": \"BODY\",\n                \"text\": \"Your case {{1}} was opened. We will get in touch soon.\"\n            }\n        ],\n        \"language\": \"en_US\",\n        \"status\": \"APPROVED\",\n        \"category\": \"TICKET_UPDATE\",\n        \"id\": \"755551981307120\"\n    }\n]"
+								}
+							]
+						},
+						{
+							"name": "Get Message Template Namespace",
+							"id": "1ad83fc4-0010-41ff-af27-9dd27f51612b",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://graph.facebook.com/{{Version}}/{{WABA-ID}}?fields=message_template_namespace",
+									"protocol": "https",
+									"host": [
+										"graph",
+										"facebook",
+										"com"
+									],
+									"path": [
+										"{{Version}}",
+										"{{WABA-ID}}"
+									],
+									"query": [
+										{
+											"key": "fields",
+											"value": "message_template_namespace"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "5d6e7e1b-41a5-4052-92cc-757867bfc3b1",
+									"name": "Get Message Template Namespace",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{System-User-Access-Token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "https://graph.facebook.com/{{Version}}/{{WABA-ID}}?fields=message_template_namespace",
+											"protocol": "https",
+											"host": [
+												"graph",
+												"facebook",
+												"com"
+											],
+											"path": [
+												"{{Version}}",
+												"{{WABA-ID}}"
+											],
+											"query": [
+												{
+													"key": "fields",
+													"value": "message_template_namespace"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"id\": \"1972385232742141\",\n    \"message_template_namespace\": \"12abcdefghijk_34lmnop\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Create Message Template",
+							"id": "9d3c6728-3f50-4040-98b5-9a61c2ddf5d5",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"category\": \"ISSUE_RESOLUTION\",\n    \"components\": [\n        {\n            \"type\": \"BODY\",\n            \"text\": \"message-text\"\n        }\n    ],\n    \"name\": \"hello_world_template\",\n    \"language\": \"en_US\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://graph.facebook.com/{{Version}}/{{WABA-ID}}/message_templates",
+									"protocol": "https",
+									"host": [
+										"graph",
+										"facebook",
+										"com"
+									],
+									"path": [
+										"{{Version}}",
+										"{{WABA-ID}}",
+										"message_templates"
+									]
+								},
+								"description": "Creates a message template using the WABA ID.\n\nIn your `POST` call, include the following message template parameters:\n\n## Parameters \n| Name          | Description   |\n| ------------- | -----------|\n| **`category`**   |  **Required**. <br/><br/>The type of message template. <br/><br/>**Values**: `ACCOUNT_UPDATE`, `PAYMENT_UPDATE`, `PERSONAL_FINANCE_UPDATE`, `SHIPPING_UPDATE`, `RESERVATION_UPDATE`, `ISSUE_RESOLUTION`, `APPOINTMENT_UPDATE`, `TRANSPORTATION_UPDATE`, `TICKET_UPDATE`, `ALERT_UPDATE`, `AUTO_REPLY`|\n| **`components`** |  **Required**.  <br/><br/>The parts of the message template. |\n| **`name`** |  **Required**.  <br/><br/>The name of the message template. |\n| **`access_token`** |  **Required**.  <br/><br/>The access token for interacting with the API. |\n| **`language`** |  **Required**.  <br/><br/>The language of the message template. |\n\n### The `components` Parameter\n\n| Name          | Description   |\n| ------------- | -----------|\n| **`type`**   | **Required**. <br></br>**Values**: `BODY`, `HEADER`, `FOOTER`, and `BUTTONS`. The character limit of the `BODY` component is **1024** characters, while the character limits of the `HEADER` and `FOOTER` components is 60 characters each.|\n| **`format`** | **Optional**. <br/><br/>Only applies to the `HEADER` type.<br/><br/> **Values**: `TEXT`, `IMAGE`, `DOCUMENT`, `VIDEO` |\n| **`text`** | **Optional**. <br/><br/>Text of the message being sent. |\n| **`example`** | **Optional**. <br/><br/>Provides an example of possible data for your template. This helps us during the review and approval process, so we can understand what kind of message you plan to send. Make sure these are examples and do not include any confidential or personal information. If you decide to provide variables and examples, please provide the same number of variables and examples. |\n| **`buttons`** | **Optional.** <br/><br/>Only applies to the `BUTTONS` type. The parameters related to the button. |\n\n### The `BUTTONS` Component Type\n| Name          | Description   |\n| ------------- | -----------|\n| **`type`**   | **Required**. <br> </br>**Values**: `PHONE_NUMBER`, `URL`, `QUICK_REPLY`|\n| **`text`**   | **Required**. <br/><br/>The text to be displayed on the button.|\n| **`url`**   | **Optional**. <br/><br/>The URL that the user is sent to after the button is clicked. Variables can be used to create dynamic links.|\n| **`phone_number`**   | **Optional**. <br/><br/>The phone number that is called on clicking the button.|\n| **`example`**   | **Optional**. <br/><br/>Provides an example of possible data for your template. This helps us during the review and approval process, so we can understand what kind of message you plan to send. Make sure these are examples and do not include any confidential or personal information.|"
+							},
+							"response": [
+								{
+									"id": "4b154a91-2521-4b46-a780-a8be1cfc11cf",
+									"name": "Create Message Template",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{System-User-Access-Token}}",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"name": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"category\": \"ISSUE_RESOLUTION\",\n    \"components\": [\n        {\n            \"type\": \"BODY\",\n            \"text\": \"message-text\"\n        }\n    ],\n    \"name\": \"hello_world_template\",\n    \"language\": \"en_US\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://graph.facebook.com/{{Version}}/{{WABA-ID}}/message_templates",
+											"protocol": "https",
+											"host": [
+												"graph",
+												"facebook",
+												"com"
+											],
+											"path": [
+												"{{Version}}",
+												"{{WABA-ID}}",
+												"message_templates"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"id\": \"952305634918767\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Create Media Message Template",
+							"id": "d4549340-dcf1-4d99-a6b8-8fe0256579cf",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"category\": \"ISSUE_RESOLUTION\",\n    \"components\": [\n        {\n            \"type\": \"BODY\",\n            \"text\": \"message-text\"\n        },\n        {\n            \"type\": \"HEADER\",\n            \"format\": \"IMAGE\",\n            \"example\": {\n                \"header_handle\": [\n                    \"file-handle\"\n                ]\n            }\n        }\n    ],\n    \"name\": \"hello_world_template\",\n    \"language\": \"en_US\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://graph.facebook.com/{{Version}}/{{WABA-ID}}/message_templates",
+									"protocol": "https",
+									"host": [
+										"graph",
+										"facebook",
+										"com"
+									],
+									"path": [
+										"{{Version}}",
+										"{{WABA-ID}}",
+										"message_templates"
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "362afea1-8736-434d-b3fc-3dd98991ff55",
+									"name": "Create Media Message Template",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{System-User-Access-Token}}",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"name": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"category\": \"ISSUE_RESOLUTION\",\n    \"components\": [\n        {\n            \"type\": \"BODY\",\n            \"text\": \"message-text\"\n        },\n        {\n            \"type\": \"HEADER\",\n            \"format\": \"IMAGE\",\n            \"example\": {\n                \"header_handle\": [\n                    \"file-handle\"\n                ]\n            }\n        }\n    ],\n    \"name\": \"hello_world_template\",\n    \"language\": \"en_US\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://graph.facebook.com/{{Version}}/{{WABA-ID}}/message_templates",
+											"protocol": "https",
+											"host": [
+												"graph",
+												"facebook",
+												"com"
+											],
+											"path": [
+												"{{Version}}",
+												"{{WABA-ID}}",
+												"message_templates"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"id\": \"952305634123456\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Create Interactive Message Template",
+							"id": "aba2b58a-faa8-492a-a81d-6bc7cd986a84",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"hello_world_template\",\n    \"language\": \"en_US\",\n    \"category\": \"ISSUE_RESOLUTION\",\n    \"components\": [\n        {\n            \"type\": \"BODY\",\n            \"text\": \"body-text {{1}} {{2}} {{3}}\",\n            \"example\": {\n                \"body_text\": [\n                    [\n                        \"body-example-1\",\n                        \"body-example-2\",\n                        \"body-example-3\"\n                    ]\n                ]\n            }\n        },\n        {\n            \"type\": \"HEADER\",\n            \"format\": \"TEXT\",\n            \"text\": \"header-text {{1}}\",\n            \"example\": {\n                \"header_text\": [\n                    \"header-example\"\n                ]\n            }\n        },\n        {\n            \"type\": \"FOOTER\",\n            \"text\": \"footer-text\"\n        },\n        {\n            \"type\": \"BUTTONS\",\n            \"buttons\": [\n                {\n                    \"type\": \"PHONE_NUMBER\",\n                    \"text\": \"phone-button-text\",\n                    \"phone_number\": \"+1(650) 555-1111\"\n                }\n            ]\n        },\n        {\n            \"type\": \"URL\",\n            \"text\": \"url-button-text\",\n            \"url\": \"https://www.website.com/{{1}}\",\n            \"example\": [\n                \"https://www.website.com/dynamic-url-example\"\n            ]\n        }\n    ]   \n}"
+								},
+								"url": {
+									"raw": "https://graph.facebook.com/{{Version}}/{{WABA-ID}}/message_templates",
+									"protocol": "https",
+									"host": [
+										"graph",
+										"facebook",
+										"com"
+									],
+									"path": [
+										"{{Version}}",
+										"{{WABA-ID}}",
+										"message_templates"
+									]
+								},
+								"description": "The following example creates a template with a button that customers can use to call a business' phone number for help resolving an issue."
+							},
+							"response": [
+								{
+									"id": "b31981ef-904d-4339-a74e-0d199bddb740",
+									"name": "Create Interactive Message Template",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "https://graph.facebook.com/{{Version}}/{{WABA-ID}}/message_templates",
+											"protocol": "https",
+											"host": [
+												"graph",
+												"facebook",
+												"com"
+											],
+											"path": [
+												"{{Version}}",
+												"{{WABA-ID}}",
+												"message_templates"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"id\": \"123456789\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Delete Message Template",
+							"id": "f1884eb4-332a-4bab-8b22-66d01f8b295e",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://graph.facebook.com/{{Version}}/{{WABA-ID}}/message_templates?name=template-name-to-delete",
+									"protocol": "https",
+									"host": [
+										"graph",
+										"facebook",
+										"com"
+									],
+									"path": [
+										"{{Version}}",
+										"{{WABA-ID}}",
+										"message_templates"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "template-name-to-delete"
+										}
+									]
+								},
+								"description": "Deletes a [WhatsAppMessageTemplate](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-hsm/) from a [WhatsAppBusinessAccount](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/)."
+							},
+							"response": [
+								{
+									"id": "1a2461ec-c556-4170-98c4-02ff2ba941c6",
+									"name": "Delete Message Template",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{System-User-Access-Token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "https://graph.facebook.com/{{Version}}/{{WABA-ID}}/message_templates",
+											"protocol": "https",
+											"host": [
+												"graph",
+												"facebook",
+												"com"
+											],
+											"path": [
+												"{{Version}}",
+												"{{WABA-ID}}",
+												"message_templates"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"success\": true\n}"
+								}
+							]
+						},
+						{
+							"name": "Send Message Template Opt-Out Button",
+							"id": "72632257-b667-4a2f-97dc-0271d0107f77",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{AdminAuthToken}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"promotional_message\",\n    \"language\": \"en_US\",\n    \"category\": \"TRANSACTIONAL\",\n    \"components\": [\n        {\n            \"type\": \"BODY\",\n            \"text\": \"Hi {{1}}, get an extra 10% off every order above $300.\",\n            \"example\": {\n                \"body_text\": [\n                    [\n                        \"Sonia\"\n                    ]\n                ]\n            }\n        },\n        {\n            \"type\": \"HEADER\",\n            \"format\": \"TEXT\",\n            \"text\": \"Bonus Tuesday starts now!\"\n        },\n        {\n            \"type\": \"FOOTER\",\n            \"text\": \"You can send a request to stop receiving marketing messages.\"\n        },\n        {\n            \"type\": \"BUTTONS\",\n            \"buttons\": [\n                {\n                    \"type\": \"QUICK_REPLY\",\n                    \"text\": \"Shop now\"\n                },\n                {\n                    \"type\": \"QUICK_REPLY\",\n                    \"text\": \"Stop marketing messages\"\n                }\n            ]\n        }\n    ]\n}"
+								},
+								"url": {
+									"raw": "https://graph.facebook.com/{{Version}}/{{WABA-ID}}/message_templates",
+									"protocol": "https",
+									"host": [
+										"graph",
+										"facebook",
+										"com"
+									],
+									"path": [
+										"{{Version}}",
+										"{{WABA-ID}}",
+										"message_templates"
+									]
+								},
+								"description": "We recommend that you add an opt-out button to your marketing templates. This will give users an option to opt out of your marketing messages without having to block your business. As a result, you may be able to scale messaging volume faster on WhatsApp. For more information related to guidance on the marketing opt-out button, see [Tips for Adding a Marketing Opt-out Button to Your Message Template](https://www.facebook.com/business/help/448422200528701).\n\n>Your business must take the necessary steps to stop sending marketing messages to customers who have chosen to opt-out of receiving them. Not doing so will negatively impact your block rate and quality score.\n\nThe following **POST** request demonstrates how to incorporate the Opt-Out button into your message templates."
+							},
+							"response": [
+								{
+									"id": "a272e92d-4d6e-47e7-85d2-a9ae9578b28e",
+									"name": "Send Message Template Opt-Out Button",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"name": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer {{AdminAuthToken}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"promotional_message\",\n    \"language\": \"en_US\",\n    \"category\": \"TRANSACTIONAL\",\n    \"components\": [\n        {\n            \"type\": \"BODY\",\n            \"text\": \"Hi {{1}}, get an extra 10% off every order above $300.\",\n            \"example\": {\n                \"body_text\": [\n                    [\n                        \"Sonia\"\n                    ]\n                ]\n            }\n        },\n        {\n            \"type\": \"HEADER\",\n            \"format\": \"TEXT\",\n            \"text\": \"Bonus Tuesday starts now!\"\n        },\n        {\n            \"type\": \"FOOTER\",\n            \"text\": \"You can send a request to stop receiving marketing messages.\"\n        },\n        {\n            \"type\": \"BUTTONS\",\n            \"buttons\": [\n                {\n                    \"type\": \"QUICK_REPLY\",\n                    \"text\": \"Shop now\"\n                },\n                {\n                    \"type\": \"QUICK_REPLY\",\n                    \"text\": \"Stop marketing messages\"\n                }\n            ]\n        }\n    ]\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://graph.facebook.com/{{Version}}/{{WABA-ID}}/message_templates",
+											"protocol": "https",
+											"host": [
+												"graph",
+												"facebook",
+												"com"
+											],
+											"path": [
+												"{{Version}}",
+												"{{WABA-ID}}",
+												"message_templates"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"id\": \"<MESSAGE_TEMPLATE_ID>\"\n}\n"
+								}
+							]
+						}
+					],
+					"id": "155565a5-ff06-44a5-8da3-16df541b33a6",
+					"description": "This section presents a list of Message Template APIs available for Postman.\n\nUse the WhatsApp Business Management API to create new message templates, media message templates, or interactive message templates.\n\nFor a list of supported language codes, see [Supported languages](https://developers.facebook.com/docs/whatsapp/business-management-api/message-templates#supported-languages).\n\nIn your `POST` call, include the following message template parameters: \n## Parameters\n| Name          | Description   |\n| ------------- | -----------|\n| **`category`**   |  **Required**. <br/><br/>The type of message template. <br><br> **Values**: `ACCOUNT_UPDATE`, `PAYMENT_UPDATE`, `PERSONAL_FINANCE_UPDATE`, `SHIPPING_UPDATE`, `RESERVATION_UPDATE`, `ISSUE_RESOLUTION`, `APPOINTMENT_UPDATE`, `TRANSPORTATION_UPDATE`, `TICKET_UPDATE`, `ALERT_UPDATE`, `AUTO_REPLY`|\n| **`components`** |  **Required**.  <br/><br/>The parts of the message template. |\n| **`name`** |  **Required**.  <br/><br/>The name of the message template. |\n| **`access_token`** |  **Required**.  <br/><br/>The access token for interacting with the API. |\n| **`language`** |  **Required**.  <br/><br/>The language of the message template. |\n\n### The `components` Parameter\n\n| Name          | Description   |\n| ------------- | -----------|\n| **`type`**   | **Required**. <br></br>**Values**: `BODY`, `HEADER`, `FOOTER`, and `BUTTONS`. The character limit of the `BODY` component is **1024** characters, while the character limits of the `HEADER` and `FOOTER` components is 60 characters each.|\n| **`format`** | **Optional**. <br/><br/>Only applies to the `HEADER` type.<br/><br/> **Values**: `TEXT`, `IMAGE`, `DOCUMENT`, `VIDEO` |\n| **`text`** | **Optional**. <br/><br/>Text of the message being sent. |\n| **`example`** | **Optional**. <br/><br/>Provides an example of possible data for your template. This helps us during the review and approval process, so we can understand what kind of message you plan to send. Make sure these are examples and do not include any confidential or personal information. If you decide to provide variables and examples, please provide the same number of variables and examples. |\n| **`buttons`** | **Optional.** <br/><br/>Only applies to the `BUTTONS` type. The parameters related to the button. |\n\n### The `BUTTONS` Component Type\n| Name          | Description   |\n| ------------- | -----------|\n| **`type`**   | **Required**. <br> </br>**Values**: `PHONE_NUMBER`, `URL`, `QUICK_REPLY`.|\n| **`text`**   | **Required**. <br/><br/>The text to be displayed on the button.|\n| **`url`**   | **Optional**. <br/><br/>The URL that the user is sent to after the button is clicked. Variables can be used to create dynamic links.|\n| **`phone_number`**   | **Optional**. <br/><br/>The phone number that is called on clicking the button.|\n| **`example`**   | **Optional**. <br/><br/>Provides an example of possible data for your template. This helps us during the review and approval process, so we can understand what kind of message you plan to send. Make sure these are examples and do not include any confidential or personal information.|"
+				},
+				{
+					"name": "QR Code Messages (QRDLS)",
+					"item": [
+						{
+							"name": "Get Single Message QRDLS",
+							"id": "fcf0acd0-0df0-41c7-91d7-1a48f43170cf",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://graph.facebook.com/{{Version}}/{{Phone-Number-ID}}/message_qrdls/{{QR-Code-ID}}",
+									"protocol": "https",
+									"host": [
+										"graph",
+										"facebook",
+										"com"
+									],
+									"path": [
+										"{{Version}}",
+										"{{Phone-Number-ID}}",
+										"message_qrdls",
+										"{{QR-Code-ID}}"
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "dd32199e-0053-43fe-bff4-863f00507f71",
+									"name": "Get Single Message QRDLS",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{System-User-Access-Token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "https://graph.facebook.com/{{Version}}/{{Phone-Number-ID}}/message_qrdls/{{QR-Code-ID}}",
+											"protocol": "https",
+											"host": [
+												"graph",
+												"facebook",
+												"com"
+											],
+											"path": [
+												"{{Version}}",
+												"{{Phone-Number-ID}}",
+												"message_qrdls",
+												"{{QR-Code-ID}}"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"data\": [\n        {\n            \"code\": \"ABCDE6RINR1234\"\n        }\n    ]\n}"
+								}
+							]
+						},
+						{
+							"name": "Get List of QR Code Messages",
+							"id": "1feb0e60-1ed6-47c7-98e0-b86fce21a312",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://graph.facebook.com/{{Version}}/{{Phone-Number-ID}}/message_qrdls?fields=prefilled_message,deep_link_url,qr_image_url.format(image-format)&code={{QR-Code-ID}}",
+									"protocol": "https",
+									"host": [
+										"graph",
+										"facebook",
+										"com"
+									],
+									"path": [
+										"{{Version}}",
+										"{{Phone-Number-ID}}",
+										"message_qrdls"
+									],
+									"query": [
+										{
+											"key": "fields",
+											"value": "prefilled_message,deep_link_url,qr_image_url.format(image-format)"
+										},
+										{
+											"key": "code",
+											"value": "{{QR-Code-ID}}"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "c53e1630-af8e-479e-9bc8-501e5d860c2e",
+									"name": "Get List of QR Code Messages",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{System-User-Access-Token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "https://graph.facebook.com/{{Version}}/{{Phone-Number-ID}}/message_qrdls?fields=prefilled_message,deep_link_url,qr_image_url.format(image-format)&code={{QR-Code-ID}}",
+											"protocol": "https",
+											"host": [
+												"graph",
+												"facebook",
+												"com"
+											],
+											"path": [
+												"{{Version}}",
+												"{{Phone-Number-ID}}",
+												"message_qrdls"
+											],
+											"query": [
+												{
+													"key": "fields",
+													"value": "prefilled_message,deep_link_url,qr_image_url.format(image-format)"
+												},
+												{
+													"key": "code",
+													"value": "{{QR-Code-ID}}"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"data\": [\n        {\n            \"code\": \"ANOVZ6RINRD7G1\",\n            \"prefilled_message\": \"I need help with my account.\",\n            \"deep_link_url\": \"https://wa.me/message/ANOVZ6RINRD7G1\",\n            \"qr_image_url\": \"https://scontent.xx.fbcdn.net/m1/v/An8Nfi7S69_twTspN_cD1gQNKeqM112SbCc8PIJm0MIH5K9gR2mBaErQsn_0-08fUc7_K3DsYNCHqlzaVLxyeoFNAOH43jRpelso3dkGqxAVcd-VKOMElO-LDwVaMA?efg=eyJ1cmxnZW4iOiJtYW5pZm9sZF9jcHBfdXJsZ2VuL21hbmlmb2xkX2Jsb2JzdG9yZV9zdmMifQ&hnt1=prn&oh=abf392689f0d87771ac6edb0a643684c&oe=5EEC69CG\"\n        },\n        {\n            \"code\": \"TNGSHG326AIHH1\",\n            \"prefilled_message\": \"What are your store hours?\",\n            \"deep_link_url\": \"https://wa.me/message/TNGSHG326AIHH1\",\n            \"qr_image_url\": \"https://scontent.xx.fbcdn.net/m1/v/An8FXjwdfiLGtluShN2E5Pk_lJdunhEQf6-FeWaJ3fjDWaGxQ5_F6VlJnXv0Sur_-9GZRpvMS_HuvTGhL0UqkXEhcRq-VB_mJFzM2HzkJM6BcoDQyZ2vXT4bIf76BA?efg=eyJ1cmxnZW4iOiJtYW5pZm9sZF9jcHBfdXJsZ2VuL21hbmlmb2xkX2Jsb2JzdG9yZV9zdmMifQ&hnt1=prn&oh=dada23db9bf3537d27daf67b3e16f3dc&oe=5EEC00A6\"\n        },\n        {\n            \"code\": \"R3LUI5KILJUYA1\",\n            \"prefilled_message\": \"When is the next sale?\",\n            \"deep_link_url\": \"https://wa.me/message/R3LUI5KILJUYA1\",\n            \"qr_image_url\": \"https://scontent.xx.fbcdn.net/m1/v/An8fjbSQzLpLNWoUzyUtAvKPyfzR3QTZEfLYW2DO6i6K1yQd2PDZYe23P3ZfJabhsz7yslM0qSLpIA_TA1ukRofhyNFghCcdDUVFj24SxOgJThE9vIWJ8k4icCWAfw?efg=eyJ1cmxnZW4iOiJtYW5pZm9sZF9jcHBfdXJsZ2VuL21hbmlmb2xkX2Jsb2JzdG9yZV9zdmMifQ&hnt1=prn&oh=4653fd0c09c1cbe3a3c68fdc86ef7a1c&oe=5EEC8240\"\n        },\n  \n    ]\n}"
+								}
+							]
+						},
+						{
+							"name": "Create Message QRDLS",
+							"id": "a759e476-bdbb-48c4-aefd-91d952521d5b",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"prefilled_message\": \"message-text\",\n    \"generate_qr_image\": \"image-format\" \n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://graph.facebook.com/{{Version}}/{{WABA-ID}}/message_qrdls",
+									"protocol": "https",
+									"host": [
+										"graph",
+										"facebook",
+										"com"
+									],
+									"path": [
+										"{{Version}}",
+										"{{WABA-ID}}",
+										"message_qrdls"
+									]
+								},
+								"description": "This example shows you how to create a new QR Code message.\n\nThe image format for the `generate_qr_image` field can be either a `svg` or a`png`. The `svg` format is the recommended format for print materials. The `prefilled_message` field has a character limit of 140 characters.\n\nIt should be highlighted that the response to the API call includes a field called `deep_link_url`. This is the short link equivalent of your QR Code."
+							},
+							"response": [
+								{
+									"id": "614e678e-1884-4267-b0e2-6ed9f6ef24bd",
+									"name": "Create Message QRDLS",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{System-User-Access-Token}}",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"name": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"prefilled_message\": \"Tell me about your new sale!\",\n    \"generate_qr_image\": \"png\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://graph.facebook.com/{{Version}}/{{WABA-ID}}/message_qrdls",
+											"protocol": "https",
+											"host": [
+												"graph",
+												"facebook",
+												"com"
+											],
+											"path": [
+												"{{Version}}",
+												"{{WABA-ID}}",
+												"message_qrdls"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": \"ANOVZ6RINRD7G1\",\n    \"prefilled_message\": \"Tell me about your new sale!\",\n    \"deep_link_url\": \"https://wa.me/message/ANOVZ6RINRD7G1\",\n    \"qr_image_url\": \"https://scontent.xx.fbcdn.net/m1/v/An8Nfi7S69_twTspN_cD1gQNKeqM112SbCc8PIJm0MIH5K9gR2mBaErQsn_0-08fUc7_K3DsYNCHqlzaVLxyeoFNAOH43jRpelso3dkGqxAVcd-VKOMElO-LDwVaMA?efg=eyJ1cmxnZW4iOiJtYW5pZm9sZF9jcHBfdXJsZ2VuL21hbmlmb2xkX2Jsb2JzdG9yZV9zdmMifQ&hnt1=prn&oh=abf392689f0d87771ac6edb0a643684c&oe=5EEC69CF\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Update Message QRDLS",
+							"id": "e3de58ad-b8d3-4695-abfd-edd22f6ec20b",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"prefilled_message\": \"updated-message-text\",\n    \"generate_qr_image\": \"image-format\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://graph.facebook.com/{{Version}}/{{WABA-ID}}/message_qrdls/{{QR-Code-ID}}",
+									"protocol": "https",
+									"host": [
+										"graph",
+										"facebook",
+										"com"
+									],
+									"path": [
+										"{{Version}}",
+										"{{WABA-ID}}",
+										"message_qrdls",
+										"{{QR-Code-ID}}"
+									]
+								},
+								"description": "This example shows you how to update an existing QR Code message.\n\nYou can either list the code field explicitly or include it as part of the URL of the API call. If you need to generate a new QR code for your message, include the `generate_qr_image` field as well.\n\nThe image format for the `generate_qr_image` field can be either `svg` or `png`. The `svg` format is the recommended format for print materials. The `prefilled_message` field has a character limit of 140 characters."
+							},
+							"response": [
+								{
+									"id": "26b63b2f-60af-49af-9f7f-efe959efba02",
+									"name": "Update Message QRDLS",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{System-User-Access-Token}}",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"name": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"prefilled_message\": \"What are your store hours?\",\n    \"generate_qr_image\": \"png\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://graph.facebook.com/{{Version}}/{{WABA-ID}}/message_qrdls/{{QR-Code-ID}}",
+											"protocol": "https",
+											"host": [
+												"graph",
+												"facebook",
+												"com"
+											],
+											"path": [
+												"{{Version}}",
+												"{{WABA-ID}}",
+												"message_qrdls",
+												"{{QR-Code-ID}}"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": \"ANOVZ6RINRD7G1\",\n    \"prefilled_message\": \"What are your store hours?\",\n    \"deep_link_url\": \"https://wa.me/message/ANOVZ6RINRD7G1\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Update Message QR Code",
+							"id": "581b376e-3d24-46a8-ba59-0f0ba63c65b8",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"code\": \"qr-code-to-update\",\n    \"prefilled_message\": \"new-message-text\",\n    \"generate_qr_image\": \"image-format\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://graph.facebook.com/{{Version}}/{{Phone-Number-ID}}/message_qrdls",
+									"protocol": "https",
+									"host": [
+										"graph",
+										"facebook",
+										"com"
+									],
+									"path": [
+										"{{Version}}",
+										"{{Phone-Number-ID}}",
+										"message_qrdls"
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "605bae5c-e3b2-4567-bec4-a0d336d44ca6",
+									"name": "Update Message QR Code",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{System-User-Access-Token}}",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"code\":\"ANOVZ6RINRD7G1\",\n    \"prefilled_message\":\"What are your store hours?\",\n    \"generate_qr_image\":\"png\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://graph.facebook.com/{{Version}}/{{Phone-Number-ID}}/message_qrdls",
+											"protocol": "https",
+											"host": [
+												"graph",
+												"facebook",
+												"com"
+											],
+											"path": [
+												"{{Version}}",
+												"{{Phone-Number-ID}}",
+												"message_qrdls"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": \"ANOVZ6RINRD7G1\",\n    \"prefilled_message\": \"What are your store hours?\",\n    \"deep_link_url\": \"https://wa.me/message/ANOVZ6RINRD7G1\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Delete Message QRDLS",
+							"id": "3c334e9d-8063-48c6-81cb-b97f5a5ee1f4",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://graph.facebook.com/{{Version}}/{{WABA-ID}}/message_qrdls/{{QR-Code-ID}}",
+									"protocol": "https",
+									"host": [
+										"graph",
+										"facebook",
+										"com"
+									],
+									"path": [
+										"{{Version}}",
+										"{{WABA-ID}}",
+										"message_qrdls",
+										"{{QR-Code-ID}}"
+									]
+								},
+								"description": "This example shows you how to delete a QR Code message. QR codes do not expire. You must delete a QR code in order to retire it."
+							},
+							"response": [
+								{
+									"id": "056bfeea-b8e8-47e0-8250-ae01b1302112",
+									"name": "Delete Message QRDLS",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{System-User-Access-Token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "https://graph.facebook.com/{{Version}}/{{WABA-ID}}/message_qrdls/{{QR-Code-ID}}",
+											"protocol": "https",
+											"host": [
+												"graph",
+												"facebook",
+												"com"
+											],
+											"path": [
+												"{{Version}}",
+												"{{WABA-ID}}",
+												"message_qrdls",
+												"{{QR-Code-ID}}"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"success\": true\n}"
+								}
+							]
+						}
+					],
+					"id": "412e0766-c375-46f3-8cc3-358d62ef96a6",
+					"description": "Gets a list of all the short links and/or QR codes associated with the WhatsApp Business Account.\n\n## Fields\n\n| Name          | Description   |\n| ------------- | ------------- |\n| **`data`**   | A list of [WhatsApp Business Message QRDL](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-message-qrdl/) objects.|\n| **`paging`**  | The pagination associated with the QRDLS. For more information about pagination, see [Graph API Guide](https://developers.facebook.com/docs/graph-api/using-graph-api/#paging). |"
+				},
+				{
+					"name": "Get Business Account",
+					"id": "d1962841-e7af-41bc-98bf-d9ae470b6880",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://graph.facebook.com/{{Version}}/{{Business-ID}}",
+							"protocol": "https",
+							"host": [
+								"graph",
+								"facebook",
+								"com"
+							],
+							"path": [
+								"{{Version}}",
+								"{{Business-ID}}"
+							]
+						},
+						"description": "Gets the Facebook business ID associated with the WABA.\n\n## Fields\n\n| Name          | Description   |\n| ------------- | ------------- |\n| **`id`**   | The business account ID.|\n| **`block_offline_analytics`**   | Specifies whether offline analytics for business is blocked.|\n| **`business_verification_directional_exp_bucket`**   | Contains information related to the BV Directional Experiment.|\n| **`collaborative_ads_aams_seller_business_info`**  | The seller metadata of an AAMS seller child business. |\n| **`created_by`**  | The creator of this business. |\n| **`created_time`**  | The creation time of this business. |\n| **`extended_updated_time`**  | The update time of the extended credits for this business. |\n| **`is_hidden`**   | Specifies whether the business is hidden.|\n| **`is_instagram_enabled_in_fb_analytics`**   | Specifies whether Instagram is enabled as an event source in Facebook Analytics.|\n| **`link`**  | The URI for the business profile page. |\n| **`name`**  | The name of this business. |\n| **`payment_account_id`**  | The ID for the payment account of this business. |\n| **`primary_page`**  | The primary Facebook Page for this business. |\n| **`profile_picture_uri`**  | The profile picture URI for this business. |\n| **`timezone_id`**  | The timezone of the business's physical location. |\n| **`two_factor_type`**  | The two factor type authentication used for this business. |\n| **`updated_by`**  | The person's name who last updated this business. |\n| **`updated_time`**  | The time when this business was last updated. |\n| **`verification_status`**   | The verification status for this business.|\n| **`vertical`**   | The vertical industry that this business associates with, or belongs to.|\n| **`vertical_id`**   | The ID for the vertical industry.|"
+					},
+					"response": [
+						{
+							"id": "f194f683-5132-4327-9068-09a38b65f125",
+							"name": "Get Business Account",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{System-User-Access-Token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "https://graph.facebook.com/{{Version}}/{{Business-ID}}",
+									"protocol": "https",
+									"host": [
+										"graph",
+										"facebook",
+										"com"
+									],
+									"path": [
+										"{{Version}}",
+										"{{Business-ID}}"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true\n}"
+						}
+					]
+				},
+				{
+					"name": "Fetch Extended Credit",
+					"id": "39577443-a369-48f2-8146-4ca3e3f280a8",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://graph.facebook.com/{{Version}}/{{Business-ID}}/extendedcredits",
+							"protocol": "https",
+							"host": [
+								"graph",
+								"facebook",
+								"com"
+							],
+							"path": [
+								"{{Version}}",
+								"{{Business-ID}}",
+								"extendedcredits"
+							]
+						},
+						"description": "Gets an Extended Credit object based on the WABA ID. Queryable id obtainable using `{business_id}/extendedcredits` and then filtering on `legal_entity_name`.\n\n\n## Fields\n\n| Name          | Description   |\n| ------------- | ------------- |\n| **`id`**   | The ID for the extended credit line for this business.|\n| **`allocated_amount`**  | The total amount of credit that has been granted to other businesses. Credentials are measured in USD at the top level and attachable to ad accounts that belong to multiple currencies. |\n| **`balance`** | The total amount spent. This value is calculated by adding the parent ad account and all child ad accounts. Credentials are measured in USD at the top level and attachable to ad accounts that belong to multiple currencies. |\n| **`credit_available`** | The credit available to this business. |\n| **`credit_type`** | The type of extended credit used. The most common credit types are: **ADS_BUSINESS**, **ADS_SEQUENTIAL**, and **WHATSAPP_BUSINESS**.|\n| **`is_access_revoked`** | Specifies whether the credit owner removed access for previously shared lines of credit. |\n| **`is_automated_experience`** | Specifies whether this credential is using the fully automated experience. |\n| **`legal_entity_name`** | The legal entity name of the owner of a line of credit. |\n| **`liable_biz_name`** | The business name of the liable party when this credit is chosen as the payment method. | \n| **`max_balance`** | The amount of credit available to a specific business. Credentials are measured in USD at the top level and attachable to ad accounts that belong to multiple currencies. |\n| **`online_max_balance`**| The raw credit limit for an entire business. |\n| **`owner_business`**| The business account responsible for extended credit payment.|\n| **`owner_business_name`**| The name of the business account responsible for extended credit payment.|\n| **`partition_from`**| The name of the business that granted the credit line. For **ADS_SEQUENTIAL** credit types.|\n| **`receiving_credit_allocation_config`**| The allocation configuration for which this extended credit line is the receiver.|\n| **`send_bill_to_biz_name`** | Specifies the business name to bill (bill_to_party) when this credit is chosen as the payment method.|"
+					},
+					"response": [
+						{
+							"id": "2f6493c6-751d-4ee6-9925-e39e43fda515",
+							"name": "Fetch Credit Line ID",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{System-User-Access-Token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "https://graph.facebook.com/{{Version}}/{{Business-ID}}/extendedcredits?fields=id,legal_entity_name",
+									"protocol": "https",
+									"host": [
+										"graph",
+										"facebook",
+										"com"
+									],
+									"path": [
+										"{{Version}}",
+										"{{Business-ID}}",
+										"extendedcredits"
+									],
+									"query": [
+										{
+											"key": "fields",
+											"value": "id,legal_entity_name"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"data\": [\n    {\n      \"id\": \"1972385232742146\",    \n      \"legal_entity_name\": \"Your Legal Entity\"\n    }\n  ]\n}\n"
+						}
+					]
+				}
+			],
+			"id": "bab0811c-0e84-4f1f-b014-72d8851d6f0d",
+			"description": "This page contains only the API reference. For more information on how to use the API, refer to the [WhatsApp Business Management API documentation](https://developers.facebook.com/docs/whatsapp/business-management-api/reference).\n\n### Main Root Nodes\n| Root Name        | Description  |\n|------------------|--------------|\n|[**`/{whats-app-business-account-id}`**](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account) | Represents a specific [WhatsApp Business Account (WABA)](https://www.facebook.com/business/help/1499554293524119?id=2129163877102343). Make the API call to the WABA ID. |\n|[**`/{whats-app-business-account-to-number-current-status-id}`**](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account-to-number-current-status/) | Represents a specific phone number. Make the API call to the phone number ID. |\n|[**`/{whats_app_message_template_id}`**](/docs/graph-api/reference/whats-app-business-hsm/) | Represents a specific [message template](https://developers.facebook.com/docs/whatsapp/conversation-types#message-templates). Make the API call to the message template ID. |\n|[**`/{waba-analytics}`**](/docs/graph-api/reference/waba-analytics/)| Represents analytics information about a specific WhatsApp Business Account (WABA). |\n|[**`/{business_id}`**](/docs/marketing-api/reference/business) | Represents a business. Includes any specified properties and assets belonging to the business. |\n|[**`/{extended-credit}`**](/docs/marketing-api/reference/extended-credit/) | Represents a specific credit line. Make the API call to the credit line ID. |"
+		},
+		{
+			"name": "Webhooks",
+			"item": [
+				{
+					"name": "Understanding Webhooks",
+					"item": [],
+					"id": "86192cd9-e147-4a2d-b140-eba90dde8733",
+					"description": "The types of notifications you can subscribe to are:\n\n|Field | Description |\n|---|---|\n|**`account_review_update`** | Notifies you when a WABA has been reviewed.|\n|**`account_update`**  | Notifies you when:<ul><li>a WABA has been upgraded from a [unverified trial experience](https://developers.facebook.com/docs/whatsapp/embedded-signup/overview/unverified-trial-experience) to a verified account</li><li>a WABA has been banned</li><li>a WABA has violated WhatApp's policies (See [WhatsApp Business Platform Policy Enforcement](https://developers.facebook.com/docs/whatsapp/overview/policy-enforcement)</li></ul>|\n|**`message_template_status_update`** | Notifies you when the message template status changes, by being approved or rejected, or if it has been disabled.|\n|**`phone_number_name_update`** | Notifies you when the name review associated with a phone number has a status update.|\n|**`phone_number_quality_update`** | Notifies you when the quality-related status of a phone number has an update.|",
+					"auth": {
+						"type": "noauth"
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								],
+								"id": "0f5319e3-54fe-4dd2-b58b-e13648aeaa83"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								],
+								"id": "e6fc4ae8-1480-42c8-aaef-5749f0caf295"
+							}
+						}
+					]
+				},
+				{
+					"name": "Components",
+					"item": [],
+					"id": "56fe8019-ff2c-4665-b10c-7b8893d3fca8",
+					"description": "Webhooks have a top level array field indicating the information being communicated. The members of the array are JSON objects with detailed fields relevant to the Webhook. \n<!--The WhatsApp Business Management API Webhooks components are listed [here](https://developers.facebook.com/docs/whatsapp/business-management-api/webhooks/components).-->\n\nWhatsApp Business Management API Webhooks can contain the following objects:\n\n| Parameter | Description |\n| --- | --- |\n| **`object`** | This is the object that was subscribed to.<br><br/>For embedded signup, this is always **`whatsapp_business_account`**.\n| **`entry`** | This object contains the details of the change that triggered the Webhooks call. |\n\n## The entry Object\n\n| Parameter | Description |\n| --- | --- |\n| **`id`** | ID of Whatsapp Business Accounts this Webhook belongs to |\n| **`time`** | Time for the entry. |\n| **`changes`** | Changes that triggered the Webhooks call.|\n\n### changes\n\n| Parameter | Description *(Click the arrow in the left column for supported values.)* |\n| --- | --- |\n| **`field`** | Contains the type of notification you are getting on that Webhook. |\n| **`value`** | Contains details of the changes related to the specified **`field`**. |\n\n### value\n\n| Parameter | Description *(Click the arrow in the left column for supported values.)* |\n| --- | --- |\n| **`ban_info`** | Added to webhooks when an account has been banned. This object includes two properties:<ul><li>`waba_ban_state`: Options are SCHEDULE_FOR_DISABLE, DISABLE, and REINSTATE.</li><li>`waba_ban_date`</li></ul>\n| **`current_limit`** | Contains the current tier limit where this account is. |\n| **`decision`** | Used if a decision about accounts or phone numbers has been made. |\n| **`display_phone_number`** | Includes the display phone number of the business account account that triggered the notification. |\n| **`event`** | Used when an event happened in a specific WABA. Click the arrow on the left column to see all available options. |\n| **`max_daily_conversation_per_phone`** | **Always present when field=business_capability_update.**<br/><br/>\nIncludes the maximum number of unique people a phone number can send messages to. See [Messaging Limits](https://developers.facebook.com/docs/whatsapp/messaging-limits#messaging) for more information. |\n| **`max_phone_numbers_per_business`** | Includes the maximum number of phone numbers that can belong to a business.<br><br>*When field=business_capability_update, a webhook will have either max_phone_numbers_per_business or max_phone_numbers_per_waba present.* |\n| **`max_phone_numbers_per_waba`** | Includes the maximum number of phone numbers that can belong to a WABA.<br><br>*When field=business_capability_update, a webhook will have either `max_phone_numbers_per_business` or `max_phone_numbers_per_waba present`.*<br><br> |\n| **`rejection_reason`** | If a request was rejected, this field displays the reason for that rejection. |\n| **`requested_verified_name`** | This field displays the name that was sent to be verified. |\n| `restriction_info`<br>type: enum | Used to report restrictions imposed on a specific WABA, when that WABA violates [WhatsApp Business Platform policies](https://developers.facebook.com/docs/whatsapp/overview/policy-enforcement).<br><br>  This field includes a list of restriction types and their corresponding expiration dates. Possible restriction types are:<ul><li>RESTRICTED_ADD_PHONE_NUMBER_ACTION</li><li>RESTRICTED_BIZ_INITIATED_MESSAGING</li><li>RESTRICTED_CUSTOMER_INITIATED_MESSAGING</li></ul><br><br>Expiration dates are provided in DateTime format. |",
+					"auth": {
+						"type": "noauth"
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								],
+								"id": "647c4e4d-8dc8-462e-8a02-94385dd88476"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								],
+								"id": "6242f2d0-3faa-4c4f-9676-fc374cb8ecab"
+							}
+						}
+					]
+				},
+				{
+					"name": "Sandbox Number Upgraded to Verified Account",
+					"id": "d123be85-0a1e-4c21-8538-4f9659b08af3",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "VIEW",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"object\": \"whatsapp_business_account\",\n    \"entry\": [\n        {\n            \"id\": \"whatsapp-business-account-id\",\n            \"time\": 1604703058,\n            \"changes\": [\n                {\n                    \"field\": \"account_update\",\n                    \"value\": {\n                        \"phone_number\": \"16505551111\",\n                        \"event\": \"VERIFIED_ACCOUNT\"\n                    }\n                }\n            ]\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": ""
+						},
+						"description": "The following is an example of Webhook notification that indicates the user's sandbox number has been upgraded to a verified account:"
+					},
+					"response": []
+				},
+				{
+					"name": "Name Update Received",
+					"id": "a998dfef-d5e9-4da1-8948-e6579bb07e8d",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "VIEW",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"object\": \"whatsapp_business_account\",\n  \"entry\": [\n    {\n      \"id\": \"waba-id\",\n      \"time\": 1608243053,\n      \"changes\": [\n        {\n          \"field\": \"phone_number_name_update\",\n          \"value\": {\n            \"display_phone_number\": \"16505551111\",\n            \"decision\": \"APPROVED\",\n            \"requested_verified_name\": \"WhatsApp\",\n            \"rejection_reason\": null\n          }\n        }\n      ]\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": ""
+						},
+						"description": "The following is an example of Webhook notification that indicates that the specified phone number has received a name update:"
+					},
+					"response": []
+				},
+				{
+					"name": "Message Template Schedule for Disabling",
+					"id": "254b247c-b4d8-494e-bf14-95bc15abb5d9",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "VIEW",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"object\": \"whatsapp_business_account\",\n  \"entry\": [\n    {\n      \"id\": \"whatsapp-business-account-id\",\n      \"time\": 1604703141,\n      \"changes\": [\n        {\n          \"field\": \"message_template_status_update\",\n          \"value\": { \n              \"event\": \"FLAGGED\",\n              \"message_template_id\": 1234567, \n              \"message_template_name\": \"My message template\",\n              \"message_template_language\": \"en-US\",\n              \"reason\": null,\n              \"disable_info\": {\n                  \"disable_date\": \"January 31, 2021\",\n              }\n         }\n       }\n      ]\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": ""
+						},
+						"description": "The following is an example of notification that indicates the message template is scheduled for disabling:"
+					},
+					"response": []
+				},
+				{
+					"name": "Message Template Update Approved",
+					"id": "e0ec1a3d-6a35-4c96-8ac3-f48e7d8494b9",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "VIEW",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"object\": \"whatsapp_business_account\",\n  \"entry\": [\n    {\n      \"id\": \"whatsapp-business-account-id\",\n      \"time\": 1604703141,\n      \"changes\": [\n        {\n          \"field\": \"message_template_status_update\",\n          \"value\": { \n              \"event\": \"APPROVED\",\n              \"message_template_id\": 1234567, \n              \"message_template_name\": \"My message template\",\n              \"message_template_language\": \"en-US\",\n              \"reason\": null \n         }\n       }\n      ]\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": ""
+						},
+						"description": "The following is an example of notification that indicates the message template was update approved:"
+					},
+					"response": []
+				},
+				{
+					"name": "Quality Update Received",
+					"id": "b1c989bf-b206-4442-bb03-a7ce7584691b",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "VIEW",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"object\": \"whatsapp_business_account\",\n  \"entry\": [\n    {\n      \"id\": \"waba-id\",\n      \"time\": 1608243062,\n      \"changes\": [\n        {\n          \"field\": \"phone_number_quality_update\",\n          \"value\": {\n            \"display_phone_number\": \"16505551111\",\n            \"event\": \"FLAGGED\",\n            \"current_limit\": \"TIER_10K\"\n          }\n        }\n      ]\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": ""
+						},
+						"description": "The following is an example of Webhook notification that indicates that the specified phone number has received a quality update:"
+					},
+					"response": []
+				},
+				{
+					"name": "WhatsApp Business Account Banned",
+					"id": "f6146115-85c7-4f6f-9aab-5c37508040b8",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "VIEW",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"object\": \"whatsapp_business_account\",\n  \"entry\": [\n    {\n      \"id\": \"whatsapp-business-account-id\",\n      \"time\": 1604703058,\n      \"changes\": [\n        {\n          \"field\": \"account_update\",\n          \"value\": {\n            \"event\": \"DISABLED_UPDATE\"\n            \"ban_info\": {\n              \"waba_ban_state\": [\"SCHEDULE_FOR_DISABLE\", \"DISABLE\", \"REINSTATE\"],\n              \"waba_ban_date\": \"January 31, 2021\"\n            }\n          }\n        }\n      ]\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": ""
+						},
+						"description": "The following is an example of Webhook notification that indicates that the specified WhatsApp Business Account has been banned:"
+					},
+					"response": []
+				},
+				{
+					"name": "WhatsApp Business Account Review Completed",
+					"id": "348de78a-5eef-4a35-aff3-945e2409e31a",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "VIEW",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"object\": \"whatsapp_business_account\",\n  \"entry\": [\n    {\n      \"id\": \"whatsapp-business-account-id\",\n      \"time\": 1604703141,\n      \"changes\": [\n        {\n          \"field\": \"account_review_update\",\n          \"value\": {\n            \"decision\": \"APPROVED\"\n          }\n        }\n      ]\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": ""
+						},
+						"description": "The following is an example of Webhook notification that indicates that the specified WhatsApp Business Account has been review completed:"
+					},
+					"response": []
+				},
+				{
+					"name": "WhatsApp Business Account Restricted Due To Policy Violations",
+					"id": "a1b3a1b7-83ea-4853-a810-4be3fd4dd7e7",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "VIEW",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"field\": \"account_update\",\n    \"value\": {\n        \"phone_number\": \"<PHONE_NUMBER>\",\n        \"event\": \"ACCOUNT_RESTRICTION\",\n        \"restriction_info\": [\n            {\n                \"restriction_type\": \"RESTRICTION_ADD_PHONE_NUMBER_ACTION\",\n                \"expiration\": \"<TIMESTAMP>\"\n            },\n            {\n                \"restriction_type\": \"RESTRICTED_BIZ_INITIATED_MESSAGING\",\n                \"expiration\": \"<TIMESTAMP>\"\n            },\n            {\n                \"restriction_type\": \"RESTRICTED_CUSTOMER_INITIATED_MESSAGING\",\n                \"expiration\": \"<TIMESTAMP>\"\n            }\n        ]\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "ef00b625-eea9-44a2-bc66-6e9be5f86416",
+			"description": "You can get real-time notifications when there are changes to your WhatsApp Business Account (WABA) by subscribing at the WhatsApp business account level. To set up Webhooks for WhatsApp business accounts:\n\n1. [Set up your endpoint and configure the Webhooks](https://developers.facebook.com/docs/graph-api/webhooks/getting-started/webhooks-for-whatsapp#setup). These are the same steps that you use to set up Webhooks for Facebook Pages.\n\n2. [Subscribe your app under your WhatsApp business account](https://developers.facebook.com/docs/graph-api/webhooks/getting-started/webhooks-for-whatsapp#subscribe).\n\nFor more information, see [Webhooks for WhatsApp Business Accounts](https://developers.facebook.com/docs/graph-api/webhooks/getting-started/webhooks-for-whatsapp).\n\n## Understanding Webhooks\n\nThe top level array contains two main objects:\n\n| Parameter         | Description   |\n| ------------- | ------------- |\n| **`object`**   | This is the object that was subscribed to.|\n| **`entry`**  | This object contains the details of the change that triggered the webhooks call. |\n\nThe types of notifications you can subscribe to are:\n\n| Field Name          | Description   |\n| ------------- | ------------- |\n| **`message_template_status_update`**   | Notifies you when the message template status changes, by being approved or rejected, or if it has been disabled.|\n| **`phone_number_name_update`**   | Notifies you when the name review associated with a phone number has a status update.|\n| **`phone_number_quality_update`**   | Notifies you when the quality-related status of a phone number has an update.|\n| **`account_update`**  | Notifies you when a WABA has been upgraded from [unverified trial experience](https://developers.facebook.com/docs/whatsapp/embedded-signup/overview/unverified-trial-experience) to a verified account, or if a WABA has been banned. |\n| **`account_review_update`**  | Notifies you when a WABA has been reviewed. |\n\n### Components\n\nNotifications are received in the following general format:\n\n```\n{\n  \"object\": \"whatsapp_business_account\",\n  \"entry\": [\n    {\n      \"changes\": [\n        {\n          \"value\": {\n            ...\n          }\n        }\n      ]\n    }\n  ]\n}\n```\n\n\nFor more information relating to all available webhook objects, see [Components](https://developers.facebook.com/docs/whatsapp/business-management-api/webhooks/components).",
+			"auth": {
+				"type": "noauth"
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						],
+						"id": "5b31e9d3-2192-4f82-af9d-026d80c80616"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						],
+						"id": "bcce616c-239e-43e5-a705-6f2fce3b50d9"
+					}
+				}
+			]
+		},
+		{
+			"name": "Error Codes",
+			"item": [],
+			"id": "4e122f31-1dba-42ef-87d0-a5050b0d7f88",
+			"description": "For information relating to troubleshooting WhatsApp Business Management API issues, see our [FAQ](https://developers.facebook.com/docs/whatsapp/business-management-api/message-templates#faq)."
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{System-User-Access-Token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				],
+				"id": "7eba13f1-f2b9-433a-b842-533b3a411bd0"
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				],
+				"id": "326b03cc-2778-4278-a194-0abe54989f81"
+			}
+		}
+	]
+}
