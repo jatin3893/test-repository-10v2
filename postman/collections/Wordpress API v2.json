@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "a8646d31-e5da-4748-a15a-cbda8e002ff0",
+		"_postman_id": "fbce30fa-e4e5-4bf6-a206-d50b14b98e34",
 		"name": "Wordpress API v2",
 		"description": "The WordPress REST API provides API endpoints for WordPress data types that allow developers to interact with sites remotely by sending and receiving JSON.\n\n# Why use the WordPress REST API\nThe WordPress REST API makes it easier than ever to use WordPress in new and exciting ways, such as creating Single Page Applications on top of WordPress. You could create a plugin to provide an entirely new admin experiences for WordPress, or create a brand new interactive front-end experience.\n\n# Key Concepts\nTo get started with using the WordPress REST API we will break down some of the key concepts and terms associated with the API:\n* Routes/Endpoints\n* Requests\n* Responses\n* Schema\n* Controller Classes\n\nEach of these concepts play a crucial role in using and understanding the WordPress REST API. Let’s briefly break them down so that we can later explore each in greater depth.\n\n# Routes & Endpoints\nA route, in the context of the WordPress REST API, is a URI which can be mapped to different HTTP methods. The mapping of an individual HTTP method to a route is known as an _“endpoint”_. To clarify: If we make a **GET** request to _http://oursite.com/wp-json/_, we will get a JSON response showing us what routes are available, and within each route, what endpoints are available. _/wp-json/_ is a route itself and when a **GET** request is made it matches to the endpoint that displays what is known as the index for the WordPress REST API. \n\n> Note:\n  If you’re using non-pretty permalinks, you should pass the REST API route as a query string parameter. The route http://oursite.com/wp-json/ in the example above would hence be http://oursite.com/?rest_route=/.\n\n\n# Schema\nEach endpoint requires and provides slightly different data structures, and those structures are defined in the API Schema. The schema structures API data and provides a comprehensive list of all of the properties the API can return and input parameters it can accept. \nSchema also provides security benefits for the API, as it enables us to validate the requests being made to the API. The Schema section further explores this large topic.\n\n# Authorization\n\nSome of the endpoints require special role permissions which may require more setup in your Wordpress instance, such as downloading a role permissions editor tool. \n\n# Cookie Authentication\nCookie authentication is the standard authentication method included with WordPress. When you log in to your dashboard, this sets up the cookies correctly for you, so plugin and theme developers need only to have a logged-in user.\n\nHowever, the REST API includes a technique called **_nonces_** to avoid CSRF issues. This prevents other sites from forcing you to perform actions without explicitly intending to do so. This requires slightly special handling for the API.\n\nFor developers using the built-in Javascript API, this is handled automatically for you. This is the recommended way to use the API for plugins and themes. Custom data models can extend **_wp.api.models.Base_** to ensure this is sent correctly for any custom requests.\n\nFor developers making manual Ajax requests, the **_nonce_** will need to be passed with each request. The API uses nonces with the action set to **_wp_rest**. These can then be passed to the API via the **_wpnonce** data parameter (either **POST** data or in the query for **GET** requests), or via the **X-WP-Nonce** header. If no nonce is provided the API will set the current user to 0, turning the request into an unauthenticated request, even if you’re logged into WordPress.\n\n> Note: Until recently, most software had spotty support for DELETE requests. For instance, PHP doesn’t   transform the request body of a DELETE request into a super global. As such, supplying the nonce as a   header is the most reliable approach.\n\nIt is important to keep in mind that this authentication method relies on **_WordPress cookies_**. As a result this method is only applicable when the REST API is used inside of WordPress and the current user is logged in. In addition, the current user must have the appropriate capability to perform the action being performed.\n\n\nWhile cookie authentication is the only authentication mechanism available natively within WordPress, plugins may be added to support alternative modes of authentication that will work from remote applications. Some example plugins are OAuth 1.0a Server, Application Passwords, and JSON Web Tokens.\n\n\n# Why is the REST API not verifying the incoming Origin header? Does this expose my site to CSRF attacks?\n**_Cross-Origin Resource Sharing (CORS)_** is a mechanism which allows a website to control which Origins (originating external sites) are allowed to access your site’s data. CORS prevents against a particular type of attack known as **_Cross-Site Request Forgery_**, or CSRF. However, WordPress has an existing CSRF protection mechanism which uses nonces. Tightening CORS restrictions would prevent some authentication methods, so the WordPress REST API uses nonces for CSRF protection instead of CORS.\n\nBecause the **_WordPress REST API does not verify the Origin header of incoming requests_**, public REST API endpoints may therefore be accessed from any site.\n\nThis is an intentional design decision, but if you wish to prevent your site from being accessed from unknown origins you may unhook the default **rest_send_cors_headers** function from the **rest_pre_serve_request** filter hook, then hook in your own function to that same filter to specify stricter CORS headers.\n\n\n\n",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_uid": "869033-a8646d31-e5da-4748-a15a-cbda8e002ff0"
+		"_uid": "869033-fbce30fa-e4e5-4bf6-a206-d50b14b98e34"
 	},
 	"item": [
 		{
@@ -36,11 +36,11 @@
 									""
 								],
 								"type": "text/javascript",
-								"id": "c4aeb611-3b20-4eeb-bc6f-18d1a09d1d76"
+								"id": "64f7e7a5-cc3f-48c1-89c6-bc9cb70c3684"
 							}
 						}
 					],
-					"id": "12f24d14-bed1-4e01-8676-8c4a0c33ca8b",
+					"id": "0870897f-d980-4b7f-9675-f8527c242281",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -100,7 +100,7 @@
 									"pm.environment.set(\"excerpt\", response.excerpt.rendered);"
 								],
 								"type": "text/javascript",
-								"id": "324a6eb8-8f7e-4a57-97fd-1c17ae3f871f"
+								"id": "581409ab-fcd2-4f82-bc7e-47cc9882dbeb"
 							}
 						},
 						{
@@ -112,11 +112,11 @@
 									"pm.environment.set(\"excerpt\", \"Test WAPI Excerpt\");"
 								],
 								"type": "text/javascript",
-								"id": "f5bd3cbc-6f2d-4cee-8b1b-e86d904c87d0"
+								"id": "f809de26-2295-4fc9-a63d-4f7d6560c1a3"
 							}
 						}
 					],
-					"id": "a8d9b2a5-431a-4e1d-aeba-93a3b6b10d00",
+					"id": "86dda42c-2ed7-41d0-9fcf-27305d30f7a7",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -195,11 +195,11 @@
 									"});"
 								],
 								"type": "text/javascript",
-								"id": "8607acf5-fc8f-487b-a7fb-fa8deff9603f"
+								"id": "27f3aacf-b1cb-4181-a528-313679702cbc"
 							}
 						}
 					],
-					"id": "99b923e2-4f70-46e4-8099-9ab19a76c3e7",
+					"id": "ce33f036-4414-4121-ae09-50b4b871c279",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -250,7 +250,7 @@
 									"pm.environment.set(\"excerpt\", \"Test WAPI Excerpt Updated\");"
 								],
 								"type": "text/javascript",
-								"id": "52585dda-0727-4804-a058-92c6f73b9618"
+								"id": "ae2df86b-482e-4e8a-bf19-28d596dee6e2"
 							}
 						},
 						{
@@ -284,11 +284,11 @@
 									"});"
 								],
 								"type": "text/javascript",
-								"id": "33c7ddce-294c-47ea-881f-6b899a7e63d9"
+								"id": "6627e64d-e35f-4952-a6da-e773636bca29"
 							}
 						}
 					],
-					"id": "994c2cd1-ae77-48f5-a154-54bfa2b39b50",
+					"id": "0e86060b-4c31-42da-97df-2e4146da30f1",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -361,11 +361,11 @@
 									""
 								],
 								"type": "text/javascript",
-								"id": "38d76e45-7975-4579-8330-1f469fda018f"
+								"id": "73f1c390-fa78-42e2-9e72-ea21117d2798"
 							}
 						}
 					],
-					"id": "443decc0-1575-42a6-b470-2c797018f768",
+					"id": "ac5211a7-f630-42ac-b801-4cb3804f5968",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -405,7 +405,7 @@
 					"response": []
 				}
 			],
-			"id": "9d4e600a-0fba-4ac9-9b93-401359048fc1",
+			"id": "cbf8cc93-0753-44eb-b975-4b12a8708fb1",
 			"description": "## Schema\n``` The schema defines all the fields that exist for a post object. ```\n\n\n| |    |\n|:-|:- |\n|```date``` <br> datedatestring,datetime ([details](https://core.trac.wordpress.org/ticket/41032)) | The date the object was published, in the site's timezone. <br >Context: **view, edit, embed** |\n| ```date_gmt``` <br >string, datetime ([details](https://core.trac.wordpress.org/ticket/41032)) | The date the object was published, as GMT.<br />Context: **view, edit**\n|```guid``` <br /> object | The globally unique identifier for the object. <br />Read only<br />Context: **view, edit**\n| ```id``` <br /> integer |  Unique identifier for the object.<br /> Read Only <br /> Context: **view, edit, embed**\n| ```link``` <br /> string, uri | Url to the object. <br /> Read Only <br /> Context: **view, edit, embed**\n| ```modified``` <br /> string, datetime ([details](https://core.trac.wordpress.org/ticket/41032)) | The date the object was last modified, in the site's timezone. <br /> Read only <br /> Context: **view, edit**\n| modified_gmt <br /> string, datetime ([details](https://core.trac.wordpress.org/ticket/41032)) | The date the object was last modified, as GMT. <br /> Read only <br /> Context: **view, edit**\n| ```slug``` <br /> string | An alphanumeric identifier for the object unique to its type. <br /> Context: **view, edit**\n| ```status``` <br /> string | A named status for the object. <br /> Context: **view, edit** <br /> One of: **publish, future, draft, pending, private**\n| ```type``` <br /> string | Type of Post for the object. <br /> Read Only <br /> Context: **view, edit, embed**\n| ```password``` <br /> string | A password to protect access to the content and excerpt. <br/> Context: **edit**\n| ```permalink_template``` <br/> string | Permalink template for the object <br/> Read Only <br/> Context: **edit**\n| ```generated_slug``` <br/> string | Permalink template for the object. <br/> Read only <br/> Context: **edit**\n|```title``` <br/> object | The title for the object. <br/> Context: **view, edit, embed**\n| ```content``` <br/> object | The content for the object. <br/>Context: **view, edit**\n|```author``` <br/> integer | The ID for the author of the object<br/>Context:**view, edit, embed**\n|```excerpt```<br/>object | The exerpt of the object.<br/>Context:**view, edit, embed**\n|```featured_media```<br/>integer | The ID of the featured media for the object<br/>Context: **view, edit, embed**\n|```comment_status```<br/>string | Whether or not comments are open on the object.<br/>Context: **view, edit**<br />One of:**open, closed**\n|```ping_status```<br/>string | Whether or not the object can be pinged.<br/>Context: **open, closed**\n|```format```<br/>string | The format for the object.<br/>Context: **view, edit**<br/>One of: **standard, aside, chat, gallery, link, image, quote, status, video, audio**\n|```meta```<br/>object | Meta fields.<br/>Context: **view, edit**\n|```sticky```<br/>boolean | Whether or not the object should be treated as sticky.<br/>Context: **view, edit**\n|```template```<br/>string | The theme file to use to display the object.<br/>Context: **view, edit**\n|```categories```<br/>array | The terms assigned to the object in the category taxonomy.<br/>Context: **view, edit**\n|```tags```<br/>array | The terms assigned to the object in the post_tag taxonomy.<br/>Context: **view, edit**",
 			"event": [
 				{
@@ -415,7 +415,7 @@
 						"exec": [
 							""
 						],
-						"id": "8c92e7fe-b6f4-487c-a688-d57589808af2"
+						"id": "c0d163ae-ff70-481f-a009-0875ff2c0d7c"
 					}
 				},
 				{
@@ -425,7 +425,7 @@
 						"exec": [
 							""
 						],
-						"id": "1699e3ce-718e-4333-a6af-c7ba5538d7e6"
+						"id": "1d4abbe8-dbbc-4a05-bbeb-17e4f337cd93"
 					}
 				}
 			]
@@ -460,11 +460,11 @@
 									""
 								],
 								"type": "text/javascript",
-								"id": "8d44d719-3453-4b66-8a29-1082146f17c5"
+								"id": "d3aa8225-e7a4-41e7-a107-39e55c30c7f4"
 							}
 						}
 					],
-					"id": "e7d1b696-924b-4e44-b056-acc0cf2ff7a5",
+					"id": "9cc3617e-389d-4df9-85f4-ba9ecea94ec9",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -506,11 +506,11 @@
 									""
 								],
 								"type": "text/javascript",
-								"id": "6bd53d0a-3797-4371-90f0-fea801f206a2"
+								"id": "682d699e-b8b0-4738-a604-ee31f76d84d9"
 							}
 						}
 					],
-					"id": "ab2324d9-74ec-4f4e-81c8-7dedf1928b76",
+					"id": "e3d68be3-dc05-484c-b890-e2fa3121ac64",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -599,11 +599,11 @@
 									""
 								],
 								"type": "text/javascript",
-								"id": "e8a6cf0f-7999-4a33-929b-3b89af7fcb9c"
+								"id": "484cb888-21af-4b58-a816-b967ba656017"
 							}
 						}
 					],
-					"id": "cec111da-fd9e-4afa-8785-39c2f9ae36ec",
+					"id": "07d72cb8-b478-4063-b908-ef569fef8212",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -660,11 +660,11 @@
 									""
 								],
 								"type": "text/javascript",
-								"id": "2fc45b58-f4ec-4762-9afd-7a86340e27c7"
+								"id": "f0c83c73-90ab-419c-a153-1bbce4f433e7"
 							}
 						}
 					],
-					"id": "36cde9d9-edcf-439c-8c4b-1ce16ef6584a",
+					"id": "4df6634f-ec0e-4129-8b6f-a40071aa3eba",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -738,11 +738,11 @@
 									"});"
 								],
 								"type": "text/javascript",
-								"id": "329c8826-89be-4ca3-b5f1-f3a62eabb866"
+								"id": "1d3c14af-f273-4b31-9f8f-d030e6c5fa84"
 							}
 						}
 					],
-					"id": "312952b2-1045-40f4-ab36-1683733cc6dd",
+					"id": "c255bd6a-ca88-49e0-8635-e53c072385a1",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -795,7 +795,7 @@
 					"response": []
 				}
 			],
-			"id": "847c031d-3cf3-4cdb-a7b4-e3890bd5784c",
+			"id": "2947aa9f-686a-42d0-a9f2-94cef6aae9c6",
 			"description": "|||\n|:---|:---\n|```date```<br/>string,<br/>datetime ([details](https://core.trac.wordpress.org/ticket/41032))|The date the object was published, in the site's timezone.<br/>Context: **view, edit, embed**\n|```date_gmt```<br/>string,<br/>datetime ([details](https://core.trac.wordpress.org/ticket/41032))|The date the object was published, as GMT.<br/>Context: **view, edit**\n|```guid```<br/>object<br/>The globally unique identifier for the object.<br/>Read only<br/>Context: **view, edit**\n|```id```<br/>integer|Unique identifier for the object.<br/>Read only<br/>Context: **view, edit, embed**\n|```link```<br/>string,uri|URL to the object.<br/>Read only<br/>Context: **view, edit, embed**\n|```modified```<br/>string,<br/>datetime ([details](https://core.trac.wordpress.org/ticket/41032))|The date the object was last modified, in the site's timezone.<br/>Read only<br/>Context: **view, edit**\n|```modified_gmt```<br/>string,<b/>datetime ([details](https://core.trac.wordpress.org/ticket/41032))|The date the object was last modified, as GMT.<br/>Read only<br/>Context: **view, edit**\n|```slug```</br>string|An alphanumeric identifier for the object unique to its type.<br/>Context: **view, edit, embed**\n|```status```<br/>string|A named status for the object.<br/>Context: **view, edit**<br/>One of: **publish, future, draft, pending, private**\n|```type```<br/>string|Type of Post for the object.<br/>Read only<br/>Context: **view, edit, embed**\n|```permalink_template```<br/>string|Permalink template for the object.<br/>Read only<br/>Context: **edit**\n|```generated_slug```<br/>string|Slug automatically generated from the object title.<br/>Read only<br/>Context: **edit**\n|```title```<br/>object|The title for the object.<br/>Context: **view, edit, embed**\n|```author```<br/>integer|The ID for the author of the object.<br/>Context: **view, edit, embed**\n|```comment_status```</br>string|Whether or not comments are open on the object.<br/>Context: **view, edit**<br/>One of: **open, closed**\n|```ping_status```<br/>string|Whether or not the object can be pinged.<br/>Context: **view, edit**<br/>One of: **open, closed**\n|```meta```<br/>object|Meta fields.<br/>Context: **view, edit**\n|```template```<br/>string|The theme file to use to display the object.<br/>Context: **view, edit**\n|```alt_text```<br/>string|Alternative text to display when attachment is not displayed.<br/>Context: **view, edit, embed**\n|```caption```<br/>object|The attachment caption.<br/>Context: **view, edit, embed**\n|```description```<br/>object|The attachment description.<br/>Context: **view, edit**\n|```media_type```<br/>string|Attachment type.<br/>Read only<br/>Context: **view, edit, embed**<br/>One of: **image, file**\n|```mime_type```<br/>string|The attachment MIME type.<br/>Read only<br/>Context: **view, edit, embed**\n|```media_details```<br/>object|Details about the media file, specific to its type.<br/>Read only<br/>Context: **view, edit, embed**\n|```post```<br/>integer|The ID for the associated post of the attachment.<br/>Context: **view, edit**\n|```source_url```<br/>string, uri|URL to the original attachment file.<br/>Read only<br/>Context: **view, edit, embed**",
 			"event": [
 				{
@@ -805,7 +805,7 @@
 						"exec": [
 							""
 						],
-						"id": "23616dad-37a4-4368-98ae-a882f3da3a1f"
+						"id": "04cd3f1a-15b8-41ea-88b3-1ff810e9b0ba"
 					}
 				},
 				{
@@ -815,7 +815,7 @@
 						"exec": [
 							""
 						],
-						"id": "7ecd953d-d106-450a-be96-b88f7133e4f4"
+						"id": "022eaeb9-7e2a-4e5a-815b-f179d467acae"
 					}
 				}
 			]
@@ -851,11 +851,11 @@
 									""
 								],
 								"type": "text/javascript",
-								"id": "505c2bca-7d2f-452e-b906-c78056a909d1"
+								"id": "27938b94-aaef-4dc8-b2b3-c0970b8fb310"
 							}
 						}
 					],
-					"id": "5401a671-6882-4228-b8fd-4f506c2f0fbf",
+					"id": "7f467ed9-1bd9-42d8-b085-bac1c4dd33ff",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -908,7 +908,7 @@
 									"});"
 								],
 								"type": "text/javascript",
-								"id": "6cb0fa00-9291-4f3e-8249-3f4a82c7648f"
+								"id": "4afcbc20-9869-4199-bf64-2e0f7fc81401"
 							}
 						},
 						{
@@ -920,11 +920,11 @@
 									"pm.environment.set(\"excerpt\", \"Test WAPI Page Excerpt\");"
 								],
 								"type": "text/javascript",
-								"id": "6cc00ae7-add4-4658-8f80-1ccfa928b472"
+								"id": "37ea32d1-879b-4bc9-bf70-f5fc3f869bfc"
 							}
 						}
 					],
-					"id": "a65dae59-cc65-43fe-9a37-a064df6a8ef0",
+					"id": "38681df6-878b-48bb-9fdc-c97d97a8dc0f",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1003,11 +1003,11 @@
 									""
 								],
 								"type": "text/javascript",
-								"id": "6c316ad9-b34e-447b-bd37-34846f41e08b"
+								"id": "864e6a13-3393-4286-9c02-1beee3576857"
 							}
 						}
 					],
-					"id": "969ea795-f111-4a23-b3df-6f0c3cb4553d",
+					"id": "c4e4e821-1a64-44d3-8a6a-33932c945bab",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1080,7 +1080,7 @@
 									"});"
 								],
 								"type": "text/javascript",
-								"id": "63610205-da72-492a-b4f0-915e2990e943"
+								"id": "8924cc4c-a3df-4bee-ab9e-757c9da5d8c5"
 							}
 						},
 						{
@@ -1092,11 +1092,11 @@
 									"pm.environment.set(\"excerpt\", \"Test WAPI Page Excerpt Updated\");"
 								],
 								"type": "text/javascript",
-								"id": "6b7fc187-c46f-40b9-b0e6-465d36f4cc29"
+								"id": "bc9931e3-1dd9-4675-8f79-993a53dccf49"
 							}
 						}
 					],
-					"id": "fa1a2a1f-a7f0-4afc-897c-c0fc4afa0f2a",
+					"id": "470ef84c-6d75-4e10-9a34-1166e0b9d723",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1170,11 +1170,11 @@
 									""
 								],
 								"type": "text/javascript",
-								"id": "aa33ae6d-1947-4f49-ba30-0805f386c77c"
+								"id": "aeae3948-3589-4c07-b091-c4737ff3f8a6"
 							}
 						}
 					],
-					"id": "ab9d2eee-fd70-4f55-bccf-45424d809438",
+					"id": "5d16ebbf-8117-4b80-ad5e-5a86a878ac62",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1214,7 +1214,7 @@
 					"response": []
 				}
 			],
-			"id": "ba6fea6c-34ca-4253-aeef-aae255440e40",
+			"id": "2780c1f1-d70a-4c92-81a7-a8003506b546",
 			"description": "|||\n|:---|:---\n|```date```<br/>string,<br/>datetime ([details](https://core.trac.wordpress.org/ticket/41032))|The date the object was published, in the site's timezone.<br/>Context: **view, edit, embed**\n|```date_gmt```<br/>string,<br/>datetime ([details](https://core.trac.wordpress.org/ticket/41032))|The date the object was published, as GMT.<br/>Context: **view, edit**\n|```guid```<br/>object|The globally unique identifier for the object.<br/>Read only<br/>Context: **view, edit**\n|```id```<br/>integer|Unique identifier for the object.<br/>Read only<br/>Context: **view, edit, embed**\n|```link```<br/>string,uri|URL to the object.<br/>Read only<br/>Context: **view, edit, embed**\n|```modified```<br/>string,<br/>datetime ([details](https://core.trac.wordpress.org/ticket/41032))\nThe date the object was last modified, in the site's timezone.<br/>Read only<br/>Context: **view, edit**\n|```modified_gmt```<br/>string,<br/>\ndatetime ([details](https://core.trac.wordpress.org/ticket/41032))|The date the object was last modified, as GMT.<br/>Read only<br/>Context: **view, edit**\n|```slug```<br/>string|An alphanumeric identifier for the object unique to its type.<br/>Context: **view, edit, embed**\n|```status```<br/>string|A named status for the object.<br/>Context: **view, edit**<br/>One of: **publish, future, draft, pending, private**\n|```type```<br/>string|Type of Post for the object.<br/>Read only<br/>Context: **view, edit, embed**\n|```password```<br/>string|A password to protect access to the content and excerpt.<br/>Context: **edit**\n|```permalink_template```<br/>string|Permalink template for the object.<br/>Read only<br/>Context: **edit**\n|```generated_slug```<br/>string|Slug automatically generated from the object title.<br/>Read only<br/>Context: **edit**\n|```parent```<br/>integer|The ID for the parent of the object.<br/>Context: **view, edit**\n|```title``<br/>object|The title for the object.<br/>Context: **view, edit, embed**\n|```content```<br/>object|The content for the object.<br/>Context: **view, edit**\n|```author```<br/>integer|The ID for the author of the object.<br/>Context: **view, edit, embed**\n|```excerpt```<br/>object|The excerpt for the object.<br/>Context: **view, edit, embed**\n|```featured_media```<br/>integer|The ID of the featured media for the object.<br/>Context: **view, edit, embed**\n|```comment_status```<br/>string|Whether or not comments are open on the object.<br/>Context: **view, edit**<br/>One of: **open, closed**\n|```ping_status```<br/>string|Whether or not the object can be pinged.<br/>Context: **view, edit**<br/>One of: **open, closed**\n|```menu_order```<br/>integer|The order of the object in relation to other object of its type.<br/>Context: **view, edit**\n|```meta```<br/>object|Meta fields.<br/>Context: **view, edit**\n|```template```<br/>string|The theme file to use to display the object.<br/>Context: **view, edit**\n\n\n\n",
 			"event": [
 				{
@@ -1224,7 +1224,7 @@
 						"exec": [
 							""
 						],
-						"id": "5d26575c-c3e2-4af6-a4cc-9fec59c62e78"
+						"id": "d07ecab8-1447-468f-b9a7-816852862412"
 					}
 				},
 				{
@@ -1234,7 +1234,7 @@
 						"exec": [
 							""
 						],
-						"id": "2b894831-853b-49b0-8da4-c2a1421d3c92"
+						"id": "aeef486d-13dd-4b08-aa4b-ef18fad95e4b"
 					}
 				}
 			]
@@ -1244,7 +1244,7 @@
 			"item": [
 				{
 					"name": "List Themes ",
-					"id": "ab054081-40d8-4abe-967e-1b938a787019",
+					"id": "aa07812d-3370-445c-988f-df82d70f5772",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1274,7 +1274,7 @@
 					"response": []
 				}
 			],
-			"id": "ad17a265-c7be-4431-bddd-1a8be1932514",
+			"id": "362d8ed4-7496-48e9-b6f6-8de04f8cd35d",
 			"description": "|||\n|:--|:--\n|```theme_supports```<br/>array|Features supported by this theme.<br/>Read only\n\n\nhttps://developer.wordpress.org/cli/commands/theme/status/\n",
 			"event": [
 				{
@@ -1284,7 +1284,7 @@
 						"exec": [
 							""
 						],
-						"id": "c8efd528-545d-4abf-9e87-160f79f83cf5"
+						"id": "982a3048-8bb6-4e71-bb84-beceef7464ef"
 					}
 				},
 				{
@@ -1294,7 +1294,7 @@
 						"exec": [
 							""
 						],
-						"id": "a48bdc66-d8e4-45d6-b21b-5ada8c8c5337"
+						"id": "8dd29933-44c0-4bf3-85b3-4cb6d410dc28"
 					}
 				}
 			]
@@ -1329,11 +1329,11 @@
 									""
 								],
 								"type": "text/javascript",
-								"id": "9a0826c9-adbb-49dc-ba11-f3dabc61ad3b"
+								"id": "0decdd56-828a-42ab-8f38-1272ace4ee03"
 							}
 						}
 					],
-					"id": "fd3d4dc7-9d74-4184-b35a-ba44a73bb751",
+					"id": "035d2ec2-17a5-4e16-ae3e-77424968ffb5",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1381,7 +1381,7 @@
 									"pm.environment.set('test-tag', 'test');"
 								],
 								"type": "text/javascript",
-								"id": "6c4208a8-59bf-470f-b704-5cd32c9e7f16"
+								"id": "e9ac24f2-8915-41e9-9ac6-5bf60349a2fe"
 							}
 						},
 						{
@@ -1402,11 +1402,11 @@
 									""
 								],
 								"type": "text/javascript",
-								"id": "178ff399-c8d4-453e-8d1c-3bd529eb6635"
+								"id": "ee1923d9-6287-4ed7-ba29-ea958bbc9958"
 							}
 						}
 					],
-					"id": "750f324f-87f6-42cb-b085-61a8fd0550de",
+					"id": "8ab23762-8587-4bd1-a36d-cd0ee7f79216",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1475,11 +1475,11 @@
 									""
 								],
 								"type": "text/javascript",
-								"id": "eef85b02-c8b8-4d1b-96fa-0972b082eea8"
+								"id": "1a3a7ff8-6847-4e77-980b-5b71f963f7cf"
 							}
 						}
 					],
-					"id": "9fbac70f-d365-49ce-b80a-e326b6aa4b3d",
+					"id": "9ae8671a-a7aa-4419-8e6d-46e7e85d7b26",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1513,7 +1513,7 @@
 									"pm.environment.set('test-tag', 'updated-name');"
 								],
 								"type": "text/javascript",
-								"id": "13c27496-0d5d-4557-a823-85530513d824"
+								"id": "d798eef1-41fe-4918-ada2-96cd0142afaa"
 							}
 						},
 						{
@@ -1538,11 +1538,11 @@
 									""
 								],
 								"type": "text/javascript",
-								"id": "c0799b3f-41c2-4615-bac1-6ee168c09acf"
+								"id": "ff55b7cb-0470-4968-b10f-dab134c86de9"
 							}
 						}
 					],
-					"id": "9e33561c-8832-4f6b-9f24-6ac627c8b6f1",
+					"id": "88ff1265-2ba6-498d-81c6-6f48d9b205a7",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1607,11 +1607,11 @@
 									"});"
 								],
 								"type": "text/javascript",
-								"id": "e71c8f18-5120-45b3-bcf2-d3bc2890e2dd"
+								"id": "f62625bd-65ec-4d51-a388-49644a5607a8"
 							}
 						}
 					],
-					"id": "2202f3d9-9217-42e8-8c5e-96098768f060",
+					"id": "18101b0d-e9d4-4e41-ae01-52349498a2dd",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1657,7 +1657,7 @@
 					"response": []
 				}
 			],
-			"id": "44fe8ba4-f537-45f7-83a9-da8474d11cfe",
+			"id": "14218047-9721-464e-83e6-5033efc1f367",
 			"description": "|||\n|:--|:--\n|```id```<br/>integer|Unique identifier for the term.<br/>Read only<br/>Context: **view, embed, edit**\n|```count```<br/>integer|Number of published posts for the term.<br/>Read only<br/>Context: **view, edit**\n|```description```<br/>string|HTML description of the term.<br/>Context: **view, edit**\n|```link```<br/>string,uri|URL of the term.<br/>Read only<br/>Context: **view, embed, edit**\n|```name```<br/>string|HTML title for the term.<br/>Context: **view, embed, edit**\n|```slug```<br/>string|An alphanumeric identifier for the term unique to its type.<br/>Context: **view, embed, edit**\n|```taxonomy```<br/>string|Type attribution for the term.<br/>Read only<br/>Context: **view, embed, edit**<br/>One of: **category, post_tag, nav_menu, link_category, post_format**\n|```meta```<br/>object|Meta fields.<br/>Context: **view, edit**",
 			"event": [
 				{
@@ -1667,7 +1667,7 @@
 						"exec": [
 							""
 						],
-						"id": "49cd4e16-2cba-45c4-803f-9a5eea11b83e"
+						"id": "4dad3da7-4f6c-4403-9123-3cd779346770"
 					}
 				},
 				{
@@ -1677,7 +1677,7 @@
 						"exec": [
 							""
 						],
-						"id": "0cce0fb5-b0a3-4feb-b419-47a665d432d7"
+						"id": "ba71687b-19ff-47f2-81ca-34a09674d2bd"
 					}
 				}
 			]
@@ -1715,7 +1715,7 @@
 									""
 								],
 								"type": "text/javascript",
-								"id": "f4c59ab9-f8cc-419d-8b86-b88813735c8c"
+								"id": "c9dc814a-0317-4bdc-b587-0a76cfe957b8"
 							}
 						},
 						{
@@ -1725,11 +1725,11 @@
 									""
 								],
 								"type": "text/javascript",
-								"id": "ca79076f-bbd2-4f3e-8639-4e27dc0b3f1f"
+								"id": "dbb0a725-f784-4fac-b7ac-374f815c7205"
 							}
 						}
 					],
-					"id": "765cace4-6fb7-4620-86e7-b9fe0b5ec116",
+					"id": "d575308d-9032-4a05-b0b9-e893089e8a26",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1771,11 +1771,11 @@
 									""
 								],
 								"type": "text/javascript",
-								"id": "7e5ea1c1-f33c-4e52-a0e5-fcf644ae0302"
+								"id": "a8269368-a67a-43b2-8070-c4111dd4fbce"
 							}
 						}
 					],
-					"id": "488b2c67-c7a0-470a-8166-5856496b9579",
+					"id": "b44d44f5-9582-47db-97a5-96151f1212e7",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1806,7 +1806,7 @@
 					"response": []
 				}
 			],
-			"id": "c635fead-7b3a-44d6-b213-8a374758eb39",
+			"id": "908d4fde-d7a9-43a4-bdbe-19a45e91d183",
 			"description": "|||\n|:--|:---\n|```capabilities```<br/>object|All capabilities used by the post type.<br/>Read only<br/>Context: **edit**\n|```description```<br/>string|A human-readable description of the post type.<br/>Read only<br/>Context: **view, edit**\n|```hierarchical``<br/>boolean|Whether or not the post type should have children.<br/>Read only<br/>Context: **view, edit**\n|```viewable```<br/>boolean|Whether or not the post type can be viewed.<br/>Read only<br/>Context: **edit**\n|```labels```object|Human-readable labels for the post type for various contexts.<br/>Read only<br/>Context: **edit**\n|```name```<br/>string|The title for the post type.<br/>Read only<br/>Context: **view, edit, embed**\n|```slug```<br/>string|An alphanumeric identifier for the post type.<br/>Read only<br/>Context: **view, edit, embed**\n|```supports```<br/>object|All features, supported by the post type.<br/>Read only<br/>Context: **edit**\n|```taxonomies```<br/>array|Taxonomies associated with post type.<br/>Read only<br/>Context: **view, edit**\n|```rest_base```string|REST base route for the post type.<br/>Read only<br/>Context: **view, edit, embed**",
 			"event": [
 				{
@@ -1816,7 +1816,7 @@
 						"exec": [
 							""
 						],
-						"id": "5bcd188c-6a9c-49a9-a741-53353c5af470"
+						"id": "05366935-96c6-4a65-849a-673ca2c4354e"
 					}
 				},
 				{
@@ -1826,7 +1826,7 @@
 						"exec": [
 							""
 						],
-						"id": "86508433-400f-4d78-8be8-d64d83796afa"
+						"id": "105293c1-1dc4-4afd-8edc-a10d6f27246a"
 					}
 				}
 			]
@@ -1861,11 +1861,11 @@
 									""
 								],
 								"type": "text/javascript",
-								"id": "068484a7-86a2-4f8a-af56-a9a87dc6e599"
+								"id": "36124ee3-2372-4c5c-a1e0-371a4305c6f9"
 							}
 						}
 					],
-					"id": "5225b043-e70a-49ac-85a8-8b98ced5055b",
+					"id": "c5081f2f-9de7-4c47-9f00-5894d0dc58e7",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1898,7 +1898,7 @@
 									"pm.environment.set('categoriesName','Category TEST');"
 								],
 								"type": "text/javascript",
-								"id": "73c39845-fd8c-4b6c-b66e-c089c39bb96e"
+								"id": "d57c1ef1-42fe-4e8a-a362-ae71d08a0080"
 							}
 						},
 						{
@@ -1919,11 +1919,11 @@
 									""
 								],
 								"type": "text/javascript",
-								"id": "5a82094d-f310-4f9e-982e-bef1a4d7cbea"
+								"id": "fbd425fc-40fe-458b-8a77-e76f591db05f"
 							}
 						}
 					],
-					"id": "0acffd9e-05cd-47b9-bfa5-a78d4750ec23",
+					"id": "a82fc7c7-1100-4f52-b26a-5002aaf07505",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1992,11 +1992,11 @@
 									""
 								],
 								"type": "text/javascript",
-								"id": "5b28ff68-1a65-435c-86e5-591cc9bf0d70"
+								"id": "a4b5128a-3e31-4f6b-aaf1-ae67014e216e"
 							}
 						}
 					],
-					"id": "3612b06f-b3fd-4c88-a838-ab2d8226d897",
+					"id": "08dd8f5d-e474-45cb-bce5-9905d6b56eb1",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -2030,7 +2030,7 @@
 									"pm.environment.set('categoriesName', 'Categories UPDATE');"
 								],
 								"type": "text/javascript",
-								"id": "f9634625-6b11-4799-a863-36177473e597"
+								"id": "ca14a44a-99bd-4ee1-a9e2-f0cf858564ad"
 							}
 						},
 						{
@@ -2055,11 +2055,11 @@
 									""
 								],
 								"type": "text/javascript",
-								"id": "b394385d-9416-4754-9dc0-4fa5919eda3b"
+								"id": "de820ea3-dd53-43af-ad6b-bab435468120"
 							}
 						}
 					],
-					"id": "d1d844b7-d734-4e2f-abbd-57796fca66df",
+					"id": "f3483cbe-620a-473a-b7d8-80ebf93fbc08",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -2124,11 +2124,11 @@
 									"});"
 								],
 								"type": "text/javascript",
-								"id": "ca158eed-ae8b-459b-9063-6fc0fa1c494c"
+								"id": "afa1c258-2056-47e7-a4a2-aba1bc181431"
 							}
 						}
 					],
-					"id": "91f5fbbe-8166-43aa-8452-fd95d5c216e6",
+					"id": "3862438a-ca31-4662-bcdb-e6d0afd9e3fe",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -2174,7 +2174,7 @@
 					"response": []
 				}
 			],
-			"id": "604edf4b-6b04-4d2c-aac9-998d7864b9cc",
+			"id": "68385253-d33b-4e43-bf17-2abcd42c2ee6",
 			"description": "|||\n|:---|:---\n|```id```<br/>integer|Unique identifier for the term.<br/>Read only<br/>Context: **view, embed, edit**\n|```count```<br/>integer|Number of published posts for the term.<br/>Read only<br/>Context: **view, edit**\n|```description```<br/>string|HTML description of the term.<br/>Context: **view, edit**\n|```link```<br/>string,uri<br/>|URL of the term.<br/>Read only<br/>Context: **view, embed, edit**\n|```name```<br/>string|HTML title for the term.<br/>Context: **view, embed, edit**\n|```slug```<br/>string|An alphanumeric identifier for the term unique to its type.<br/>Context: **view, embed, edit**\n|```taxonomy```<br/>string|Type attribution for the term.<br/>Read only<br/>Context: **view, embed, edit**<br/>One of: **category, post_tag, nav_menu, link_category, post_format**\n|```parent```<br/>integer|The parent term ID.<br/>Context: **view, edit**\n|```meta``<br/>object|Meta fields.<br/>Context: **view, edit**",
 			"event": [
 				{
@@ -2184,7 +2184,7 @@
 						"exec": [
 							""
 						],
-						"id": "02d24dcd-92e5-412a-8f2d-282aae6b998c"
+						"id": "868b69c5-9ac5-49f1-908d-bfbc342504cd"
 					}
 				},
 				{
@@ -2194,7 +2194,7 @@
 						"exec": [
 							""
 						],
-						"id": "919ea8ad-15ab-4ed1-af0f-380ae277bc39"
+						"id": "849655b2-75e9-4da2-b57a-b5f3a64ce54f"
 					}
 				}
 			]
@@ -2229,11 +2229,11 @@
 									""
 								],
 								"type": "text/javascript",
-								"id": "b757724d-1477-4eac-9b1f-f68a78769ade"
+								"id": "f5bbed93-8822-4f09-92b4-e57c5fc0504f"
 							}
 						}
 					],
-					"id": "d5c5976f-4b88-42dc-b680-a02b5c92eea4",
+					"id": "f80e8ac5-1cfb-40dd-8522-2870a41ffda0",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -2272,11 +2272,11 @@
 									""
 								],
 								"type": "text/javascript",
-								"id": "87bfe17c-2055-4f81-915c-63ec391ac98b"
+								"id": "a0a854b6-029a-4559-a53e-c686f07aa339"
 							}
 						}
 					],
-					"id": "61d26bbf-bf02-41f2-997f-d11c9f17a328",
+					"id": "46a35b05-6f26-462a-b80e-14d98bbeffda",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -2307,7 +2307,7 @@
 					"response": []
 				}
 			],
-			"id": "dcf47d8d-4f6e-4027-a07b-a14c521f2705",
+			"id": "e1c2dadc-9f41-4d2d-8705-0abb6f9bea09",
 			"description": "|||\n|:---|:---\n|```capabilities```<br/>object|All capabilities used by the taxonomy.<br/>Read only<br/>Context: **edit**\n|```description```</br>string|A human-readable description of the taxonomy.<br/>Read only<br/>Context: **view, edit**\n|```hierarchical```<br/>boolean|Whether or not the taxonomy should have children.<br/>Read only<br/>Context: **view, edit**\n|```labels```<br/>object|Human-readable labels for the taxonomy for various contexts.<br/>Read only<br/>Context: **edit**\n|```name```<br/>string|The title for the taxonomy.<br/>Read only<br/>Context: **view, edit, embed**\n|```slug```<br/>string|An alphanumeric identifier for the taxonomy.<br/>Read only<br/>Context: **view, edit, embed**\n|```show_cloud```<br/>boolean|Whether or not the term cloud should be displayed.<br/>Read only<br/>Context: **edit**\n|```types```<br/>array|Types associated with the taxonomy.<br/>Read only<br/>Context: **view, edit**\n|```rest_base```<br/>string|REST base route for the taxonomy.<br/>Read only<br/>Context: **view, edit, embed**\n|```visibility```<br/>object|The visibility settings for the taxonomy.<br/>Read only<br/>Context: **edit**",
 			"event": [
 				{
@@ -2317,7 +2317,7 @@
 						"exec": [
 							""
 						],
-						"id": "3d5b8b60-c0c5-423c-b6bc-56f384024ab7"
+						"id": "e74f2789-0ed8-4315-ba30-ea51dc0b0845"
 					}
 				},
 				{
@@ -2327,7 +2327,7 @@
 						"exec": [
 							""
 						],
-						"id": "5403b3f7-a71f-4609-8214-1b83664c54e3"
+						"id": "b8c30c02-c4cb-45e4-83d9-d683cc16d3f1"
 					}
 				}
 			]
@@ -2362,11 +2362,11 @@
 									""
 								],
 								"type": "text/javascript",
-								"id": "9154fe9b-5b96-4fe0-9125-7a6d18ac6cef"
+								"id": "81a85386-be10-4a44-8906-68561dc73142"
 							}
 						}
 					],
-					"id": "5aa6e7c2-46a6-4a62-9919-ac72bb64d473",
+					"id": "f37f578c-27de-4aff-85cd-f9b8b9de0ce4",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -2405,11 +2405,11 @@
 									""
 								],
 								"type": "text/javascript",
-								"id": "e66d3dac-c8fc-4c8c-87f7-5c9d8013e151"
+								"id": "6521dd91-4ff2-4d12-9682-b8827e9acffb"
 							}
 						}
 					],
-					"id": "71963a79-fc13-4814-b51c-daf3ffe51519",
+					"id": "ddd4720a-b380-444b-8b18-b7e63138fc51",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -2434,7 +2434,7 @@
 					"response": []
 				}
 			],
-			"id": "807fb524-6e4c-4992-a2c6-dc203ce7576d",
+			"id": "cb55a1a9-7276-4c51-b027-df058555000d",
 			"description": "|||\n|:---|:---\n|||\n|```name```<br/>string|The title for the status.<br/>Read only<br/>Context: **embed, view, edit**\n|```private```<br/>boolean|Whether posts with this status should be private.<br/>Read only<br/>Context: **edit**\n|```protected```<br/>boolean|Whether posts with this status should be protected.<br/>Read only<br/>Context: **edit**\n|```public```<br/>boolean|Whether posts of this status should be shown in the front end of the site.<br/>Read only<br/>Context: **view, edit**\n|```queryable```<br/>boolean|Whether posts with this status should be publicly-queryable.<br/>Read only<br/>Context: **view, edit**\n|```show_in_list```<br/>boolean|Whether to include posts in the edit listing for their post type.<br/>Read only<br/>Context: **edit**\n|```slug```<br/>string|An alphanumeric identifier for the status.<br/>Read only<br/>Context: **embed, view, edit**",
 			"event": [
 				{
@@ -2444,7 +2444,7 @@
 						"exec": [
 							""
 						],
-						"id": "d94ce1ca-a1c0-4e51-b7f5-1025102ab678"
+						"id": "2fc0d2a9-8ec9-4910-adc3-a56e01634fc8"
 					}
 				},
 				{
@@ -2454,7 +2454,7 @@
 						"exec": [
 							""
 						],
-						"id": "c156aecf-8859-4965-8894-911cde7a6cc7"
+						"id": "0ec8276e-524f-4fcc-baaa-9bc234ad9123"
 					}
 				}
 			]
@@ -2464,7 +2464,7 @@
 			"item": [
 				{
 					"name": "List Search-results",
-					"id": "fe5f55da-9799-4ba9-916f-74edba93e038",
+					"id": "be1b9ba2-7ee4-420f-a262-7147e5091ddb",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -2488,7 +2488,7 @@
 					"response": []
 				}
 			],
-			"id": "c011c4f1-b3ce-4a0f-997e-a6e02382879d",
+			"id": "52c3a08f-e2e5-4f36-9429-930c1833824f",
 			"description": "|||\n|:---|:---\n|```id```<br/>integer|Unique identifier for the object.<br/>Read only<br/>Context: **view, embed**\n|```title```<br/>string|The title for the object.<br/>Read only<br/>Context: **view, embed**\n|```url```<br/>string,uri|URL to the object.<br/>Read only<br/>Context: **view, embed**\n|```type```<br/>string|Object type.<br/>Read only<br/>Context: **view, embed**<br/>One of: **post**\n|```subtype```<br/>string|Object subtype.<br/>Read only<br/>Context: **view, embed**<br/>One of: **post, page**",
 			"event": [
 				{
@@ -2498,7 +2498,7 @@
 						"exec": [
 							""
 						],
-						"id": "f3af08f5-b86a-471e-b265-378a1ad6394b"
+						"id": "a163d380-971d-4944-bb9f-b00c820213db"
 					}
 				},
 				{
@@ -2508,7 +2508,7 @@
 						"exec": [
 							""
 						],
-						"id": "80815fcf-cd32-4074-a1ae-88ac9b2406fe"
+						"id": "48552e48-99cb-47ff-899d-f8cbed1971a4"
 					}
 				}
 			]
@@ -2536,11 +2536,11 @@
 									""
 								],
 								"type": "text/javascript",
-								"id": "cae1e893-c38e-4ec5-bad4-84c45ba1183b"
+								"id": "d70058ca-8e0a-4060-b238-e790e4a3d42a"
 							}
 						}
 					],
-					"id": "715f4dc7-b011-4009-b094-8316a1ed44af",
+					"id": "6d491c5d-2c56-4179-87c0-56a3f8390474",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -2574,7 +2574,7 @@
 									"pm.environment.set('title', 'BLOCKS TITLE');"
 								],
 								"type": "text/javascript",
-								"id": "b7b8b4cf-6ce0-48f1-a9c5-212ebf2b482e"
+								"id": "8f94cdeb-1050-4bff-ad5c-d25dad6ce7da"
 							}
 						},
 						{
@@ -2599,11 +2599,11 @@
 									"});"
 								],
 								"type": "text/javascript",
-								"id": "ad905012-ed2b-4de4-abbb-7fb872ccb965"
+								"id": "8ca7f6c0-7a05-42cc-8ec4-0b09a85fbeb0"
 							}
 						}
 					],
-					"id": "f20f9cfa-2d9f-45a1-afb7-02108a12bfe3",
+					"id": "0abd6c42-32e2-4aee-864b-0aabe0919cad",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -2663,7 +2663,7 @@
 									""
 								],
 								"type": "text/javascript",
-								"id": "56bc01e3-79af-491b-906e-2333560517d6"
+								"id": "eca634f5-1b00-42c3-8906-c38378d48bc7"
 							}
 						},
 						{
@@ -2692,11 +2692,11 @@
 									"});"
 								],
 								"type": "text/javascript",
-								"id": "58a2be49-6606-4e5f-b2e9-49e44dbadf63"
+								"id": "a460be0e-46c0-4153-ab8a-6156722b7f8b"
 							}
 						}
 					],
-					"id": "584adb98-6a05-4bec-b314-9ef5e690494e",
+					"id": "06c132ea-0ba4-4fa6-ae99-27b0a6a8f6be",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -2774,11 +2774,11 @@
 									"});"
 								],
 								"type": "text/javascript",
-								"id": "bc34e777-ca3e-46b7-ad19-60c00030805e"
+								"id": "79baa3a6-3757-499c-a9e2-2ad0eded3ef6"
 							}
 						}
 					],
-					"id": "03cb723d-4332-4ee8-98cb-1182bcc8aa42",
+					"id": "ea5eff5b-ba24-47ef-acce-c67a1f6024d0",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -2837,11 +2837,11 @@
 									"});"
 								],
 								"type": "text/javascript",
-								"id": "e03ca448-6d01-45ab-acb8-017100a8b96a"
+								"id": "880cf479-8fa2-4ce3-b3d8-b610b50aae74"
 							}
 						}
 					],
-					"id": "27e5744e-e8c8-4c7e-a262-42a459b32635",
+					"id": "7daa3bbc-0ed4-4866-b85a-6454877c2c41",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -2887,7 +2887,7 @@
 					"response": []
 				}
 			],
-			"id": "bf61759d-b989-4003-b35f-b962a93bcbe7",
+			"id": "1edd6596-deb9-459f-a5e8-03d37689170c",
 			"description": "|||\n|:---|:---\n|```author```<br/>integer|The ID for the author of the object.<br/>Context: **view, edit, embed**\n|```date```<br/>string,<br/>datetime ([details](https://core.trac.wordpress.org/ticket/41032))|The date the object was published, in the site's timezone.<br/>Context: **view, edit, embed**\n|```date_gmt```<br/>string,<br/>datetime ([details](https://core.trac.wordpress.org/ticket/41032))|The date the object was published, as GMT.<br/>Context: **view, edit**\n|```guid```<br/>object|The globally unique identifier for the object.<br/>Read only<br/>Context: **view, edit**\n|```id```<br/>integer|Unique identifier for the object.<br/>Context: **view, edit, embed**\n|```modified```<br/>string,<br/>datetime ([details](https://core.trac.wordpress.org/ticket/41032))|The date the object was last modified, in the site's timezone.<br/>Context: **view, edit**\n|```modified_gmt```<br/>string,<br/>datetime ([details](https://core.trac.wordpress.org/ticket/41032))|The date the object was last modified, as GMT.<br/>Context: **view, edit**\n|```parent```<br/>integer|The ID for the parent of the object.<br/>Context: **view, edit, embed**\n|```slug```<br/>string|An alphanumeric identifier for the object unique to its type.<br/>Context: **view, edit, embed**\n|```title```<br/>object|The title for the object.<br/>Context: **view, edit, embed**\n|```content```<br/>object|The content for the object.<br/>Context: **view, edit**\n|```preview_link```<br/>string,uri|Preview link for the post.<br/>Read only<br/>Context: **edit**",
 			"event": [
 				{
@@ -2897,7 +2897,7 @@
 						"exec": [
 							"pm.test.skip"
 						],
-						"id": "60ec4205-2134-4c6d-b585-d1ba4e5e24d3"
+						"id": "2aecac8d-4cd1-468b-99eb-8cd6924bfec3"
 					}
 				},
 				{
@@ -2907,7 +2907,7 @@
 						"exec": [
 							""
 						],
-						"id": "25702d3d-9d83-4c12-b295-c82dc23c97ef"
+						"id": "a3a129af-838f-4f21-8484-ba4cf4f05fc9"
 					}
 				}
 			]
@@ -2935,11 +2935,11 @@
 									""
 								],
 								"type": "text/javascript",
-								"id": "a3412e01-2737-4f8a-a4d9-220654248492"
+								"id": "10263652-7ca3-42b5-8701-e9cdc6a8ef65"
 							}
 						}
 					],
-					"id": "bacaab69-74f2-42d7-8915-1a0fb69f261b",
+					"id": "0a614c3c-fa6a-45af-a615-ef2f83a2897f",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -2999,7 +2999,7 @@
 									"});"
 								],
 								"type": "text/javascript",
-								"id": "221caa8f-0df1-42d4-805c-0a8327838338"
+								"id": "93c2dc81-4dd9-4857-95f7-8c513dcc1a91"
 							}
 						},
 						{
@@ -3013,11 +3013,11 @@
 									""
 								],
 								"type": "text/javascript",
-								"id": "931e3c6e-d063-4614-b520-99a3e02d21e6"
+								"id": "1f87dd63-46d4-42a2-a00f-7b21e45af036"
 							}
 						}
 					],
-					"id": "d60024f5-2646-49f4-9c8c-3db5478d65b2",
+					"id": "4662f3d9-67cb-43b1-8fed-6f86aea17d42",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -3083,7 +3083,7 @@
 									""
 								],
 								"type": "text/javascript",
-								"id": "0975d88c-f022-484e-9ac2-383df3a01ee1"
+								"id": "da00da73-58cb-4ba5-9a6b-2c840f744bac"
 							}
 						},
 						{
@@ -3119,11 +3119,11 @@
 									""
 								],
 								"type": "text/javascript",
-								"id": "4354513a-43d8-4b2a-8b82-e43d097dd29b"
+								"id": "fda67b9c-706d-4991-af2a-0501cdb31f48"
 							}
 						}
 					],
-					"id": "77f799c7-4352-4258-87d2-179f3bf4907d",
+					"id": "633fb4da-5157-424e-a261-b1d9a9fe94db",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -3188,7 +3188,7 @@
 									""
 								],
 								"type": "text/javascript",
-								"id": "55d325f2-9a23-422a-affb-d76ab46eae62"
+								"id": "9dbf98a4-9de5-4c98-b959-a1dde15616f0"
 							}
 						},
 						{
@@ -3198,11 +3198,11 @@
 									"pm.environment.set('content', 'comment UPDATE');"
 								],
 								"type": "text/javascript",
-								"id": "5fd282f1-016e-475d-a7da-d2466373c82e"
+								"id": "905a5100-c4a7-4271-92d2-a4ea9883245d"
 							}
 						}
 					],
-					"id": "47bdf44b-2d28-4ef3-b7d7-89db7e9a375e",
+					"id": "c7004e4b-3676-430d-b79b-048ef5ef74e9",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -3267,11 +3267,11 @@
 									"});"
 								],
 								"type": "text/javascript",
-								"id": "6de17e79-2d65-4d91-829b-5b151b5b716c"
+								"id": "8f702dab-99f3-40f1-addf-7bb86ce19711"
 							}
 						}
 					],
-					"id": "91191320-2935-4ff3-90c4-720e1087032b",
+					"id": "b213fbc5-51ab-4510-9098-28cf898463a0",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -3311,7 +3311,7 @@
 					"response": []
 				}
 			],
-			"id": "b2c3795e-a4d4-4d29-b3b1-4fca6f15a079",
+			"id": "ec108fe6-7ba7-494d-8519-0366e42d07f0",
 			"description": "|||\n|:---|:---\n|```id```<br/>integer|Unique identifier for the object.<br/>Read only<br/>Context: **view, edit, embed**\n|```author```<br/>integer|The ID of the user object, if author was a user.<br/>Context: **view, edit, embed**\n|```author_email```<br/>string,email|Email address for the object author.<br/>Context: **edit**\n|```author_ip```<br/>string,ip|IP address for the object author.<br/>Context: **edit**\n|```author_name```<br/>string|Display name for the object author.<br/>Context: **view, edit, embed**\n|```author_url```<br/>string,uri|URL for the object author.<br/>Context: **view, edit, embed**\n|```author_user_agent```<br/>string|User agent for the object author.<br/>Context: **edit**\n|```content```<br/>object|The content for the object.<br/>Context: **view, edit, embed**\n|```date```<br/>string,<br/>datetime ([details](https://core.trac.wordpress.org/ticket/41032))|The date the object was published, in the site's timezone.<br/>Context: **view, edit, embed**\n|```date_gmt```<br/>string,<br/>datetime ([details](https://core.trac.wordpress.org/ticket/41032))|The date the object was published, as GMT.<br/>Context: **view, edit**\n|```link```<br/>string,uri|URL to the object.<br/>Read only<br/>Context: **view, edit, embed**\n|```parent```<br/>integer|The ID for the parent of the object.<br/>Context: **view, edit, embed**\n|```post```<br/>integer|The ID of the associated post object.<br/>Context: **view, edit**\n|```status```<br/>string|State of the object.<br/>Context: **view, edit**\n|```type```<br/>string|Type of Comment for the object.<br/>Read only<br/>Context: **view, edit, embed**\n|```author_avatar_urls```<br/>object|Avatar URLs for the object author.<br/>Read only<br/>Context: **view, edit, embed**\n|```meta```|object\tMeta fields.<br/>Context: **view, edit**",
 			"event": [
 				{
@@ -3321,7 +3321,7 @@
 						"exec": [
 							""
 						],
-						"id": "70338d8b-b919-41e0-8465-74010e141732"
+						"id": "2b1dbf38-456c-4b2e-84cf-787056865f3f"
 					}
 				},
 				{
@@ -3331,7 +3331,7 @@
 						"exec": [
 							""
 						],
-						"id": "e2994734-ddec-436a-a41d-94993b23c369"
+						"id": "78d1f0ca-5af4-41a3-a574-74806b477373"
 					}
 				}
 			]
@@ -3349,11 +3349,11 @@
 									"pm.skip.test;"
 								],
 								"type": "text/javascript",
-								"id": "f4301d33-05f8-4f16-8bb9-796900dc05d4"
+								"id": "e534287a-ba89-4392-b55f-9531714c7a87"
 							}
 						}
 					],
-					"id": "9c666905-4f67-4571-b03d-80ae2e87228f",
+					"id": "0a84f399-78d3-4234-a087-af6733d29de3",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -3394,11 +3394,11 @@
 									"pm.skip.test;"
 								],
 								"type": "text/javascript",
-								"id": "2c3f9626-3dae-4d5c-9ca6-d202da1d19fc"
+								"id": "7f6eae65-1c1f-49d5-a066-45b49f3d0e1b"
 							}
 						}
 					],
-					"id": "6bb35958-1c2d-420e-a364-651299461069",
+					"id": "90aafc71-bfa5-4c26-a366-6aaabfbf1b5c",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -3432,11 +3432,11 @@
 									"pm.skip.test;"
 								],
 								"type": "text/javascript",
-								"id": "76366a27-b3e0-40e4-b15e-be2b7b858879"
+								"id": "2f6645fe-3f7a-4b4f-bd0b-135bc426fada"
 							}
 						}
 					],
-					"id": "453026fc-4bf3-4267-9dc7-ec94a6e52104",
+					"id": "e59dc6d9-3d83-4919-8449-0fd2138941dd",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -3463,7 +3463,7 @@
 					"response": []
 				}
 			],
-			"id": "9a4aa240-93ad-48af-acec-387586d9e3db",
+			"id": "741d4659-f0c7-4b07-9c8b-62f8c0fdeb99",
 			"description": "|||\n|:---|:---\n|```author```<br/>integer|The ID for the author of the object.<br/>Context: **view, edit, embed**\n|```date```<br/>string,<br/>datetime ([details](https://core.trac.wordpress.org/ticket/41032))|The date the object was published, in the site's timezone.<br/>Context: **view, edit, embed**\n|```date_gmt```<br/>string,<br/>datetime ([details](https://core.trac.wordpress.org/ticket/41032))|\nThe date the object was published, as GMT.<br/>Context: **view, edit**\n|```guid```<br/>object|The globally unique identifier for the object.<br/>Read only<br/>Context: **view, edit**\n|```id```<br/>integer|Unique identifier for the object.<br/>Context: **view, edit, embed**\n|```modified```<br/>string,<br/>datetime ([details](https://core.trac.wordpress.org/ticket/41032))|The date the object was last modified, in the site's timezone.<br/>Context: **view, edit**\n|```modified_gmt```<br/>string,<br/>datetime ([details](https://core.trac.wordpress.org/ticket/41032))|The date the object was last modified, as GMT.<br/>Context: **view, edit**\n|```parent```<br/>integer|The ID for the parent of the object.<br/>Context: **view, edit, embed**\n|```slug```<br/>string|An alphanumeric identifier for the object unique to its type.<br/>Context: **view, edit, embed**\n|```title```<br/>object|The title for the object.<br/>Context: **view, edit, embed**\n|```content```<br/>object|The content for the object.<br/>Context: **view, edit**\n|```preview_link```<br/>string,uri|Preview link for the post.<br/>Read only<br/>Context: **edit**",
 			"event": [
 				{
@@ -3473,7 +3473,7 @@
 						"exec": [
 							"pm.test.skip"
 						],
-						"id": "daebd1ba-223c-4be5-ab48-d16370f38ece"
+						"id": "961e3c05-c863-4ef3-84ea-ffb335b7f29a"
 					}
 				},
 				{
@@ -3483,7 +3483,7 @@
 						"exec": [
 							""
 						],
-						"id": "774fef80-a6ab-444e-82f1-495dd88117fc"
+						"id": "a03e522e-7be8-45da-aaa9-0114d2647290"
 					}
 				}
 			]
@@ -3501,11 +3501,11 @@
 									"pm.skip.test;"
 								],
 								"type": "text/javascript",
-								"id": "8b708414-9ac2-4c16-82cb-8317a98b8940"
+								"id": "0ba9e73d-deff-4587-a8ff-bc727748a255"
 							}
 						}
 					],
-					"id": "caf2f508-1fb9-40c6-a1ba-9db0e36dcbd4",
+					"id": "e7d0c2dc-6df0-41bb-bce2-46fa43c30d74",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -3539,11 +3539,11 @@
 									"pm.skip.test;"
 								],
 								"type": "text/javascript",
-								"id": "212cd3e0-a173-4add-b530-da183ff58043"
+								"id": "3ddb5a43-0aea-4a63-b771-0f113a129082"
 							}
 						}
 					],
-					"id": "41eb25a7-9080-46ac-82a1-7b339aedda2f",
+					"id": "d7eea546-27a0-4413-b785-59b1a3cba050",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -3578,11 +3578,11 @@
 									"pm.skip.test;"
 								],
 								"type": "text/javascript",
-								"id": "caef874c-6ff4-4292-b696-2dc2cb90e76e"
+								"id": "5681713f-5135-45f1-99ca-524074f34af5"
 							}
 						}
 					],
-					"id": "1d5d97eb-f2dc-4b80-9929-2dfe47b9cfe8",
+					"id": "a1105763-9a2b-45d4-b74e-8b9261c4fc4e",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -3608,7 +3608,7 @@
 					"response": []
 				}
 			],
-			"id": "3575bd2f-cfb4-4ac1-90bd-981b3efd3ae6",
+			"id": "811b5cdf-8e0c-46e6-ac0f-9809a19f572d",
 			"description": "#Schema\nThe schema defines all the fields that exist for a post-revision object.\n\n| | |\n| :-- | :--\n|```author```<br/>integer |\tThe ID for the author of the object.</br>Context: **view, edit, embed**\n|```date```<br/>string,datetime ([details](https://core.trac.wordpress.org/ticket/41032))|The date the object was published, in the site's timezone.<br/>Context: **view, edit, embed**\n|```date_gmt```<br/>string,datetime ([details](https://core.trac.wordpress.org/ticket/41032))|The date the object was published, as GMT.<br/>Context: **view, edit**\n|```guid```<br/>object|The globally unique identifier for the object.<br/>Read only<br/>Context: **view, edit**\n|```id```<br/>integer\t|Unique identifier for the object.<br/>Context: **view, edit, embed**\n|```modified```<br/>string,datetime ([details](https://core.trac.wordpress.org/ticket/41032))|The date the object was last modified, in the site's timezone.<br/>Context: **view, edit**\n|```modified_gmt```<br/>string,datetime ([details](https://core.trac.wordpress.org/ticket/41032))|The date the object was last modified, as GMT.<br/>Context: **view, edit**\n|```parent```<br/>integer|The ID for the parent of the object.<br/>Context: **view, edit, embed**\n|```slug```<br/>string|\tAn alphanumeric identifier for the object unique to its type.<br/>Context: **view, edit, embed**\n|```title```<br/>object\t| The title for the object.<br/>Context: **view, edit, embed**\n|```content```<br/>object |The content for the object.<br/>Context: **view, edit**\n|```excerpt```<br/>object\t| The excerpt for the object.<br/>Context: **view, edit, embed**\n",
 			"event": [
 				{
@@ -3618,7 +3618,7 @@
 						"exec": [
 							"pm.test.skip"
 						],
-						"id": "ae3f0502-9f8c-470a-9a6a-6e211f61afe4"
+						"id": "1d4ed5ff-b4d1-4455-b964-c10eee3176ec"
 					}
 				},
 				{
@@ -3628,7 +3628,7 @@
 						"exec": [
 							""
 						],
-						"id": "f1957e3a-4626-4b18-a1a3-9bb2e2e77641"
+						"id": "2d948cb0-bf55-45bd-aed0-952400e3298d"
 					}
 				}
 			]
@@ -3646,11 +3646,11 @@
 									"pm.skip.test;"
 								],
 								"type": "text/javascript",
-								"id": "ab0210ec-b51f-4d9c-8f9a-c6d4e550f7b3"
+								"id": "49e83b4e-0541-4ef3-bc29-765ae03c766b"
 							}
 						}
 					],
-					"id": "a0a7625f-7fdd-476c-bdf7-c072fd785fd6",
+					"id": "085c30c8-dc37-48dc-b122-33bf60ac1bb9",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -3675,7 +3675,7 @@
 					"response": []
 				}
 			],
-			"id": "9184bc2b-4b25-4aaa-9d1d-2233954fd347",
+			"id": "83824ca1-ad92-4af9-bd72-f0bdd468425b",
 			"description": "|||\n|:---|:---\n|```rendered```<br/>string|The rendered block.<br/>Context: **edit**",
 			"event": [
 				{
@@ -3685,7 +3685,7 @@
 						"exec": [
 							"pm.test.skip"
 						],
-						"id": "d78f7202-fbb7-4cb7-8590-cf100fe0b996"
+						"id": "e1efe399-ce55-4319-990d-5fe156d761a7"
 					}
 				},
 				{
@@ -3695,7 +3695,7 @@
 						"exec": [
 							""
 						],
-						"id": "03dfd59f-2ea3-46d2-8636-a16540dec6d8"
+						"id": "64089c59-03e1-4462-93b0-0c98e3bf79a2"
 					}
 				}
 			]
@@ -3705,7 +3705,7 @@
 			"item": [
 				{
 					"name": "List Users ",
-					"id": "eed00ea3-7389-4803-85f3-6f78902d22c6",
+					"id": "5d6ac161-737d-465e-b29c-3f283c232f7a",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -3753,11 +3753,11 @@
 									"pm.skip.test;"
 								],
 								"type": "text/javascript",
-								"id": "d35962be-fd7f-4d8c-a750-38c5de313efb"
+								"id": "08539733-7820-404f-b08b-c652c4c48104"
 							}
 						}
 					],
-					"id": "0da7c1b0-6e9b-4895-bfc0-534dcde1dd3b",
+					"id": "ac7ab905-053e-48dd-99b3-1af0a7c3ec50",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -3790,11 +3790,11 @@
 									"pm.skip.test;"
 								],
 								"type": "text/javascript",
-								"id": "a9207bd6-8ce6-4f3f-b50e-bd94c7d70be9"
+								"id": "88f8e0b8-a611-4f8a-96a6-3ab973119129"
 							}
 						}
 					],
-					"id": "5c0f1862-b4d5-4f12-a3f3-f13d41f0baeb",
+					"id": "cd39e034-7b74-40c3-8935-13f1c0f4d603",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -3828,11 +3828,11 @@
 									"pm.skip.test;"
 								],
 								"type": "text/javascript",
-								"id": "f4e2ddf8-05bc-4398-8cd3-06bdad3b3331"
+								"id": "55e2b8b6-a998-4ab7-82e4-b9b33c4708b1"
 							}
 						}
 					],
-					"id": "066c45c8-9c66-41fb-b149-dfdd61b7e00c",
+					"id": "03d537c8-3730-4686-9b1b-d865fffdea43",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -3866,11 +3866,11 @@
 									"pm.skip.test;"
 								],
 								"type": "text/javascript",
-								"id": "c19aa3a1-fed9-4031-badb-b254fe4b6ff3"
+								"id": "b4e9a537-9fdb-485c-92ce-b917d3da8fed"
 							}
 						}
 					],
-					"id": "c4caa818-f394-4e1f-99b3-0d147ebc7d8e",
+					"id": "8085d7d5-fd1a-4f96-8478-15d70b37f355",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -3904,11 +3904,11 @@
 									"pm.skip.test;"
 								],
 								"type": "text/javascript",
-								"id": "510fd9d4-1e9b-4905-b058-8b5163a2eac1"
+								"id": "592999c1-5450-4645-acde-2cf1d15d0f3f"
 							}
 						}
 					],
-					"id": "434524bc-ceea-4a28-9309-fd37a9fe1442",
+					"id": "1e44a494-c744-4379-985d-8644f7ac66dd",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -3942,11 +3942,11 @@
 									"pm.skip.test;"
 								],
 								"type": "text/javascript",
-								"id": "e7e16cef-7232-4ed6-aa00-6a2c071b9d77"
+								"id": "bfea8011-662d-416f-a58f-3255fc43e6e7"
 							}
 						}
 					],
-					"id": "0bd5ba72-bdcd-4350-9c77-a83b970b4249",
+					"id": "d69d4da2-7420-4546-9471-f0db79726bde",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -3980,11 +3980,11 @@
 									"pm.skip.test;"
 								],
 								"type": "text/javascript",
-								"id": "640750d1-f730-4d7c-ad57-ab66328035b1"
+								"id": "0806ce09-19ae-4de9-9212-2a504a1331b6"
 							}
 						}
 					],
-					"id": "aacd0f21-6874-4338-b53a-c592f2aa7a24",
+					"id": "210e76b1-904f-48b8-a8b6-75d7d05aadf4",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -4009,7 +4009,7 @@
 					"response": []
 				}
 			],
-			"id": "e89a3d0a-f1e7-4b43-a566-bbe1ea928bd3",
+			"id": "f3a1ae70-a1bd-4ccf-a8cc-de582663961b",
 			"description": "|||\n|:---|:---\n|```id```<br/>integer|Unique identifier for the user.<br/>Read only<br/>Context: **embed, view, edit**\n|```username```<br/>string|Login name for the user.<br/>Context: **edit**\n|```name```<br/>string|Display name for the user.<br/>Context: **embed, view, edit**\n|```first_name```<br/>string|First name for the user.<br/>Context: **edit**\n|```last_name```<br/>string|Last name for the user.<br/>Context:  **edit**\n|```email```<br/>string,email|The email address for the user.<br/>Context: **edit**\n|```url```<br/>string,uri|URL of the user<br/>Context: **embed, view, edit**\n|```description```|<br/>string|Description of the user.<br/>Context: **embed, view, edit**\n|```link```<br/>string,uri | Author URL of the user.<br/>Read only<br/>Context: **embed, view, edit**\n|```locale```<br/>string|Locale for the user.<br/>Context:  **edit**<br/>One of: **en_US**\n|```nickname```<br/>string|The nickname for the user.<br/>Context: **edit**\n|```slug```<br/>string|An alphanumeric identifier for the user.<br/>Context: **embed, view, edit**\n|```registered_date```<br/>string,<br/>datetime ([details](https://core.trac.wordpress.org/ticket/41032))|Registration date for the user.<br/>Read only<br/>Context: **edit**\n|```roles```<br/>array|Roles assigned to the user.<br/>Context: **edit**\n|```password```<br/>string|Password for the user (never included)\n|```capabilities```<br/>object|All capabilities assigned to the user.<br/>Read only<br/>Context: **edit**\n|```extra_capabilities```<br/>object|Any extra capabilities assigned to the user.<br/>Read only<br>Context: **edit**\n|```avatar_urls```<br/>object|Avatar URLs for the user.<br/>Read only<br/>Context: **embed, view, edit**\n|```meta```<br/>object|Meta fields.<br/>Context: **view, edit**",
 			"event": [
 				{
@@ -4019,7 +4019,7 @@
 						"exec": [
 							"pm.test.skip"
 						],
-						"id": "fb72f5eb-1e9b-44e7-9420-6bbb7a0ad0d1"
+						"id": "d89966a2-f101-422d-ad72-d010cfb81948"
 					}
 				},
 				{
@@ -4029,7 +4029,7 @@
 						"exec": [
 							""
 						],
-						"id": "63cda0c9-5915-4ea7-b623-9e7b4a371399"
+						"id": "e086b647-bdd8-4162-bb57-5bc1d9b6a80e"
 					}
 				}
 			]
@@ -4058,7 +4058,7 @@
 									""
 								],
 								"type": "text/javascript",
-								"id": "eb7a4278-ccd3-4ad0-a8bf-3a08992b318c"
+								"id": "a6766bb7-3686-4a72-b768-355b8693085e"
 							}
 						},
 						{
@@ -4068,11 +4068,11 @@
 									""
 								],
 								"type": "text/javascript",
-								"id": "300aa79d-b749-4b34-b2c5-a7d28a1acd77"
+								"id": "8f084a49-b611-42e7-9b8e-779b42a49248"
 							}
 						}
 					],
-					"id": "31d20680-820f-4480-a55e-86ab2199560e",
+					"id": "2bcc90f7-1213-4db5-b79e-c642dbc21555",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -4120,11 +4120,11 @@
 									"pm.skip.test;"
 								],
 								"type": "text/javascript",
-								"id": "d5cb1d20-9018-48cc-92b7-c9851ed5cddb"
+								"id": "0a1e75a1-5af4-4582-a9e8-a5b3929d412f"
 							}
 						}
 					],
-					"id": "bdb66867-7f99-4517-924a-0c7c7fe4e236",
+					"id": "b17d3bdc-6505-4ae0-b2d1-7c3d099f0891",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -4148,7 +4148,7 @@
 					"response": []
 				}
 			],
-			"id": "a44229cb-99e1-4113-b5bd-db3464f40f5f",
+			"id": "fcebdf61-fa46-43b3-af34-419590d4135c",
 			"description": "|||\n|:---|:---\n|```title```<br/>string|Site title.\n|```description```<br/>string|Site tagline.\n|```timezone```<br/>string|A city in the same timezone as you.\n|```date_format```<br/>string|\tA date format for all date strings.\n|```time_format```<br/>string|A time format for all time strings.\n|```start_of_week```<br/>integer|A day number of the week that the week should start on.\n|```language```<br/>string|WordPress locale code.\n|```use_smilies```<br/>boolean|Convert emoticons like :-) and :-P to graphics on display.\n|```default_category```<br/>integer|Default post category.\n|```default_post_format```<br/>string|Default post format.\n|```posts_per_page```<br/>integer | Blog pages show at most.\n|```default_ping_status```<br/>string|Allow link notifications from other blogs (pingbacks and trackbacks) on new articles.<br/>One of: **open, closed**\n|```default_comment_status```<br/>string|Allow people to post comments on new articles.<br/>One of: **open, closed**",
 			"event": [
 				{
@@ -4158,7 +4158,7 @@
 						"exec": [
 							""
 						],
-						"id": "65f6fcc3-df1c-437f-84fc-c1ac6d5f9563"
+						"id": "2ffce170-53f0-4254-8b95-50543a64fa5b"
 					}
 				},
 				{
@@ -4168,14 +4168,14 @@
 						"exec": [
 							""
 						],
-						"id": "e43532d8-5984-4a97-8f70-5d2e644ac4b0"
+						"id": "67de64b3-f881-45e9-a8e9-3fa5b4e4c290"
 					}
 				}
 			]
 		},
 		{
 			"name": "Routes",
-			"id": "0e2e9dee-31ac-4f28-9708-597279f6ed7a",
+			"id": "0478ad68-0df6-445c-a39a-644c5a9c9245",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -4204,7 +4204,7 @@
 				"exec": [
 					""
 				],
-				"id": "677c086d-fd8b-4eae-ae88-4304828817cd"
+				"id": "f669c511-8f9b-4e8b-9146-ffb94d756981"
 			}
 		},
 		{
@@ -4214,7 +4214,7 @@
 				"exec": [
 					""
 				],
-				"id": "8d33df51-2f90-4093-90db-0296af335db6"
+				"id": "85a3267c-4381-453c-8b75-68e6b0622ef0"
 			}
 		}
 	]

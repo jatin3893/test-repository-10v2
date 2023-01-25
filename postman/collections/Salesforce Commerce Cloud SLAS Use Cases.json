@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "72077ecc-dc22-44d6-bd4c-70401c69495b",
+		"_postman_id": "a15963d1-f406-4086-8e2d-8e2ada66002e",
 		"name": "Salesforce Commerce Cloud SLAS Use Cases",
 		"description": "# Shopper Login and API Access Service (SLAS) Use Case Scenarios Using Postman\nThis Postman collection contains 6 use cases that SLAS supports. This collection will show how to get an authorization code, access token, create a shopper basket, place an item in the basket, and then delete the basket using a private SLAS client and a SLAS public client.\n\nThis collection was developed so that multiple SLAS deployments could be used by this collection simply by setting up different Postman environments.\n\nFor the registered user flow using a private client that is federated to a 3rd party IDP (like Okta, or Google) the IPD will need to be called from a browser to login and get an authentication code.\n\nFor the Proof Key for Code Exchange (PKCE) flows the `CODE_CHALLENGE` and `CODE_VERIFIER` will be created and stored as collection variables when using the tests that need them.\n\n**⚠️ Disclaimers:**\n- This collection is provided as-is. It's not officially supported by Salesforce or covered by SLAs.\n- API documentation is not provided with the collection. Please refer to the [official documentation](https://developer.commercecloud.com/s/api-details/a003k00000VzoEyAAJ/commerce-cloud-developer-centershopperloginandapiaccessadmin).\n\nℹ️ Report issues and ask questions [here](https://github.com/forcedotcom/postman-commerce-cloud-apis/issues).\n\n## Get started\n\nFollow [this startup guide](https://github.com/forcedotcom/postman-commerce-cloud-apis) to get started with the collection.\n\n## The 6 Use Cases\n* **Guest User • Private Client** - Creates a SLAS JSON Web Token (JWT) using a SLAS private client id and secret in a authorization header.\n* **Guest User • Public Client** - Creates a SLAS (JWT) using a PKCE flow using a code challenge, code verifier and a SLAS public user client id. An authorization header is not needed as the client id, without a secret is provider as a query parameter.\n* **Ecom Registered User • Private Client** - Creates a SLAS JWT using Ecom customer credentials, code challenge, code verifier with a SLAS private client id and secret.\n* **Ecom Public Registered User • Public Client** - Creates a SLAS JWT using the PKCE flow using Ecom customer credentials, code challenge, code verifier and a SLAS public client id.\n* **Registered User • Private Client** - Creates a SLAS JWT using a 3rd party identity provider (IDP) with a SLAS private client id and secret.\nNOTE: The IDP will need to be called from the browser and get an authorization code to be used for the SLAS `/token` endpoint.\n* **Registered User • Public Client** - Creates a SLAS JWT using the PKCE flow and a SLAS public client id.\n\n## Prerequisites\nSLAS Use Case collection should have a SLAS service deployed and running and a Salesforce Commerce Cloud (ECOM) environment running. During SLAS service and ECOM setup a tenant id, private client id and secret, and a public client id should be set up. There also needs to be an active ECOM customer (shopper) with password that can be used with this collection.\n\n## Variables Reference\nThe following variables should be setup as Postman environment variables before running any tests.\n\nRelated Environment: Salesforce Commerce Cloud SLAS Use Cases - Template\n\n| Variable | Description |\n| --- | --- |\n| `host` | The host to the SLAS service. Should include the `https://` protocol. |\n| `tenant_id` | The tenant id that was created when SLAS and ECOM was set up. |\n| `base_uri` | The base URI to SLAS. ex. `/api/v1/organizations/` |\n| `ocapi_uri` | The URI to ECOM to access the OCAPI APIs. Should include the `https://` protocol. |\n| `ocapi_site` | The ECOM Site used in OCAPI calls. Ex. `SiteGenesis` or `RefArch` |\n| `ecom_customer_id` | A customer (shopper) user from ECOM. |\n| `ecom_customer_pw` | A customer (shopper) user password from ECOM. |\n| `private_client_id` | The private client when client was created in SLAS. |\n| `private_client_secret` | The private client secret when client was created in SLAS. |\n| `public_client_id` | The public client when client was created in SLAS. |\n| `redirect_url` | One of the `redirect_uris` that are part of the SLAS client. |\n\n## Shopping Baskets\nAfter each SLAS authorization there are tests to create a basket, add an item to the basket, get the basket and delete the basket. The basket id is saved during the tests so it can be used by the other tests. However, in the Add Item to basket test there is an ECOM product id in the body of the request. The product is based on the ECOM site that is chosen. The product id in the body may need to change to a product id in ECOM.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_uid": "869033-72077ecc-dc22-44d6-bd4c-70401c69495b"
+		"_uid": "869033-a15963d1-f406-4086-8e2d-8e2ada66002e"
 	},
 	"item": [
 		{
@@ -27,11 +27,11 @@
 									"pm.environment.set(\"guest_admin_access_token\", jsonBody.access_token);"
 								],
 								"type": "text/javascript",
-								"id": "39f533cf-957d-4508-83ac-6bbb78d0e76d"
+								"id": "c77e4967-bddd-468e-a103-8a3bb97f852e"
 							}
 						}
 					],
-					"id": "b24b4018-c980-4660-9073-b8115e45ac12",
+					"id": "0fc2bdf7-2da4-4737-ba68-5f5382c497a6",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -125,11 +125,11 @@
 									"pm.environment.set(\"basket_id\", jsonBody.basket_id);"
 								],
 								"type": "text/javascript",
-								"id": "91b9d557-66ce-4525-8ce2-21395bf9b5bd"
+								"id": "a88b23eb-129a-4171-8bce-5879bbe2a47f"
 							}
 						}
 					],
-					"id": "ba8751fe-5981-4ec4-bdcf-be55016bd652",
+					"id": "358640a9-79ed-4706-9a99-b537b9ea2a3e",
 					"protocolProfileBehavior": {
 						"disabledSystemHeaders": {
 							"content-type": true
@@ -206,11 +206,11 @@
 									"});"
 								],
 								"type": "text/javascript",
-								"id": "0dfc01aa-4518-4b65-91cf-9f6d8b7eef9c"
+								"id": "fd332366-27d2-45b7-b0fe-d00a090d7f97"
 							}
 						}
 					],
-					"id": "1d5f007b-6af8-4631-a32c-2e74267706ec",
+					"id": "279ba541-cbf6-4aa0-b307-5771edf3ad49",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -266,7 +266,7 @@
 									""
 								],
 								"type": "text/javascript",
-								"id": "65367193-71b6-4e2c-8be1-62003939b748"
+								"id": "ac6854bf-b63d-4085-b9a3-42de761e05da"
 							}
 						},
 						{
@@ -278,11 +278,11 @@
 									"});"
 								],
 								"type": "text/javascript",
-								"id": "02ea61de-daa7-4261-b3e4-df7e2f60916d"
+								"id": "38003856-eebe-47a7-a79e-a0a17af0f02d"
 							}
 						}
 					],
-					"id": "f26f3e98-3338-4a60-8486-7e0124d8482a",
+					"id": "0b724893-98c2-4fa0-be36-b03d9b378871",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -329,11 +329,11 @@
 									"});"
 								],
 								"type": "text/javascript",
-								"id": "84f0d9de-5239-4e88-b8e7-4aaffeacf0cc"
+								"id": "7cdfdb29-f954-42d8-ae64-c5e02a8ad821"
 							}
 						}
 					],
-					"id": "71904cab-c8be-49c3-b5c1-35443de610fc",
+					"id": "75d0e16a-79c1-457e-a4e4-9c7bde1d8bf9",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -369,7 +369,7 @@
 					"response": []
 				}
 			],
-			"id": "edcbc9c5-6d07-4da5-942a-a29ba04e950d"
+			"id": "28a24d41-adab-46f9-a770-ede45918bf96"
 		},
 		{
 			"name": "Guest User • Public Client",
@@ -409,7 +409,7 @@
 									"pm.collectionVariables.set(\"PUBLIC_GUEST_CODE_CHALLENGE\", challenge);"
 								],
 								"type": "text/javascript",
-								"id": "a310d060-8afc-4950-a788-fb0ed7454df1"
+								"id": "de8c9e49-1c71-41f3-8a27-c9f5cfcadcbc"
 							}
 						},
 						{
@@ -424,11 +424,11 @@
 									"pm.environment.set(\"public_guest_auth_code\", code);"
 								],
 								"type": "text/javascript",
-								"id": "11557d21-ba30-4503-85ba-000caf5cb391"
+								"id": "af8bc98a-8cd7-4f87-a1eb-17ef1a69382d"
 							}
 						}
 					],
-					"id": "3eb8d8b2-2ae7-4936-b77d-a7251cb8e4e0",
+					"id": "753b3daa-cc6e-4741-b1da-9d9b5b0e1b74",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -487,11 +487,11 @@
 									"pm.environment.set(\"public_guest_user_access_token\", jsonBody.access_token);"
 								],
 								"type": "text/javascript",
-								"id": "28723b0f-efbf-4aed-9928-642416b1908c"
+								"id": "15de3180-8576-4dab-abb5-603e0bbc6629"
 							}
 						}
 					],
-					"id": "a5490533-bd55-4f3e-ad76-6203803995f5",
+					"id": "44e6af8a-0997-4e2d-a98d-84e491c35607",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -573,11 +573,11 @@
 									"pm.environment.set(\"basket_id\", jsonBody.basket_id);"
 								],
 								"type": "text/javascript",
-								"id": "6316ec3f-3790-44d9-a073-5890944683b6"
+								"id": "1f8c9aac-f9d0-4f57-ab91-3c019d6660b2"
 							}
 						}
 					],
-					"id": "00179094-cb8d-4478-8be3-eab6fbceb2a8",
+					"id": "a2ca0494-e7bb-4760-a237-099b51591103",
 					"protocolProfileBehavior": {
 						"disabledSystemHeaders": {
 							"content-type": true
@@ -654,11 +654,11 @@
 									"});"
 								],
 								"type": "text/javascript",
-								"id": "a66f47c6-b791-4964-b873-7740b473fae1"
+								"id": "547e66d7-1d78-458c-a56a-b9ef43f645ba"
 							}
 						}
 					],
-					"id": "6e1332ad-50da-45a1-a17e-19b7a0f43dee",
+					"id": "fbda70a8-3ec8-4196-b17a-8c6f0c101ee0",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -716,11 +716,11 @@
 									"});"
 								],
 								"type": "text/javascript",
-								"id": "6f807d94-f309-45d8-bf6c-609aba22328b"
+								"id": "416924ff-1083-4ede-8c5a-14db00640327"
 							}
 						}
 					],
-					"id": "869ecea5-af47-48fa-bcef-c68c1fcb5c3c",
+					"id": "2be854ac-0dfb-4e21-a8a8-1bc208806cb5",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -767,11 +767,11 @@
 									"});"
 								],
 								"type": "text/javascript",
-								"id": "de993b50-7f9f-48d3-834d-3cb01ba30a32"
+								"id": "471d128c-87d3-4c22-a740-924d8ce43673"
 							}
 						}
 					],
-					"id": "7daa96a5-a7c0-4314-bff1-1a754deb62c8",
+					"id": "bc1cfbaf-d96e-4ebb-b759-6a4621baa6a2",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -807,7 +807,7 @@
 					"response": []
 				}
 			],
-			"id": "ab70e1d5-1518-4cea-bdc3-7f28839003ff"
+			"id": "26f3301b-64f8-4a89-a7cc-87c4fbe96fc1"
 		},
 		{
 			"name": "Ecom User • Private Client",
@@ -847,7 +847,7 @@
 									"pm.collectionVariables.set(\"ECOM_USER_CODE_CHALLENGE\", challenge);"
 								],
 								"type": "text/javascript",
-								"id": "5f8600d3-377a-48e5-a2ee-f3df1efb1f5d"
+								"id": "d95d3f00-c14d-46f6-93ef-11a62436698f"
 							}
 						},
 						{
@@ -860,11 +860,11 @@
 									"pm.environment.set(\"private_ecom_auth_code\", code);"
 								],
 								"type": "text/javascript",
-								"id": "a77cb6e2-4785-4646-aeaf-1ac3f642ed07"
+								"id": "cc7de453-f06b-42d2-8beb-1cfc67841279"
 							}
 						}
 					],
-					"id": "ed47be9a-2f7c-4879-8e4b-e06d432ccc75",
+					"id": "aea5b70d-5b2e-4e81-838f-5eeb9244f63c",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -938,11 +938,11 @@
 									"pm.environment.set(\"private_ecom_access_token\", jsonBody.access_token);"
 								],
 								"type": "text/javascript",
-								"id": "9f246440-97ef-4048-b264-bd420158bc6c"
+								"id": "9d780073-dde6-4509-a24a-7e1f732e2e15"
 							}
 						}
 					],
-					"id": "9a62d4b9-006e-4ad2-b4b0-80b95fc0a542",
+					"id": "7e96cd8c-19c1-4b5c-8583-0bce11f3ee17",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1029,11 +1029,11 @@
 									"pm.environment.set(\"basket_id\", jsonBody.basket_id);"
 								],
 								"type": "text/javascript",
-								"id": "ca91b292-1026-4cc5-9300-7a0619b1783f"
+								"id": "cc552498-fd38-46dd-b853-df44aeca4188"
 							}
 						}
 					],
-					"id": "6860fea0-2a20-4930-bb62-d5779567a673",
+					"id": "07a694ac-2544-4b90-b98d-c777d337184d",
 					"protocolProfileBehavior": {
 						"disabledSystemHeaders": {
 							"content-type": true
@@ -1110,11 +1110,11 @@
 									"});"
 								],
 								"type": "text/javascript",
-								"id": "2223f5fc-b916-450e-a4dc-4f9b4ccf37a3"
+								"id": "5a866594-342e-4a73-8a68-2ae2ff277d3c"
 							}
 						}
 					],
-					"id": "6a67870c-c520-40cc-bf18-cb786cc3eb4f",
+					"id": "3242e2c7-06ab-4caf-9603-eec09595c789",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1172,11 +1172,11 @@
 									"});"
 								],
 								"type": "text/javascript",
-								"id": "b48df2a8-3236-4529-be31-9f2f15292211"
+								"id": "db5a9f7e-c0c1-425f-9d17-dc342f157242"
 							}
 						}
 					],
-					"id": "9ec71a27-785c-4388-91ff-55ad1db40b09",
+					"id": "0fe2b464-3248-4f42-8eb0-80513a526aaf",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1223,11 +1223,11 @@
 									"});"
 								],
 								"type": "text/javascript",
-								"id": "9354bfa3-c4be-46f4-a254-29cb579b9731"
+								"id": "02393055-7548-40f1-8520-f6968b92eaf9"
 							}
 						}
 					],
-					"id": "a3447183-fe5f-4fe8-8f53-7601ca0ec8ab",
+					"id": "c0b13042-405e-44ad-8d30-e397586e126d",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1263,7 +1263,7 @@
 					"response": []
 				}
 			],
-			"id": "247681f2-233a-4eef-8985-62fa65f974ad"
+			"id": "dcd377ff-2467-4498-ba0a-ad7ab13b27c6"
 		},
 		{
 			"name": "Ecom User • Public Client",
@@ -1303,7 +1303,7 @@
 									"pm.collectionVariables.set(\"PUBLIC_ECOM_CODE_CHALLENGE\", challenge);"
 								],
 								"type": "text/javascript",
-								"id": "a0ca530d-c001-4c5e-bd72-feb914954810"
+								"id": "fad9296d-1ffe-4d44-9f5e-af38da662bb7"
 							}
 						},
 						{
@@ -1320,11 +1320,11 @@
 									"pm.environment.set(\"public_ecom_auth_code\", code);"
 								],
 								"type": "text/javascript",
-								"id": "2b982100-816c-4706-b785-7ec5705d83a3"
+								"id": "5603ff2d-e6b9-4b74-a5b1-2210d7f5850a"
 							}
 						}
 					],
-					"id": "32d53904-4715-4230-a892-08949ce2b8cd",
+					"id": "79785ba4-f63e-4272-bd5b-2e4aec482623",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1400,11 +1400,11 @@
 									"pm.environment.set(\"public_ecom_user_access_token\", jsonBody.access_token);"
 								],
 								"type": "text/javascript",
-								"id": "71eb1266-e19d-463c-92ff-0eb8ce234f89"
+								"id": "6feae17d-670f-475d-94c4-3fab7c8030b3"
 							}
 						}
 					],
-					"id": "38cd3ac9-6d6e-4996-a9b7-2d518369cb5b",
+					"id": "e980c91a-3d5b-41a1-b2db-4c0baa6090a5",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1493,11 +1493,11 @@
 									"pm.environment.set(\"basket_id\", jsonBody.basket_id);"
 								],
 								"type": "text/javascript",
-								"id": "ff67559d-45a7-4028-b75d-498738c3f7fb"
+								"id": "992e72ae-64af-4bda-a76b-fd01bb513a44"
 							}
 						}
 					],
-					"id": "e0effe98-1943-4d5a-8031-9223d2f8938f",
+					"id": "14ae9747-201e-47e2-bc4a-eafd7b2c1cf3",
 					"protocolProfileBehavior": {
 						"disabledSystemHeaders": {
 							"content-type": true
@@ -1574,11 +1574,11 @@
 									"});"
 								],
 								"type": "text/javascript",
-								"id": "9225295e-33e6-4b3a-b7ab-693fc891a6a3"
+								"id": "d5bbbb95-7f24-496e-bfe4-c32756ab705c"
 							}
 						}
 					],
-					"id": "a71d9a3e-4953-43d9-b77a-61e1b2f3f493",
+					"id": "768ebd46-5583-4829-9197-fd1998c08b8f",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1636,11 +1636,11 @@
 									"});"
 								],
 								"type": "text/javascript",
-								"id": "75237825-559e-4f8c-a38b-c3a95a5a38b7"
+								"id": "4e26f01c-2afd-4c87-b02c-3ad74fa8a031"
 							}
 						}
 					],
-					"id": "4b672a90-c935-4941-8fbb-b750e495332a",
+					"id": "166afda5-ffd0-4a4a-890d-e09606eb2fee",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1687,11 +1687,11 @@
 									"});"
 								],
 								"type": "text/javascript",
-								"id": "94e58b57-f4a9-4e0d-8b9c-20e5d59404ba"
+								"id": "688eab23-23c3-493d-8546-c4308a4c2004"
 							}
 						}
 					],
-					"id": "5fe00078-fa3b-4656-8df2-579c99f8828f",
+					"id": "9124a436-6fcb-40a6-8105-1bf468d547ca",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1727,7 +1727,7 @@
 					"response": []
 				}
 			],
-			"id": "5bf70e1e-0e7c-4cd2-9aa9-6be6dad914f3"
+			"id": "d1a359ee-83eb-4fb3-bb05-c19f213e86ee"
 		},
 		{
 			"name": "Registered User • Private Client",
@@ -1742,7 +1742,7 @@
 									""
 								],
 								"type": "text/javascript",
-								"id": "d890ba6b-4da9-48d6-b1d7-0e0d3577d9ec"
+								"id": "dc434d20-4681-4e38-b4fb-7bfe478a63be"
 							}
 						},
 						{
@@ -1757,11 +1757,11 @@
 									"pm.environment.set(\"prd_private_registered_auth_code\", code);"
 								],
 								"type": "text/javascript",
-								"id": "4f4f36da-46fe-42dd-b67d-624563187784"
+								"id": "7c457b4e-1ca8-47aa-aa2c-62183cc2c01c"
 							}
 						}
 					],
-					"id": "394c1960-7fdf-4280-9c8f-52d1327dc7f8",
+					"id": "6860779e-b866-4bc8-9841-5fecdb98ba2d",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1822,11 +1822,11 @@
 									"pm.environment.set(\"private_registered_access_token\", jsonBody.access_token);"
 								],
 								"type": "text/javascript",
-								"id": "f851c078-8c7c-43c8-89b8-d468e86069d5"
+								"id": "a3861441-c9d9-412c-8aa9-749db50f926e"
 							}
 						}
 					],
-					"id": "f34ded01-d867-4c97-9a97-8ad9b70b8a2d",
+					"id": "0e605b0a-f2f2-4e18-958f-3830a4fd218e",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1910,11 +1910,11 @@
 									"pm.environment.set(\"basket_id\", jsonBody.basket_id);"
 								],
 								"type": "text/javascript",
-								"id": "7e2446ec-f1bd-4b23-95f6-ab39c39b5f5f"
+								"id": "1fc71d05-f8d0-4128-a3b7-f3dde5a61fae"
 							}
 						}
 					],
-					"id": "fa6d8d57-4206-4760-95fb-896ef46109b2",
+					"id": "c007aee8-8101-40d6-b53a-d06afdc6a6d6",
 					"protocolProfileBehavior": {
 						"disabledSystemHeaders": {
 							"content-type": true
@@ -1991,11 +1991,11 @@
 									"});"
 								],
 								"type": "text/javascript",
-								"id": "dccf456a-1093-4b56-b10e-c7704cbc6d8e"
+								"id": "4687991c-83a2-4361-a22e-8e7ea769468c"
 							}
 						}
 					],
-					"id": "b9391c8f-7c6b-4646-bf6b-abdf0eab2d4c",
+					"id": "e0e6ea5d-c00a-4c89-bea6-7c689bae13be",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -2053,11 +2053,11 @@
 									"});"
 								],
 								"type": "text/javascript",
-								"id": "ba5c0721-7cc8-46c2-bc9b-acf14873649d"
+								"id": "ae6d5da4-ffc7-474b-9db1-191865d6805f"
 							}
 						}
 					],
-					"id": "6559ce77-ae89-4ef7-98cf-16e8c0d8ff41",
+					"id": "cee58bfb-7abc-40b6-9590-4141682a7d8f",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -2104,11 +2104,11 @@
 									"});"
 								],
 								"type": "text/javascript",
-								"id": "ee05b053-e984-4c56-ae2d-0a322a8bb4ca"
+								"id": "33ad69af-33fe-43d1-8657-b1d8792c4985"
 							}
 						}
 					],
-					"id": "5485e672-5529-43cc-bd6b-f881cab79411",
+					"id": "3faf528b-6581-490e-baf0-cad9b81210f3",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -2144,7 +2144,7 @@
 					"response": []
 				}
 			],
-			"id": "ba430385-4762-4170-940c-9e20dee80213"
+			"id": "fdfa48ec-2bde-40d5-bfad-0ec9fe43578b"
 		},
 		{
 			"name": "Registered User • Public Client",
@@ -2184,7 +2184,7 @@
 									"pm.collectionVariables.set(\"PUBLIC_GUEST_CODE_CHALLENGE\", challenge);"
 								],
 								"type": "text/javascript",
-								"id": "f774bc24-6a3e-42c9-a3a1-55e935281e56"
+								"id": "4c2d6e2b-84eb-4cc9-aac9-7bd15748f11b"
 							}
 						},
 						{
@@ -2199,11 +2199,11 @@
 									"pm.environment.set(\"public_registered_auth_code\", code);"
 								],
 								"type": "text/javascript",
-								"id": "d96d42bc-7c6d-4699-92e9-38d3ad171af6"
+								"id": "940e6b46-dcb0-4be1-806f-02a633c3c35b"
 							}
 						}
 					],
-					"id": "73a78564-cec2-4329-b907-06a3f2851857",
+					"id": "b0260607-e290-4e16-a2b1-457d4844cb52",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -2268,11 +2268,11 @@
 									"pm.environment.set(\"public_registered_access_token\", jsonBody.access_token);"
 								],
 								"type": "text/javascript",
-								"id": "1aec9caf-ebc7-4589-9f9e-67cc25a7f99e"
+								"id": "cf3685ba-ba26-4391-a18d-0e6a4e0c43e0"
 							}
 						}
 					],
-					"id": "10629d11-2e54-43f7-92b5-288ba629c6b4",
+					"id": "18cf21c5-3bd1-4c74-a41e-dcd8e749bad0",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -2354,11 +2354,11 @@
 									"pm.environment.set(\"basket_id\", jsonBody.basket_id);"
 								],
 								"type": "text/javascript",
-								"id": "4dd1cbf8-6000-494a-bf06-652bba6d3cbf"
+								"id": "70830f98-ee13-4d6d-8b81-b859754fe705"
 							}
 						}
 					],
-					"id": "aa47deef-3ab8-4beb-8c83-892fd3c1ab69",
+					"id": "22f58da3-95be-4eb2-a74f-0204cdbc1d61",
 					"protocolProfileBehavior": {
 						"disabledSystemHeaders": {
 							"content-type": true
@@ -2435,11 +2435,11 @@
 									"});"
 								],
 								"type": "text/javascript",
-								"id": "da5e6553-d87f-492e-a76a-b6cb8020d63e"
+								"id": "5d3ce97a-8cd0-4dcf-8ffd-3dfc76da8a2a"
 							}
 						}
 					],
-					"id": "e7b7360c-e0ac-40f5-9e53-b1152d133d9c",
+					"id": "0f898d47-504a-4ac0-bc72-17fd471b71c8",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -2497,11 +2497,11 @@
 									"});"
 								],
 								"type": "text/javascript",
-								"id": "78b1b950-96da-498e-a115-0de3cd973ea0"
+								"id": "ea9fd207-fc8f-4133-a467-12d434d6b940"
 							}
 						}
 					],
-					"id": "3c5112e6-b1cc-4cb1-8f45-736698dccd46",
+					"id": "889ebcfd-6b7d-47a7-833a-73c2c05035a6",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -2548,11 +2548,11 @@
 									"});"
 								],
 								"type": "text/javascript",
-								"id": "db19881b-b4d7-49a6-ae68-a7e56e0c1875"
+								"id": "af150cd6-34a1-4ee7-bdfa-991dea0f6598"
 							}
 						}
 					],
-					"id": "f5130a93-4ffc-4af0-af53-faf7b8723e1b",
+					"id": "f350480a-1447-419c-b6e0-3556f9584cdf",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -2588,7 +2588,7 @@
 					"response": []
 				}
 			],
-			"id": "d82926e6-9b7b-4edc-9ac7-0dcd8aa5004d"
+			"id": "22e190d2-ef87-46fe-8397-fb9283ca568b"
 		}
 	],
 	"event": [
@@ -2599,7 +2599,7 @@
 				"exec": [
 					""
 				],
-				"id": "cf732faa-38c9-4cb3-abb8-1c47a201b498"
+				"id": "0adb4519-d219-4390-86a3-a5c4882f8ec8"
 			}
 		},
 		{
@@ -2609,7 +2609,7 @@
 				"exec": [
 					""
 				],
-				"id": "d71a4ce1-43c2-4fac-8fd1-0c3575e372e4"
+				"id": "0742b04b-4c97-49a1-8e6c-49f55d5d2f2f"
 			}
 		}
 	],

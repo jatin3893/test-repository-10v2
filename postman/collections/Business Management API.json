@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "f3695502-c384-4e47-8e48-8a7022531097",
+		"_postman_id": "6f953307-3c19-4d0a-9f65-fa78077b7c05",
 		"name": "Business Management API",
 		"description": "The WhatsApp Business Management API is based on [Facebook's Graph API](https://developers.facebook.com/docs/graph-api/). API calls are versioned, and the availability of each version is detailed in the [Graph API Changelog](https://developers.facebook.com/docs/graph-api/changelog). Some functionality is also available under Facebook's Marketing API, which follows some slightly different rules around versioning but uses the same technical infrastructure and authentication framework. This guide is a brief introduction to making API calls and some architectural decisions you need to consider when building your integration.\n\n# Before You Start\nTo interact with Facebook Graph API, you must have a registered Facebook App. If you already have an App that you want to use with WhatsApp, you can skip the next section. Otherwise, proceed with the next section and register an App.\n\n## Register your App\nWe recommend this setup to be done by someone with an [**admin** role in the Business Manager](https://www.facebook.com/business/help/442345745885606?id=180505742745347) containing your WhatsApp Business Accounts. This avoids permission errors.\n\n1. Register a Facebook app on the [Facebook Developers website](https://developers.facebook.com/) using your personal profile (the app eventually belongs to the Business Manager at the end of the process). Your app type needs to be `Business` or `None` to use the WhatsApp Business Management API. You can find more information on App Types in the [App Development documentation](https://developers.facebook.com/docs/development/create-an-app/app-dashboard/app-types).\n\n2. Go to [https://developers.facebook.com/apps/your-app-id/settings/advanced](https://developers.facebook.com/apps/your-app-id/settings/advanced) to import the app into your Business Manager. The Business Manager you use contains your WhatsApp Business Accounts. Make sure to replace **`your-app-id`** with your actual app ID.\n\n3. Additional instructions many apply to your App location depending on your {geography|locale} and regulations that apply there (e.g. the [European Union's Genera Data Protection Regional or GDPR](https://gdpr-info.eu/)).\n\nFor more information about registering as a developer, creating your app, app roles, app modes, please see the [App Development](https://developers.facebook.com/docs/development) documentation.\n\n## App Review\n\nWhen you initially register your app it will be set to Development mode. Apps in Development mode are automatically approved for all login permissions, features, and product-specific features for testing purposes. However, these permissions are limited as the app can only use those permissions to access data of users with roles in your app, like admins and developers.\n\nIn order to switch your Facebook app from Development mode to Live mode, it must go through App Review. If you want higher rate limits or would like to access a WhatsApp Business Account not in your Business Manager, you need to go through App Review.\n\n## Implementing the API\nTo make calls to this API's endpoints, you need to do the following:\n\n1. Acquire an access token through a System User or [Facebook Login](https://developers.facebook.com/docs/facebook-login/access-tokens).\n2. Use Postman or the tool of your choice to make API calls.\n\nWe recommend [reading Using the Graph API](https://developers.facebook.com/docs/graph-api/using-graph-api) documentation to understand the API's base concepts before consulting the API Reference to perform actions.\n\n# What's New for Business Management API\n\n### September 7th 2022\n\n**Marketing Opt-Out Button Template**\n\nYou can give customers an option to opt-out from your marketing messages. This will prevent certain customers from blocking your business. A new template request in **API Reference**->**Message Templates**->**Send Message Template Opt-Out Button** shows how to implement this feature.\n\nFor more information, see [Best Practices for Marketing Templates](https://developers.facebook.com/docs/whatsapp/business-management-api/message-templates#best-practices-for-marketing-templates).\n\n> Your business must take the necessary steps to stop sending marketing messages to customers who have chosen to opt-out from receiving them. Not doing so will negatively impact your block rate and quality score.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_uid": "869033-f3695502-c384-4e47-8e48-8a7022531097"
+		"_uid": "869033-6f953307-3c19-4d0a-9f65-fa78077b7c05"
 	},
 	"item": [
 		{
@@ -15,7 +15,7 @@
 					"item": [
 						{
 							"name": "Get WABA",
-							"id": "be7bc662-4768-45d3-849a-5254971ac7b3",
+							"id": "fc3c5542-f35d-4aa5-a4bf-1343e2ac1a7e",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -45,7 +45,7 @@
 							},
 							"response": [
 								{
-									"id": "1b89848d-7b2a-4b27-ae0f-32476ff26b93",
+									"id": "06f1dec2-6488-4d0e-a90c-67afe59b6b38",
 									"name": "Get WABA",
 									"originalRequest": {
 										"method": "GET",
@@ -79,6 +79,7 @@
 									"status": "OK",
 									"code": 200,
 									"_postman_previewlanguage": "json",
+									"_postman_previewtype": "html",
 									"header": [
 										{
 											"key": "Content-Type",
@@ -93,7 +94,7 @@
 							]
 						}
 					],
-					"id": "8e531493-7f5a-4834-8172-764ed5e426ad",
+					"id": "e41125a2-797a-4f71-b0e7-090d466b0b7c",
 					"description": "Use the `analytics` field to get the number of messages sent and delivered in addition to other metrics of a [WhatsApp Business Account](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account).\n\nFor an example request that uses metrics, see **API Reference**->**WABA Account**->**Get Insights**.\n\nFor more information related to using Account Metrics, see [Get Account Metrics](https://developers.facebook.com/docs/whatsapp/business-management-api/analytics).",
 					"event": [
 						{
@@ -103,7 +104,7 @@
 								"exec": [
 									""
 								],
-								"id": "85eb906a-2bd2-4a58-bb15-0fe0e6d0dda2"
+								"id": "b64ad06c-2438-4a33-8b84-c37e463047e0"
 							}
 						},
 						{
@@ -113,7 +114,7 @@
 								"exec": [
 									""
 								],
-								"id": "7bdecffe-11c0-43b4-95d9-2ff3d9cef61b"
+								"id": "0dbd466d-95b7-454a-9b1e-5723be6365e3"
 							}
 						}
 					]
@@ -123,7 +124,7 @@
 					"item": [
 						{
 							"name": "Get Message Template Namespace",
-							"id": "952e7734-ed61-45e2-b2f6-073e45133707",
+							"id": "781dc490-b039-4728-be59-a1834b82ce57",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -148,7 +149,7 @@
 							},
 							"response": [
 								{
-									"id": "d440ccb6-7b25-4912-8ee6-1eefb1a18a9e",
+									"id": "c24b094f-a60a-42a4-b538-b08066557ff7",
 									"name": "Get Message Template Namespace",
 									"originalRequest": {
 										"method": "GET",
@@ -177,6 +178,7 @@
 									"status": "OK",
 									"code": 200,
 									"_postman_previewlanguage": "json",
+									"_postman_previewtype": "html",
 									"header": [
 										{
 											"key": "Content-Type",
@@ -192,7 +194,7 @@
 						},
 						{
 							"name": "Get Message Template",
-							"id": "c66a2e4d-7686-4365-9567-db2d913478a7",
+							"id": "d8aba122-aa2d-4ddb-89f8-b9795256aec1",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -217,7 +219,7 @@
 							},
 							"response": [
 								{
-									"id": "3cebb0a0-c84e-4b57-9fae-0dc04a7c942f",
+									"id": "f0203bb0-7b08-4d36-acdc-a09899c75c58",
 									"name": "Get Message Template",
 									"originalRequest": {
 										"method": "GET",
@@ -252,6 +254,7 @@
 									"status": "OK",
 									"code": 200,
 									"_postman_previewlanguage": "json",
+									"_postman_previewtype": "html",
 									"header": [
 										{
 											"key": "Content-Type",
@@ -267,7 +270,7 @@
 						},
 						{
 							"name": "Create Message Template",
-							"id": "0b38351d-5bba-41ee-b094-cc07a5648552",
+							"id": "3ec65d25-fa3f-4908-9d5f-b642c537eae9",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -307,7 +310,7 @@
 							},
 							"response": [
 								{
-									"id": "5e41cd76-4153-4dd5-ace2-561c956f9a2d",
+									"id": "97a0c1eb-36e4-4f38-af5b-d3d7e573c140",
 									"name": "Create Message Template",
 									"originalRequest": {
 										"method": "POST",
@@ -351,6 +354,7 @@
 									"status": "OK",
 									"code": 200,
 									"_postman_previewlanguage": "json",
+									"_postman_previewtype": "html",
 									"header": [
 										{
 											"key": "Content-Type",
@@ -363,7 +367,7 @@
 									"body": "{\n    \"id\": \"123456789\"\n}"
 								},
 								{
-									"id": "d88ee387-97d8-4f44-97e5-3f6a92808915",
+									"id": "971c088d-e6aa-4112-91db-71523da3d119",
 									"name": "Create Media Message Template",
 									"originalRequest": {
 										"method": "POST",
@@ -407,6 +411,7 @@
 									"status": "OK",
 									"code": 200,
 									"_postman_previewlanguage": "json",
+									"_postman_previewtype": "html",
 									"header": [
 										{
 											"key": "Content-Type",
@@ -419,7 +424,7 @@
 									"body": "{\n    \"id\": \"123456789\"\n}"
 								},
 								{
-									"id": "7ce70f30-f0cb-465d-a5c7-31e786bcbded",
+									"id": "cf6d18f8-2396-4d75-9bb5-86ac18d04ae0",
 									"name": "Create Interactive Message Template",
 									"originalRequest": {
 										"method": "POST",
@@ -463,6 +468,7 @@
 									"status": "OK",
 									"code": 200,
 									"_postman_previewlanguage": "json",
+									"_postman_previewtype": "html",
 									"header": [
 										{
 											"key": "Content-Type",
@@ -478,7 +484,7 @@
 						},
 						{
 							"name": "Delete Message Template",
-							"id": "b1592f76-4c10-4be8-93db-34733d36673c",
+							"id": "f859da5e-b671-440f-9eeb-fbc90e144cbb",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -509,7 +515,7 @@
 							},
 							"response": [
 								{
-									"id": "9f1a36ab-5044-46a0-b14a-ac7f4024b56f",
+									"id": "f83f212b-e984-48b8-815e-a510951a8738",
 									"name": "Delete Message Template",
 									"originalRequest": {
 										"method": "DELETE",
@@ -544,6 +550,7 @@
 									"status": "OK",
 									"code": 200,
 									"_postman_previewlanguage": "json",
+									"_postman_previewtype": "html",
 									"header": [
 										{
 											"key": "Content-Type",
@@ -558,7 +565,7 @@
 							]
 						}
 					],
-					"id": "3815b3fe-6247-4777-ac21-f27fc7b3301f",
+					"id": "9de1003b-4190-42f3-8446-079abbdca0c5",
 					"description": "For any notifications sent using the WhatsApp Business API, a message template is required. Those templates can be created either in the Business Manager's user interface (`https://business.facebook.com/wa/manage/message-templates/?business_id=your-business-id`) or through the [WhatsApp Business Management API](https://developers.facebook.com/docs/whatsapp/business-management-api).\n\nSome important items to note:\n\n1. We support **create** and **delete**. Editing a template is not yet available.\n2. The **Create** API call allows you to add a message template in a specific language.\n3. The **Delete** API call allows you to delete all translations of a message template you specify by name.\n4. When you create a message template, make sure to be consistent when providing translations.\n   * If you don't do that, you may see a structure unavailable error and notifications won't be delivered.\n   * For more information, see [Why am I seeing `structure unavailable` errors in my callback?](https://developers.facebook.com/docs/whatsapp/faq/#faq_259315284718276).\n\nWe recommend using a test account when learning to use the WhatsApp Business Management API."
 				},
 				{
@@ -566,7 +573,7 @@
 					"item": [
 						{
 							"name": "Get All Phone Numbers",
-							"id": "bca84636-ff7f-448b-b84e-9f869e43e41a",
+							"id": "8b4277ec-1cb3-4a4a-8471-0ab44da19831",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -591,7 +598,7 @@
 							},
 							"response": [
 								{
-									"id": "135d13b7-e701-4b52-bac0-0139e1b7d71c",
+									"id": "ef393d93-75cc-4409-8763-9133cd63f6ae",
 									"name": "Get All Phone Numbers",
 									"originalRequest": {
 										"method": "GET",
@@ -620,6 +627,7 @@
 									"status": "OK",
 									"code": 200,
 									"_postman_previewlanguage": "json",
+									"_postman_previewtype": "html",
 									"header": [
 										{
 											"key": "Content-Type",
@@ -632,7 +640,7 @@
 									"body": "[\n    {\n        \"verified_name\": \"Jasper's Market\",\n        \"display_phone_number\": \"+1 631-555-5555\",\n        \"id\": \"1906385232743451\",\n        \"quality_rating\": \"GREEN\"\n    },\n    {\n        \"verified_name\": \"Jasper's Ice Cream\",\n        \"display_phone_number\": \"+1 631-555-5556\",\n        \"id\": \"1913623884432103\",\n        \"quality_rating\": \"NA\"\n    }\n]"
 								},
 								{
-									"id": "51171114-f145-4129-a8c7-508fc87ee9f7",
+									"id": "7e132efe-35cb-4499-a909-e5e9a72caad9",
 									"name": "Filter Phone Numbers by account_mode",
 									"originalRequest": {
 										"method": "GET",
@@ -675,6 +683,7 @@
 									"status": "OK",
 									"code": 200,
 									"_postman_previewlanguage": "json",
+									"_postman_previewtype": "html",
 									"header": [
 										{
 											"key": "Content-Type",
@@ -690,7 +699,7 @@
 						},
 						{
 							"name": "Get Single Phone Number",
-							"id": "d9fa6791-4f72-49e7-91e5-682cdc515728",
+							"id": "a9880de8-f039-41f5-af14-f10436c710f9",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -714,7 +723,7 @@
 							},
 							"response": [
 								{
-									"id": "e2e3a8ce-39eb-49ec-bffa-f1a82bdd0a93",
+									"id": "9c73951e-84a9-4423-8b7a-0aee8993adf4",
 									"name": "Get Single Phone Number",
 									"originalRequest": {
 										"method": "GET",
@@ -742,6 +751,7 @@
 									"status": "OK",
 									"code": 200,
 									"_postman_previewlanguage": "json",
+									"_postman_previewtype": "html",
 									"header": [
 										{
 											"key": "Content-Type",
@@ -756,7 +766,7 @@
 							]
 						}
 					],
-					"id": "276f7bc5-52bf-4061-a3de-cb0542598c80",
+					"id": "e720fb75-4b29-4b54-b834-e7e1c730f96e",
 					"description": "The WhatsApp Business Management API does not currently allow associating new phone numbers with a WhatsApp Business Account. This endpoint only allows reading information about phones registered."
 				},
 				{
@@ -764,7 +774,7 @@
 					"item": [
 						{
 							"name": "Create Message QRDLS",
-							"id": "df8afd1b-9b2a-43b6-af2a-b2a713a9ea93",
+							"id": "ea38a71a-a4db-4469-9e06-396b86f8cccb",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -798,7 +808,7 @@
 							},
 							"response": [
 								{
-									"id": "b575164d-3196-47d1-b6db-8be7440a78cd",
+									"id": "64c5153b-ed01-41fd-b7d4-1e501cd8cc2f",
 									"name": "Create Message QRDLS",
 									"originalRequest": {
 										"method": "POST",
@@ -842,6 +852,7 @@
 									"status": "OK",
 									"code": 200,
 									"_postman_previewlanguage": "json",
+									"_postman_previewtype": "html",
 									"header": [
 										{
 											"key": "Content-Type",
@@ -857,7 +868,7 @@
 						},
 						{
 							"name": "Get Message QRDLS",
-							"id": "ba3b986f-5b3e-42d4-895c-00129b66044a",
+							"id": "92326f89-7317-43d1-ad57-e2b21a93f1a3",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -897,7 +908,7 @@
 							},
 							"response": [
 								{
-									"id": "c3b37c7f-86b1-4117-a532-27712442221a",
+									"id": "862c7832-5c60-45e0-835d-e64f21cd1f6c",
 									"name": "Get Message QRDLS",
 									"originalRequest": {
 										"method": "GET",
@@ -932,6 +943,7 @@
 									"status": "OK",
 									"code": 200,
 									"_postman_previewlanguage": "json",
+									"_postman_previewtype": "html",
 									"header": [
 										{
 											"key": "Content-Type",
@@ -947,7 +959,7 @@
 						},
 						{
 							"name": "Get Message QRDLS By ID",
-							"id": "ecd8e045-2294-4ac4-9f92-3635d504469f",
+							"id": "0fd28e2c-0acc-4c5a-a75e-779595dba8aa",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -982,7 +994,7 @@
 							},
 							"response": [
 								{
-									"id": "9a9aee52-9356-40ab-a876-9dc3f24b7bff",
+									"id": "41372bb1-af6f-43d5-a596-cddba84974ec",
 									"name": "Get Message QRDLS By ID",
 									"originalRequest": {
 										"method": "GET",
@@ -1021,6 +1033,7 @@
 									"status": "OK",
 									"code": 200,
 									"_postman_previewlanguage": "json",
+									"_postman_previewtype": "html",
 									"header": [
 										{
 											"key": "Content-Type",
@@ -1036,7 +1049,7 @@
 						},
 						{
 							"name": "Update Message QRDLS",
-							"id": "9bde1615-82b3-4335-9489-34f41e75932d",
+							"id": "7abb8e6b-970e-4695-9077-78319402319b",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -1076,7 +1089,7 @@
 							},
 							"response": [
 								{
-									"id": "16e690a2-25f3-4740-b757-85824ac7f173",
+									"id": "2207148e-2425-4968-a693-49362fe715ca",
 									"name": "Update Message QRDLS",
 									"originalRequest": {
 										"method": "POST",
@@ -1126,6 +1139,7 @@
 									"status": "OK",
 									"code": 200,
 									"_postman_previewlanguage": "json",
+									"_postman_previewtype": "html",
 									"header": [
 										{
 											"key": "Content-Type",
@@ -1141,7 +1155,7 @@
 						},
 						{
 							"name": "Delete Message QRDLS",
-							"id": "f5224397-b876-4c3e-a188-24dee04499ca",
+							"id": "65b4ac24-a2c1-4575-9cad-85721b384d0e",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -1172,7 +1186,7 @@
 							},
 							"response": [
 								{
-									"id": "cd65dfb6-ad2f-4dcf-ba58-0acdba177af8",
+									"id": "421dd649-ad09-45d8-98bb-2bfac0f094e3",
 									"name": "Delete Message QRDLS",
 									"originalRequest": {
 										"method": "DELETE",
@@ -1207,6 +1221,7 @@
 									"status": "OK",
 									"code": 200,
 									"_postman_previewlanguage": "json",
+									"_postman_previewtype": "html",
 									"header": [
 										{
 											"key": "Content-Type",
@@ -1221,7 +1236,7 @@
 							]
 						}
 					],
-					"id": "1f9ea94b-577f-4e13-8aab-b9fb0394794f",
+					"id": "e5874f64-342e-4374-9949-a48b84ce9bfe",
 					"description": "Customers can scan a QR code from their phone to quickly begin a conversation with your business. The WhatsApp Business Management API allows you to create and access these QR codes and associated short links. If you wish to use the Business Manager to manage your QR codes, see [Manage your WhatsApp QR Codes](https://www.facebook.com/business/help/890732351439459).\n\n## Before You Start\n* Register the phone number you are creating the short link/QR code message for\n* Get an access token\n* API calls to the `message_qrdls` edge requires a `phone-number-id`, which is returned as the `id` when you make a [`phone_numbers` request](https://developers.facebook.com/docs/whatsapp/business-management-api/phone-numbers) to the [WhatsApp Business Management API](https://developers.facebook.com/docs/whatsapp/business-management-api).",
 					"event": [
 						{
@@ -1231,7 +1246,7 @@
 								"exec": [
 									""
 								],
-								"id": "2f14fe50-56eb-4673-af75-d7a22177cac1"
+								"id": "5a9ad1d4-1b5c-4233-81f1-a295849affa1"
 							}
 						},
 						{
@@ -1241,7 +1256,7 @@
 								"exec": [
 									""
 								],
-								"id": "f00efa18-0828-4dff-9d00-8a981738dc97"
+								"id": "f605d091-5cf3-4c62-a794-2b3e61630ac7"
 							}
 						}
 					]
@@ -1249,7 +1264,7 @@
 				{
 					"name": "Monitor Quality Signals",
 					"item": [],
-					"id": "58049034-bd5f-4e41-91c7-a0d015206410",
+					"id": "5d6a91a3-126a-48e2-9cfd-ea5a01f9efab",
 					"description": "See [How To Monitor Quality Signals](https://developers.facebook.com/docs/whatsapp/guides/how-to-monitor-quality-signals)."
 				},
 				{
@@ -1258,29 +1273,29 @@
 						{
 							"name": "Step 1: Set up Endpoint and Configure Webhooks",
 							"item": [],
-							"id": "3d589e93-e318-4aff-8aaf-fd3963e1acd4",
+							"id": "c8cd66f1-a9b8-422f-b645-45431a483103",
 							"description": "Follow our [Webhooks Getting Started](https://developers.facebook.com/docs/graph-api/webhooks/getting-started) guide to create your endpoint and configure your Webhooks."
 						},
 						{
 							"name": "Step 2: Subscribe your App to your WABA",
 							"item": [],
-							"id": "f716484f-22bf-4168-a009-9dc29d86a57f",
+							"id": "5d09e5f9-ee96-4e8a-910e-4c0dad38a0c5",
 							"description": "You need to subscribe your app to Webhook notifications for the WhatsApp Business Account. You can subscribe in two different ways:\n\n*   [Using API Calls](https://developers.facebook.com/docs/graph-api/webhooks/getting-started/webhooks-for-whatsapp#create-a-subscription)\n*   [Using Graph API Explorer](https://developers.facebook.com/docs/graph-api/webhooks/getting-started/webhooks-for-whatsapp#explorer)"
 						},
 						{
 							"name": "Step 3: Signup for Account Updates",
 							"item": [],
-							"id": "faa24da2-8459-4d00-857f-0e95d25037ad",
+							"id": "54595c49-a4ae-42ea-8237-a50c67f844da",
 							"description": "Now that your app has signed up to receive Webhooks related to your WABA, you can refine which types of updates you want to receive. To track a WABA’s status, you need to select the account_update option. This way, you will be notified when a WABA has violated WhatsApp policies.\n\nTo select this option, go to your App Dashboard and find the **Settings** option. You will see a Webhooks section with all the information you provided in the previous steps. Find **Webhook fields**, and click **Manage**. A dialog box will appear with all the fields you can subscribe to. Click **Subscribe** for **`account_update`**.\n\nNow, every time your WABA has violated a policy, you will get a notification that looks like the following:\n\n``` json\n{\n  \"object\": \"whatsapp_business_account\",\n  \"entry\": [\n    {\n      \"id\": \"whatsapp-business-account-id\",\n      \"time\": 1604703058,\n      \"changes\": [\n        {\n          \"field\": \"account_update\",\n          \"value\": {\n            \"phone_number\": \"16505551111\",\n            \"event\": \"ACCOUNT_VIOLATION\",\n            \"violation_info\": {\n                \"violation_type\": \"HARASSMENT\",\n            }\n          }\n        }\n      ]\n    }\n  ]\n}\n\n```\n\nSee [WhatsApp Business Platform Policy Violations](https://developers.facebook.com/docs/whatsapp/overview/policy-enforcement/violations) for a listing of all platform policy violations."
 						},
 						{
 							"name": "Step 4: Track WABA Restrictions",
 							"item": [],
-							"id": "123cece5-1f9f-4205-b461-89ae2a95a0d8",
+							"id": "82ee18fe-52e4-4b41-ba5f-c0eb82f878e3",
 							"description": "You should keep an eye on your Webhooks to check if your WABA has been restricted due to policy violations. If a restriction has been imposed, you get a Webhook that includes the restriction_info field, inside the value object. The restriction_info field lists all restrictions imposed on your account and when those restrictions expire.\n\n``` json\n{  \n  \"field\": \"account_update\",  \n  \"value\": {  \n    \"phone_number\": \"<PHONE_NUMBER>\",  \n    \"event\": \"<ACCOUNT_RESTRICTION>\",  \n    \"restriction_info\":[  \n      {  \n        \"restriction_type\": \"<RESTRICTION_ON_ADD_PHONE_NUMBER_ACTION>\",  \n        \"expiration\": TIMESTAMP  \n      },  \n    ]  \n  }  \n}\n\n```\n\nYour WABA may receive one or more restrictions due to policy violations. In the following example, the Webhook reports that a WABA has been restricted from adding new phone numbers:\n\n``` json\n{\n  \"field\": \"account_update\",\n  \"value\": {\n    \"phone_number\": \"<PHONE_NUMBER>\",\n    \"event\": \"<ACCOUNT_RESTRICTION>\",\n    \"restriction_info\": [\n      {\n        \"restriction_type\": \"<RESTRICTED_BIZ_INITIATED_MESSAGING>\",\n        \"expiration\": TIMESTAMP\n      },\n    ]\n  }\n}\n\n```\n\nFinally, you see a WABA that is no longer allowed to respond to [user-initiated messages](https://developers.facebook.com/docs/whatsapp/pricing#how-it-works):\n\n``` json\n{\n  \"field\": \"account_update\",\n  \"value\": {\n    \"phone_number\": \"<PHONE_NUMBER>\",\n    \"event\": \"<ACCOUNT_RESTRICTION>\",\n    \"restriction_info\": [{\n        \"restriction_type\": \"<RESTRICTED_CUSTOMER_INITIATED_MESSAGING>\",\n        \"expiration\": TIMESTAMP\n      }\n    ]\n  }\n}\n```"
 						}
 					],
-					"id": "71a0b34e-cac2-4b3f-83c3-f2ee2938a353",
+					"id": "7054f349-2dc1-4e1c-b8a6-0ed0a0f41bd3",
 					"description": "Businesses can integrate with Webhooks to get real-time notifications about changes to a WhatsApp Business Account (WABA), including when a business has [violated a WhatsApp policy](https://developers.facebook.com/docs/whatsapp/overview/policy-enforcement). This guide teaches you how to set up your Webhooks to receive these notifications so your business can quickly adjust behavior to avoid additional warnings and/or enforcement actions.\n\n**Before You Start**\n\nTo complete this guide you need to [register as a Facebook Developer](https://developers.facebook.com/docs/development/register/). Once you are registered, you need to set up a [Facebook Business Manager account](https://www.facebook.com/business/help/1710077379203657) and a [Facebook for Developers](https://www.facebook.com/business/help/1710077379203657) App.\n\nWhen creating your Facebook app, make sure you select the [**Business** type](https://developers.facebook.com/docs/development/create-an-app/app-dashboard/app-types#business) and [link your new app with your Facebook Business Manager](https://www.facebook.com/business/help/2199735813629697).\n\nOnce you have created the app, add WhatsApp as a product to your application. To add WhatsApp as a product:\n\n*   Go to [developers.facebook.com/apps](https://developers.facebook.com/apps) and click app. You will be redirected to the app dashboard for your app.\n*   Once inside the dashboard, find **Products** on the left side panel and click **Add Product**. You will then be presented with a list of Facebook products that can be added to an app.\n*   Find **WhatsApp** and click **Set Up**. *If you don’t see WhatsApp as an option, reach out to your Facebook representative*.\n    \n\nAdditionally, make sure your app has completed [App Review](https://developers.facebook.com/docs/app-review) and requested the **`whatsapp_business_management`** permission.",
 					"auth": {
 						"type": "noauth"
@@ -1293,7 +1308,7 @@
 								"exec": [
 									""
 								],
-								"id": "c83c2b72-f833-4fe5-8dd9-309b5e75d032"
+								"id": "cb8045b6-17d3-4c59-9209-4d1ca1004830"
 							}
 						},
 						{
@@ -1303,13 +1318,13 @@
 								"exec": [
 									""
 								],
-								"id": "db11a0b6-c278-428f-9c52-82854e4d1469"
+								"id": "89b02eb1-d29a-4e42-8019-0540c50ced2d"
 							}
 						}
 					]
 				}
 			],
-			"id": "31fb8b7f-95cc-4968-92d9-bc094a999e95",
+			"id": "c094e37b-14e3-4393-9fae-c7062945ee8c",
 			"description": "Use these guides to help you perform common actions using the WhatsApp Business Management API.",
 			"auth": {
 				"type": "noauth"
@@ -1322,7 +1337,7 @@
 						"exec": [
 							""
 						],
-						"id": "07584c03-d71d-465d-8bb6-cd9c0a57cb3f"
+						"id": "8db20e60-c3d2-4a0c-9d28-67eb0f19552e"
 					}
 				},
 				{
@@ -1332,7 +1347,7 @@
 						"exec": [
 							""
 						],
-						"id": "9ea3ae9e-3560-415c-b0bf-59d634109d95"
+						"id": "1ff29330-8ac3-4429-8467-b654b77c1d8a"
 					}
 				}
 			]
@@ -1345,7 +1360,7 @@
 					"item": [
 						{
 							"name": "Get WABA",
-							"id": "0f75ccf6-ba79-4e86-97ff-7f0442971220",
+							"id": "45c0baf1-4806-43e5-aec2-32f0294d89ea",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -1369,7 +1384,7 @@
 							},
 							"response": [
 								{
-									"id": "8c1e7476-d0bc-4d62-8359-ef0d0b68dada",
+									"id": "9e94bae2-37ea-41d8-8169-13bf44261111",
 									"name": "Get WABA",
 									"originalRequest": {
 										"method": "GET",
@@ -1397,6 +1412,7 @@
 									"status": "OK",
 									"code": 200,
 									"_postman_previewlanguage": "json",
+									"_postman_previewtype": "html",
 									"header": [
 										{
 											"key": "Content-Type",
@@ -1412,7 +1428,7 @@
 						},
 						{
 							"name": "Get Insights",
-							"id": "b4cd77fd-9614-469d-baf9-a217f76cda8c",
+							"id": "03b56bb4-449e-4c72-89a0-6040191d99b3",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -1441,7 +1457,7 @@
 							},
 							"response": [
 								{
-									"id": "aa9a9257-2536-404f-a97c-0ac4381c4268",
+									"id": "ee5db962-9b71-4a63-bf43-7b904a2164ad",
 									"name": "Get Insights (analytics) from the WABA ID for a 24 hour period",
 									"originalRequest": {
 										"method": "GET",
@@ -1475,6 +1491,7 @@
 									"status": "OK",
 									"code": 200,
 									"_postman_previewlanguage": "json",
+									"_postman_previewtype": "html",
 									"header": [
 										{
 											"key": "Content-Type",
@@ -1489,7 +1506,7 @@
 							]
 						}
 					],
-					"id": "27bfd4b8-86ad-4874-8c15-a03897a87565",
+					"id": "cb14340e-1be6-452a-941e-4758315b316e",
 					"description": "This section presents a list of WhatsApp Business Account APIs available for Postman."
 				},
 				{
@@ -1497,7 +1514,7 @@
 					"item": [
 						{
 							"name": "Get Single Phone Number",
-							"id": "dd1042ac-a84f-4cec-a318-8519d8de5165",
+							"id": "c8535dbe-f0e0-4e26-ad79-639a22b3ac6d",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -1521,7 +1538,7 @@
 							},
 							"response": [
 								{
-									"id": "94d93e3e-cbb7-43b0-a805-722c3a529680",
+									"id": "8e374790-bf29-45e1-aa26-0a89aacbade2",
 									"name": "Get Single Phone Number",
 									"originalRequest": {
 										"method": "GET",
@@ -1549,6 +1566,7 @@
 									"status": "OK",
 									"code": 200,
 									"_postman_previewlanguage": "json",
+									"_postman_previewtype": "html",
 									"header": [
 										{
 											"key": "Content-Type",
@@ -1564,7 +1582,7 @@
 						},
 						{
 							"name": "Get All Phone Numbers",
-							"id": "2285c4b6-792e-42db-bc30-1ad31deeb6b5",
+							"id": "aa5a1a12-ae65-498e-9fc7-a1f9936b7919",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -1589,7 +1607,7 @@
 							},
 							"response": [
 								{
-									"id": "9e79af2d-a255-464b-8f50-6092c45e1ef4",
+									"id": "bc11dcce-669e-46ad-af85-c7fdb799cb3d",
 									"name": "Get All Phone Numbers",
 									"originalRequest": {
 										"method": "GET",
@@ -1618,6 +1636,7 @@
 									"status": "OK",
 									"code": 200,
 									"_postman_previewlanguage": "json",
+									"_postman_previewtype": "html",
 									"header": [
 										{
 											"key": "Content-Type",
@@ -1632,7 +1651,7 @@
 							]
 						}
 					],
-					"id": "ba82f3fb-cfe7-462a-ab29-8354051daa86",
+					"id": "d247315e-3f76-4fbb-a960-bcd62e18c7ad",
 					"description": "This section presents a list of Phone Number APIs available for Postman."
 				},
 				{
@@ -1640,7 +1659,7 @@
 					"item": [
 						{
 							"name": "Get Message Templates",
-							"id": "58b28181-5ae7-4a18-8068-ec15e99733b9",
+							"id": "ffb63f06-62c8-4cfa-9e3d-00cd066ab5ff",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -1665,7 +1684,7 @@
 							},
 							"response": [
 								{
-									"id": "927aacf2-7a97-40bc-abc0-ceecdc8761f5",
+									"id": "3ea3e0eb-112b-4033-b848-bb361a2b9d2d",
 									"name": "Get Message Templates",
 									"originalRequest": {
 										"method": "GET",
@@ -1700,6 +1719,7 @@
 									"status": "OK",
 									"code": 200,
 									"_postman_previewlanguage": "json",
+									"_postman_previewtype": "html",
 									"header": [
 										{
 											"key": "Content-Type",
@@ -1715,7 +1735,7 @@
 						},
 						{
 							"name": "Get Message Template Namespace",
-							"id": "1ad83fc4-0010-41ff-af27-9dd27f51612b",
+							"id": "691a2838-8eec-4022-b933-087946caa90c",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -1744,7 +1764,7 @@
 							},
 							"response": [
 								{
-									"id": "5d6e7e1b-41a5-4052-92cc-757867bfc3b1",
+									"id": "9164d9de-589b-429a-a9b3-514a1b7aed17",
 									"name": "Get Message Template Namespace",
 									"originalRequest": {
 										"method": "GET",
@@ -1778,6 +1798,7 @@
 									"status": "OK",
 									"code": 200,
 									"_postman_previewlanguage": "json",
+									"_postman_previewtype": "html",
 									"header": [
 										{
 											"key": "Content-Type",
@@ -1793,7 +1814,7 @@
 						},
 						{
 							"name": "Create Message Template",
-							"id": "9d3c6728-3f50-4040-98b5-9a61c2ddf5d5",
+							"id": "a3cc497c-0abf-4e16-81c1-7387c8f88145",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -1833,7 +1854,7 @@
 							},
 							"response": [
 								{
-									"id": "4b154a91-2521-4b46-a780-a8be1cfc11cf",
+									"id": "1046e709-7b54-416b-bea0-ea019fd877f1",
 									"name": "Create Message Template",
 									"originalRequest": {
 										"method": "POST",
@@ -1877,6 +1898,7 @@
 									"status": "OK",
 									"code": 200,
 									"_postman_previewlanguage": "json",
+									"_postman_previewtype": "html",
 									"header": [
 										{
 											"key": "Content-Type",
@@ -1892,7 +1914,7 @@
 						},
 						{
 							"name": "Create Media Message Template",
-							"id": "d4549340-dcf1-4d99-a6b8-8fe0256579cf",
+							"id": "e3bf6143-0555-435d-bb55-9015968d85bd",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -1931,7 +1953,7 @@
 							},
 							"response": [
 								{
-									"id": "362afea1-8736-434d-b3fc-3dd98991ff55",
+									"id": "6690b559-fe54-4e8f-9382-3704bcc53457",
 									"name": "Create Media Message Template",
 									"originalRequest": {
 										"method": "POST",
@@ -1975,6 +1997,7 @@
 									"status": "OK",
 									"code": 200,
 									"_postman_previewlanguage": "json",
+									"_postman_previewtype": "html",
 									"header": [
 										{
 											"key": "Content-Type",
@@ -1990,7 +2013,7 @@
 						},
 						{
 							"name": "Create Interactive Message Template",
-							"id": "aba2b58a-faa8-492a-a81d-6bc7cd986a84",
+							"id": "b00e2cbf-c354-4304-9def-7081610b9759",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -2025,7 +2048,7 @@
 							},
 							"response": [
 								{
-									"id": "b31981ef-904d-4339-a74e-0d199bddb740",
+									"id": "1a191d30-e1f5-437e-b401-87cdcf01682d",
 									"name": "Create Interactive Message Template",
 									"originalRequest": {
 										"method": "POST",
@@ -2054,6 +2077,7 @@
 									"status": "OK",
 									"code": 200,
 									"_postman_previewlanguage": "json",
+									"_postman_previewtype": "html",
 									"header": [
 										{
 											"key": "Content-Type",
@@ -2069,7 +2093,7 @@
 						},
 						{
 							"name": "Delete Message Template",
-							"id": "f1884eb4-332a-4bab-8b22-66d01f8b295e",
+							"id": "4d89f61d-9b51-4958-97fc-ef26174910e3",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -2100,7 +2124,7 @@
 							},
 							"response": [
 								{
-									"id": "1a2461ec-c556-4170-98c4-02ff2ba941c6",
+									"id": "309de6a5-a526-4ef4-b1f5-2ec973ee1605",
 									"name": "Delete Message Template",
 									"originalRequest": {
 										"method": "DELETE",
@@ -2129,6 +2153,7 @@
 									"status": "OK",
 									"code": 200,
 									"_postman_previewlanguage": "json",
+									"_postman_previewtype": "html",
 									"header": [
 										{
 											"key": "Content-Type",
@@ -2144,7 +2169,7 @@
 						},
 						{
 							"name": "Send Message Template Opt-Out Button",
-							"id": "72632257-b667-4a2f-97dc-0271d0107f77",
+							"id": "83efa2fe-c6c5-43bf-8df3-be4dda612b1e",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -2182,7 +2207,7 @@
 							},
 							"response": [
 								{
-									"id": "a272e92d-4d6e-47e7-85d2-a9ae9578b28e",
+									"id": "66905f54-cd61-4ac8-b500-f4821b623e7c",
 									"name": "Send Message Template Opt-Out Button",
 									"originalRequest": {
 										"method": "POST",
@@ -2225,6 +2250,7 @@
 									"status": "OK",
 									"code": 200,
 									"_postman_previewlanguage": "json",
+									"_postman_previewtype": "html",
 									"header": [
 										{
 											"key": "Content-Type",
@@ -2239,7 +2265,7 @@
 							]
 						}
 					],
-					"id": "155565a5-ff06-44a5-8da3-16df541b33a6",
+					"id": "8a754db6-4210-410f-8d40-403a9743dd51",
 					"description": "This section presents a list of Message Template APIs available for Postman.\n\nUse the WhatsApp Business Management API to create new message templates, media message templates, or interactive message templates.\n\nFor a list of supported language codes, see [Supported languages](https://developers.facebook.com/docs/whatsapp/business-management-api/message-templates#supported-languages).\n\nIn your `POST` call, include the following message template parameters: \n## Parameters\n| Name          | Description   |\n| ------------- | -----------|\n| **`category`**   |  **Required**. <br/><br/>The type of message template. <br><br> **Values**: `ACCOUNT_UPDATE`, `PAYMENT_UPDATE`, `PERSONAL_FINANCE_UPDATE`, `SHIPPING_UPDATE`, `RESERVATION_UPDATE`, `ISSUE_RESOLUTION`, `APPOINTMENT_UPDATE`, `TRANSPORTATION_UPDATE`, `TICKET_UPDATE`, `ALERT_UPDATE`, `AUTO_REPLY`|\n| **`components`** |  **Required**.  <br/><br/>The parts of the message template. |\n| **`name`** |  **Required**.  <br/><br/>The name of the message template. |\n| **`access_token`** |  **Required**.  <br/><br/>The access token for interacting with the API. |\n| **`language`** |  **Required**.  <br/><br/>The language of the message template. |\n\n### The `components` Parameter\n\n| Name          | Description   |\n| ------------- | -----------|\n| **`type`**   | **Required**. <br></br>**Values**: `BODY`, `HEADER`, `FOOTER`, and `BUTTONS`. The character limit of the `BODY` component is **1024** characters, while the character limits of the `HEADER` and `FOOTER` components is 60 characters each.|\n| **`format`** | **Optional**. <br/><br/>Only applies to the `HEADER` type.<br/><br/> **Values**: `TEXT`, `IMAGE`, `DOCUMENT`, `VIDEO` |\n| **`text`** | **Optional**. <br/><br/>Text of the message being sent. |\n| **`example`** | **Optional**. <br/><br/>Provides an example of possible data for your template. This helps us during the review and approval process, so we can understand what kind of message you plan to send. Make sure these are examples and do not include any confidential or personal information. If you decide to provide variables and examples, please provide the same number of variables and examples. |\n| **`buttons`** | **Optional.** <br/><br/>Only applies to the `BUTTONS` type. The parameters related to the button. |\n\n### The `BUTTONS` Component Type\n| Name          | Description   |\n| ------------- | -----------|\n| **`type`**   | **Required**. <br> </br>**Values**: `PHONE_NUMBER`, `URL`, `QUICK_REPLY`.|\n| **`text`**   | **Required**. <br/><br/>The text to be displayed on the button.|\n| **`url`**   | **Optional**. <br/><br/>The URL that the user is sent to after the button is clicked. Variables can be used to create dynamic links.|\n| **`phone_number`**   | **Optional**. <br/><br/>The phone number that is called on clicking the button.|\n| **`example`**   | **Optional**. <br/><br/>Provides an example of possible data for your template. This helps us during the review and approval process, so we can understand what kind of message you plan to send. Make sure these are examples and do not include any confidential or personal information.|"
 				},
 				{
@@ -2247,7 +2273,7 @@
 					"item": [
 						{
 							"name": "Get Single Message QRDLS",
-							"id": "fcf0acd0-0df0-41c7-91d7-1a48f43170cf",
+							"id": "43f483a0-3458-4040-915c-e1a5eb2db104",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -2272,7 +2298,7 @@
 							},
 							"response": [
 								{
-									"id": "dd32199e-0053-43fe-bff4-863f00507f71",
+									"id": "4d12eed8-831b-43b1-b203-b4b3142365e6",
 									"name": "Get Single Message QRDLS",
 									"originalRequest": {
 										"method": "GET",
@@ -2302,6 +2328,7 @@
 									"status": "OK",
 									"code": 200,
 									"_postman_previewlanguage": "json",
+									"_postman_previewtype": "html",
 									"header": [
 										{
 											"key": "Content-Type",
@@ -2317,7 +2344,7 @@
 						},
 						{
 							"name": "Get List of QR Code Messages",
-							"id": "1feb0e60-1ed6-47c7-98e0-b86fce21a312",
+							"id": "10138957-5e00-4ec4-9f70-cf5275dbc8ee",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -2351,7 +2378,7 @@
 							},
 							"response": [
 								{
-									"id": "c53e1630-af8e-479e-9bc8-501e5d860c2e",
+									"id": "89b21f73-3819-4efe-8665-4c56395380a5",
 									"name": "Get List of QR Code Messages",
 									"originalRequest": {
 										"method": "GET",
@@ -2390,6 +2417,7 @@
 									"status": "OK",
 									"code": 200,
 									"_postman_previewlanguage": "json",
+									"_postman_previewtype": "html",
 									"header": [
 										{
 											"key": "Content-Type",
@@ -2405,7 +2433,7 @@
 						},
 						{
 							"name": "Create Message QRDLS",
-							"id": "a759e476-bdbb-48c4-aefd-91d952521d5b",
+							"id": "e013d25a-7f74-4e02-a922-7685f368d3e4",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -2445,7 +2473,7 @@
 							},
 							"response": [
 								{
-									"id": "614e678e-1884-4267-b0e2-6ed9f6ef24bd",
+									"id": "ad7156eb-11e8-4f22-9b78-4360ab9fedbe",
 									"name": "Create Message QRDLS",
 									"originalRequest": {
 										"method": "POST",
@@ -2489,6 +2517,7 @@
 									"status": "OK",
 									"code": 200,
 									"_postman_previewlanguage": "json",
+									"_postman_previewtype": "html",
 									"header": [
 										{
 											"key": "Content-Type",
@@ -2504,7 +2533,7 @@
 						},
 						{
 							"name": "Update Message QRDLS",
-							"id": "e3de58ad-b8d3-4695-abfd-edd22f6ec20b",
+							"id": "691494c7-d5c3-4e6a-8793-3c1239c0a5e8",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -2545,7 +2574,7 @@
 							},
 							"response": [
 								{
-									"id": "26b63b2f-60af-49af-9f7f-efe959efba02",
+									"id": "19e33978-b364-406f-9583-2a2d46d60e84",
 									"name": "Update Message QRDLS",
 									"originalRequest": {
 										"method": "POST",
@@ -2590,6 +2619,7 @@
 									"status": "OK",
 									"code": 200,
 									"_postman_previewlanguage": "json",
+									"_postman_previewtype": "html",
 									"header": [
 										{
 											"key": "Content-Type",
@@ -2605,7 +2635,7 @@
 						},
 						{
 							"name": "Update Message QR Code",
-							"id": "581b376e-3d24-46a8-ba59-0f0ba63c65b8",
+							"id": "f2baaec5-d5f9-44cc-b65e-45948063d75f",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -2644,7 +2674,7 @@
 							},
 							"response": [
 								{
-									"id": "605bae5c-e3b2-4567-bec4-a0d336d44ca6",
+									"id": "836c008e-96d9-423a-a392-42336627be28",
 									"name": "Update Message QR Code",
 									"originalRequest": {
 										"method": "POST",
@@ -2687,6 +2717,7 @@
 									"status": "OK",
 									"code": 200,
 									"_postman_previewlanguage": "json",
+									"_postman_previewtype": "html",
 									"header": [
 										{
 											"key": "Content-Type",
@@ -2702,7 +2733,7 @@
 						},
 						{
 							"name": "Delete Message QRDLS",
-							"id": "3c334e9d-8063-48c6-81cb-b97f5a5ee1f4",
+							"id": "c4b9afed-db2d-446c-8ab3-3b33364f6c49",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -2728,7 +2759,7 @@
 							},
 							"response": [
 								{
-									"id": "056bfeea-b8e8-47e0-8250-ae01b1302112",
+									"id": "b6c11850-1056-4e99-a63a-1373482a7800",
 									"name": "Delete Message QRDLS",
 									"originalRequest": {
 										"method": "DELETE",
@@ -2758,6 +2789,7 @@
 									"status": "OK",
 									"code": 200,
 									"_postman_previewlanguage": "json",
+									"_postman_previewtype": "html",
 									"header": [
 										{
 											"key": "Content-Type",
@@ -2772,12 +2804,12 @@
 							]
 						}
 					],
-					"id": "412e0766-c375-46f3-8cc3-358d62ef96a6",
+					"id": "c575543c-d7ae-4c34-998e-cb43d13fc502",
 					"description": "Gets a list of all the short links and/or QR codes associated with the WhatsApp Business Account.\n\n## Fields\n\n| Name          | Description   |\n| ------------- | ------------- |\n| **`data`**   | A list of [WhatsApp Business Message QRDL](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-message-qrdl/) objects.|\n| **`paging`**  | The pagination associated with the QRDLS. For more information about pagination, see [Graph API Guide](https://developers.facebook.com/docs/graph-api/using-graph-api/#paging). |"
 				},
 				{
 					"name": "Get Business Account",
-					"id": "d1962841-e7af-41bc-98bf-d9ae470b6880",
+					"id": "7e3a5efa-7e23-4806-8656-2a031ef7678b",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -2801,7 +2833,7 @@
 					},
 					"response": [
 						{
-							"id": "f194f683-5132-4327-9068-09a38b65f125",
+							"id": "94b3c0d5-aed8-4b01-9344-d1b84ebd6195",
 							"name": "Get Business Account",
 							"originalRequest": {
 								"method": "GET",
@@ -2829,6 +2861,7 @@
 							"status": "OK",
 							"code": 200,
 							"_postman_previewlanguage": "json",
+							"_postman_previewtype": "html",
 							"header": [
 								{
 									"key": "Content-Type",
@@ -2844,7 +2877,7 @@
 				},
 				{
 					"name": "Fetch Extended Credit",
-					"id": "39577443-a369-48f2-8146-4ca3e3f280a8",
+					"id": "f37807a3-0bf0-4cd4-b295-f61a3c3e3573",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -2869,7 +2902,7 @@
 					},
 					"response": [
 						{
-							"id": "2f6493c6-751d-4ee6-9925-e39e43fda515",
+							"id": "0cea141d-3d6d-4d6a-82cd-beaf8da190a2",
 							"name": "Fetch Credit Line ID",
 							"originalRequest": {
 								"method": "GET",
@@ -2904,6 +2937,7 @@
 							"status": "OK",
 							"code": 200,
 							"_postman_previewlanguage": "json",
+							"_postman_previewtype": "html",
 							"header": [
 								{
 									"key": "Content-Type",
@@ -2918,7 +2952,7 @@
 					]
 				}
 			],
-			"id": "bab0811c-0e84-4f1f-b014-72d8851d6f0d",
+			"id": "237febec-929a-4e07-a723-18351bcd1f02",
 			"description": "This page contains only the API reference. For more information on how to use the API, refer to the [WhatsApp Business Management API documentation](https://developers.facebook.com/docs/whatsapp/business-management-api/reference).\n\n### Main Root Nodes\n| Root Name        | Description  |\n|------------------|--------------|\n|[**`/{whats-app-business-account-id}`**](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account) | Represents a specific [WhatsApp Business Account (WABA)](https://www.facebook.com/business/help/1499554293524119?id=2129163877102343). Make the API call to the WABA ID. |\n|[**`/{whats-app-business-account-to-number-current-status-id}`**](https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account-to-number-current-status/) | Represents a specific phone number. Make the API call to the phone number ID. |\n|[**`/{whats_app_message_template_id}`**](/docs/graph-api/reference/whats-app-business-hsm/) | Represents a specific [message template](https://developers.facebook.com/docs/whatsapp/conversation-types#message-templates). Make the API call to the message template ID. |\n|[**`/{waba-analytics}`**](/docs/graph-api/reference/waba-analytics/)| Represents analytics information about a specific WhatsApp Business Account (WABA). |\n|[**`/{business_id}`**](/docs/marketing-api/reference/business) | Represents a business. Includes any specified properties and assets belonging to the business. |\n|[**`/{extended-credit}`**](/docs/marketing-api/reference/extended-credit/) | Represents a specific credit line. Make the API call to the credit line ID. |"
 		},
 		{
@@ -2927,7 +2961,7 @@
 				{
 					"name": "Understanding Webhooks",
 					"item": [],
-					"id": "86192cd9-e147-4a2d-b140-eba90dde8733",
+					"id": "793c0b09-0700-4b29-8045-5f2f80ed2cf6",
 					"description": "The types of notifications you can subscribe to are:\n\n|Field | Description |\n|---|---|\n|**`account_review_update`** | Notifies you when a WABA has been reviewed.|\n|**`account_update`**  | Notifies you when:<ul><li>a WABA has been upgraded from a [unverified trial experience](https://developers.facebook.com/docs/whatsapp/embedded-signup/overview/unverified-trial-experience) to a verified account</li><li>a WABA has been banned</li><li>a WABA has violated WhatApp's policies (See [WhatsApp Business Platform Policy Enforcement](https://developers.facebook.com/docs/whatsapp/overview/policy-enforcement)</li></ul>|\n|**`message_template_status_update`** | Notifies you when the message template status changes, by being approved or rejected, or if it has been disabled.|\n|**`phone_number_name_update`** | Notifies you when the name review associated with a phone number has a status update.|\n|**`phone_number_quality_update`** | Notifies you when the quality-related status of a phone number has an update.|",
 					"auth": {
 						"type": "noauth"
@@ -2940,7 +2974,7 @@
 								"exec": [
 									""
 								],
-								"id": "0f5319e3-54fe-4dd2-b58b-e13648aeaa83"
+								"id": "8d533f65-fea3-4fb4-92a6-56afc541a1a9"
 							}
 						},
 						{
@@ -2950,7 +2984,7 @@
 								"exec": [
 									""
 								],
-								"id": "e6fc4ae8-1480-42c8-aaef-5749f0caf295"
+								"id": "665547b3-2e40-49fc-8b03-f2d0dc6f5a15"
 							}
 						}
 					]
@@ -2958,7 +2992,7 @@
 				{
 					"name": "Components",
 					"item": [],
-					"id": "56fe8019-ff2c-4665-b10c-7b8893d3fca8",
+					"id": "15fdd391-ba73-44c7-843e-b826e882e1bb",
 					"description": "Webhooks have a top level array field indicating the information being communicated. The members of the array are JSON objects with detailed fields relevant to the Webhook. \n<!--The WhatsApp Business Management API Webhooks components are listed [here](https://developers.facebook.com/docs/whatsapp/business-management-api/webhooks/components).-->\n\nWhatsApp Business Management API Webhooks can contain the following objects:\n\n| Parameter | Description |\n| --- | --- |\n| **`object`** | This is the object that was subscribed to.<br><br/>For embedded signup, this is always **`whatsapp_business_account`**.\n| **`entry`** | This object contains the details of the change that triggered the Webhooks call. |\n\n## The entry Object\n\n| Parameter | Description |\n| --- | --- |\n| **`id`** | ID of Whatsapp Business Accounts this Webhook belongs to |\n| **`time`** | Time for the entry. |\n| **`changes`** | Changes that triggered the Webhooks call.|\n\n### changes\n\n| Parameter | Description *(Click the arrow in the left column for supported values.)* |\n| --- | --- |\n| **`field`** | Contains the type of notification you are getting on that Webhook. |\n| **`value`** | Contains details of the changes related to the specified **`field`**. |\n\n### value\n\n| Parameter | Description *(Click the arrow in the left column for supported values.)* |\n| --- | --- |\n| **`ban_info`** | Added to webhooks when an account has been banned. This object includes two properties:<ul><li>`waba_ban_state`: Options are SCHEDULE_FOR_DISABLE, DISABLE, and REINSTATE.</li><li>`waba_ban_date`</li></ul>\n| **`current_limit`** | Contains the current tier limit where this account is. |\n| **`decision`** | Used if a decision about accounts or phone numbers has been made. |\n| **`display_phone_number`** | Includes the display phone number of the business account account that triggered the notification. |\n| **`event`** | Used when an event happened in a specific WABA. Click the arrow on the left column to see all available options. |\n| **`max_daily_conversation_per_phone`** | **Always present when field=business_capability_update.**<br/><br/>\nIncludes the maximum number of unique people a phone number can send messages to. See [Messaging Limits](https://developers.facebook.com/docs/whatsapp/messaging-limits#messaging) for more information. |\n| **`max_phone_numbers_per_business`** | Includes the maximum number of phone numbers that can belong to a business.<br><br>*When field=business_capability_update, a webhook will have either max_phone_numbers_per_business or max_phone_numbers_per_waba present.* |\n| **`max_phone_numbers_per_waba`** | Includes the maximum number of phone numbers that can belong to a WABA.<br><br>*When field=business_capability_update, a webhook will have either `max_phone_numbers_per_business` or `max_phone_numbers_per_waba present`.*<br><br> |\n| **`rejection_reason`** | If a request was rejected, this field displays the reason for that rejection. |\n| **`requested_verified_name`** | This field displays the name that was sent to be verified. |\n| `restriction_info`<br>type: enum | Used to report restrictions imposed on a specific WABA, when that WABA violates [WhatsApp Business Platform policies](https://developers.facebook.com/docs/whatsapp/overview/policy-enforcement).<br><br>  This field includes a list of restriction types and their corresponding expiration dates. Possible restriction types are:<ul><li>RESTRICTED_ADD_PHONE_NUMBER_ACTION</li><li>RESTRICTED_BIZ_INITIATED_MESSAGING</li><li>RESTRICTED_CUSTOMER_INITIATED_MESSAGING</li></ul><br><br>Expiration dates are provided in DateTime format. |",
 					"auth": {
 						"type": "noauth"
@@ -2971,7 +3005,7 @@
 								"exec": [
 									""
 								],
-								"id": "647c4e4d-8dc8-462e-8a02-94385dd88476"
+								"id": "7f2ad695-11c6-447c-9d99-5d80322ebd61"
 							}
 						},
 						{
@@ -2981,14 +3015,14 @@
 								"exec": [
 									""
 								],
-								"id": "6242f2d0-3faa-4c4f-9676-fc374cb8ecab"
+								"id": "ff6b460d-da53-4d22-982e-e403e9bed4f6"
 							}
 						}
 					]
 				},
 				{
 					"name": "Sandbox Number Upgraded to Verified Account",
-					"id": "d123be85-0a1e-4c21-8538-4f9659b08af3",
+					"id": "0b7cd2a6-9093-4640-9693-a1354128e68c",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -3016,7 +3050,7 @@
 				},
 				{
 					"name": "Name Update Received",
-					"id": "a998dfef-d5e9-4da1-8948-e6579bb07e8d",
+					"id": "e3e48ed4-7836-4079-a8f7-90d070c420f5",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -3041,7 +3075,7 @@
 				},
 				{
 					"name": "Message Template Schedule for Disabling",
-					"id": "254b247c-b4d8-494e-bf14-95bc15abb5d9",
+					"id": "021d956d-bea6-4797-8b87-1ae66064621b",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -3069,7 +3103,7 @@
 				},
 				{
 					"name": "Message Template Update Approved",
-					"id": "e0ec1a3d-6a35-4c96-8ac3-f48e7d8494b9",
+					"id": "430b3702-b5e5-42d3-9991-db3274dbe0fe",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -3097,7 +3131,7 @@
 				},
 				{
 					"name": "Quality Update Received",
-					"id": "b1c989bf-b206-4442-bb03-a7ce7584691b",
+					"id": "d7aae2ab-5dc2-471d-b9c7-6d2fecb39e39",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -3122,7 +3156,7 @@
 				},
 				{
 					"name": "WhatsApp Business Account Banned",
-					"id": "f6146115-85c7-4f6f-9aab-5c37508040b8",
+					"id": "7b103674-1832-46dd-83c5-345c925529a0",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -3150,7 +3184,7 @@
 				},
 				{
 					"name": "WhatsApp Business Account Review Completed",
-					"id": "348de78a-5eef-4a35-aff3-945e2409e31a",
+					"id": "0ccdd323-8a6c-4417-bbda-60fa78742fc4",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -3178,7 +3212,7 @@
 				},
 				{
 					"name": "WhatsApp Business Account Restricted Due To Policy Violations",
-					"id": "a1b3a1b7-83ea-4853-a810-4be3fd4dd7e7",
+					"id": "42c220cb-f7fb-474e-a0df-ca0f447a502f",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -3201,7 +3235,7 @@
 					"response": []
 				}
 			],
-			"id": "ef00b625-eea9-44a2-bc66-6e9be5f86416",
+			"id": "85249481-1a1d-4d52-92c7-8ee03f093145",
 			"description": "You can get real-time notifications when there are changes to your WhatsApp Business Account (WABA) by subscribing at the WhatsApp business account level. To set up Webhooks for WhatsApp business accounts:\n\n1. [Set up your endpoint and configure the Webhooks](https://developers.facebook.com/docs/graph-api/webhooks/getting-started/webhooks-for-whatsapp#setup). These are the same steps that you use to set up Webhooks for Facebook Pages.\n\n2. [Subscribe your app under your WhatsApp business account](https://developers.facebook.com/docs/graph-api/webhooks/getting-started/webhooks-for-whatsapp#subscribe).\n\nFor more information, see [Webhooks for WhatsApp Business Accounts](https://developers.facebook.com/docs/graph-api/webhooks/getting-started/webhooks-for-whatsapp).\n\n## Understanding Webhooks\n\nThe top level array contains two main objects:\n\n| Parameter         | Description   |\n| ------------- | ------------- |\n| **`object`**   | This is the object that was subscribed to.|\n| **`entry`**  | This object contains the details of the change that triggered the webhooks call. |\n\nThe types of notifications you can subscribe to are:\n\n| Field Name          | Description   |\n| ------------- | ------------- |\n| **`message_template_status_update`**   | Notifies you when the message template status changes, by being approved or rejected, or if it has been disabled.|\n| **`phone_number_name_update`**   | Notifies you when the name review associated with a phone number has a status update.|\n| **`phone_number_quality_update`**   | Notifies you when the quality-related status of a phone number has an update.|\n| **`account_update`**  | Notifies you when a WABA has been upgraded from [unverified trial experience](https://developers.facebook.com/docs/whatsapp/embedded-signup/overview/unverified-trial-experience) to a verified account, or if a WABA has been banned. |\n| **`account_review_update`**  | Notifies you when a WABA has been reviewed. |\n\n### Components\n\nNotifications are received in the following general format:\n\n```\n{\n  \"object\": \"whatsapp_business_account\",\n  \"entry\": [\n    {\n      \"changes\": [\n        {\n          \"value\": {\n            ...\n          }\n        }\n      ]\n    }\n  ]\n}\n```\n\n\nFor more information relating to all available webhook objects, see [Components](https://developers.facebook.com/docs/whatsapp/business-management-api/webhooks/components).",
 			"auth": {
 				"type": "noauth"
@@ -3214,7 +3248,7 @@
 						"exec": [
 							""
 						],
-						"id": "5b31e9d3-2192-4f82-af9d-026d80c80616"
+						"id": "2a25ed81-3ee7-49bf-95ea-fd832672b4ce"
 					}
 				},
 				{
@@ -3224,7 +3258,7 @@
 						"exec": [
 							""
 						],
-						"id": "bcce616c-239e-43e5-a705-6f2fce3b50d9"
+						"id": "9af5a3f1-be2f-4327-9de2-93d3feb77010"
 					}
 				}
 			]
@@ -3232,7 +3266,7 @@
 		{
 			"name": "Error Codes",
 			"item": [],
-			"id": "4e122f31-1dba-42ef-87d0-a5050b0d7f88",
+			"id": "5e9bb01b-b299-4bb5-ae55-8f69e44f4d81",
 			"description": "For information relating to troubleshooting WhatsApp Business Management API issues, see our [FAQ](https://developers.facebook.com/docs/whatsapp/business-management-api/message-templates#faq)."
 		}
 	],
@@ -3254,7 +3288,7 @@
 				"exec": [
 					""
 				],
-				"id": "7eba13f1-f2b9-433a-b842-533b3a411bd0"
+				"id": "bfa140b5-9140-4c13-b147-a15f7d89f6e9"
 			}
 		},
 		{
@@ -3264,7 +3298,7 @@
 				"exec": [
 					""
 				],
-				"id": "326b03cc-2778-4278-a194-0abe54989f81"
+				"id": "74fbd4b8-af2c-4681-94d3-38043a2264bd"
 			}
 		}
 	]

@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "1c47a6a3-7223-4381-8023-795b4fd8861f",
+		"_postman_id": "e49bf106-b815-4a46-9323-ba5021f2585c",
 		"name": "Razorpay APIs",
 		"description": "Razorpay is an Indian payments solution provider that allows businesses to accept, process and disburse payments with its product suite. Razorpay APIs are completely RESTful and all our responses are returned in JSON.\n\n\n# API Authentication\n\nAll Razorpay APIs are authenticated using **Basic Auth**. Basic auth requires the following:\n\n- [YOUR_KEY_ID]\n- [YOUR_KEY_SECRET]\n\nBasic auth expects an Authorization header for each request in the Basic base64token format. Here, base64token is a base64 encoded string of YOUR_KEY_ID:YOUR_KEY_SECRET.\n\n<table>\n<b>Watch Out!</b> <br>\nThe Authorization header value should strictly adhere to the format mentioned above. Invalid formats will result in authentication failures. Few examples of invalid headers are:\n\n- BASIC base64token\n- basic base64token\n- Basic \"base64token\"\n- Basic $base64token\n</table>\n\n# Generate API Key\n\nYou can use Razorpay APIs in two modes, Test and Live. The API key is different for each mode.\n\nTo generate the API keys:\n1. Log into the <a href=\"https://dashboard.razorpay.com/app/dashboard\" target=\"_blank\">Razorpay Dashboard</a>.\n2. Select the mode (Test or Live) for which you want to generate the API key.\n<br>- Test Mode: The test mode is a simulation mode that you can use to test your integration flow. Your customers will not be able to make payments in this mode.\n<br>- Live Mode: When your integration is complete, in the Dashboard, switch to the live mode and generate live mode API keys. Replace test mode keys with live mode keys in the integration to accept payments from customers.\n3. Navigate to Settings → API Keys → Generate Key to generate key for the selected mode.\n\n# Errors\nAll successful responses are returned with HTTP Status code 204. In case of failure, API returns a JSON error response with the parameters that contain the failure reason.\n\n# Understanding Error Response\n\nThe error response contains `code`, `description`, `field`, `source`, `step`, and `reason` parameters to understand and troubleshoot the error.\n\nLet us take an example where a merchant tries to add new allowed payer accounts when the overall limit is exceeded.\n\n```json: Sample Error Response\n{\n  \"error\": {\n    \"code\": \"BAD_REQUEST_ERROR\",\n    \"description\": \"Authentication failed due to incorrect otp\",\n    \"field\": null,\n    \"source\": \"customer\",\n    \"step\": \"payment_authentication\",\n    \"reason\": \"invalid_otp\",\n    \"metadata\": {\n      \"payment_id\": \"pay_EDNBKIP31Y4jl8\",\n      \"order_id\": \"order_DBJKIP31Y4jl8\"\n    }\n  }\n}\n```\n\n### Response Parameters\n\n`error`\n: `object` The error object.\n\n`code`\n: `string` Type of the error.\n\n`description`\n: `string` Description of the error.\n\n`field`\n: `string` Name of the parameter in the API request that caused the error.\n\n`source`\n: `string` The point of failure in the specific operation (payment in this case). For example, customer, business\n\n`step`\n: `string` The stage where the transaction failure occurred. The stages can vary depending on the payment method used to complete the transaction.\n\n`reason`\n: `string` The exact error reason. It can be handled programmatically.\n\n`metadata`\n: `object` Contains additional information about the request.\n\n    `payment_id`\n    : `string` Unique identifier of the payment.\n\n    `order_id`\n    : `string` Unique identifier of the order associated with the payment.\n\nKnow more about <a href=\"/docs/errors/error-codes\" target=\"_blank\">Error Codes</a>.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_uid": "869033-1c47a6a3-7223-4381-8023-795b4fd8861f"
+		"_uid": "869033-e49bf106-b815-4a46-9323-ba5021f2585c"
 	},
 	"item": [
 		{
@@ -12,7 +12,7 @@
 			"item": [
 				{
 					"name": "Create a Customer",
-					"id": "117768c6-a2e6-4fad-93a6-0385652d2b85",
+					"id": "06ec3cc8-326b-468d-b267-867bf712abda",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -54,7 +54,7 @@
 				},
 				{
 					"name": "Fetch all Customers",
-					"id": "79c827b6-5777-410d-b956-41c59ddef7d2",
+					"id": "ada15261-6ffa-4fc8-9b37-0c243a83cdbf",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -80,7 +80,7 @@
 				},
 				{
 					"name": "Fetch Customer by ID",
-					"id": "528fc051-3931-4717-8fc8-52a26d029a0a",
+					"id": "1dec14a5-8d1f-469a-bb8d-b6fccffaf6e9",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -107,7 +107,7 @@
 				},
 				{
 					"name": "Edit a Customer",
-					"id": "d4879859-e93a-400b-8984-020cb3687d42",
+					"id": "d42b9ec0-a136-4cae-a21e-a762e97813d2",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -149,7 +149,7 @@
 					"response": []
 				}
 			],
-			"id": "20d7b51e-2f27-4a4c-8555-cbc541f91ae8",
+			"id": "cb9667ed-4d3f-4aa1-92c7-4a4c5bac85f5",
 			"description": "You can create customers with basic details such as name and contact details and use them for various Razorpay solution offerings.\n\n## List of APIs:\n- <a href=\"https://razorpay.com/docs/api/customers/#create-a-customer\" target=\"_blank\">Create a Customer</a>\n- <a href=\"https://razorpay.com/docs/api/customers/#edit-customer-details\" target=\"_blank\">Edit Customer Details</a>\n- <a href=\"https://razorpay.com/docs/api/customers/#fetch-all-customers\" target=\"_blank\">Fetch all Customers</a>\n- <a href=\"https://razorpay.com/docs/api/customers/#fetch-customer-by-id\" target=\"_blank\">Fetch Customer by ID</a>"
 		},
 		{
@@ -157,7 +157,7 @@
 			"item": [
 				{
 					"name": "Create an Order",
-					"id": "4d70ec91-2171-41ce-b92a-70d30b7a5aaa",
+					"id": "5c8833f1-6be7-4460-a501-2047ea343bbf",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -194,7 +194,7 @@
 				},
 				{
 					"name": "Fetch Orders",
-					"id": "a17b1045-7ed4-4fd2-a4e2-beafb84cf1ad",
+					"id": "46d497b9-08ba-4224-b64d-f1dd62073fde",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -236,7 +236,7 @@
 				},
 				{
 					"name": "Fetch Orders by ID",
-					"id": "ac4bdeaa-95d3-450e-b890-18813af73559",
+					"id": "fef4ddc7-fe88-47df-9346-e054cebf7c95",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -263,7 +263,7 @@
 				},
 				{
 					"name": "Fetch Payments by Order",
-					"id": "fd1e2b7a-68fb-4133-985b-4202bdefb5a7",
+					"id": "a2e2d9c0-3ea6-4ed9-aa8e-c3be0723f609",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -291,7 +291,7 @@
 				},
 				{
 					"name": "Update Order",
-					"id": "ba20676f-1354-456f-98bb-929559d0a9c4",
+					"id": "e108c35f-8099-4bcd-9c67-3fb154e97c5d",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -333,7 +333,7 @@
 					"response": []
 				}
 			],
-			"id": "d595f7e4-05bf-403a-9619-b12749bea754",
+			"id": "de246e9e-42fd-4434-a764-a477e302989a",
 			"description": "Order is an important step in the payment process. Orders and payments go hand-in-hand. For every payment, an order needs to be created. You can create orders using the Orders API.\n\n## List of APIs:\n- <a href=\"https://razorpay.com/docs/api/orders/#create-an-order\" target=\"_blank\">Create an Order</a>\n- <a href=\"https://razorpay.com/docs/api/orders/#fetch-orders\" target=\"_blank\">Fetch Orders</a>\n- <a href=\"https://razorpay.com/docs/api/orders/#fetch-an-order-with-id\" target=\"_blank\">Fetch an Order With Id</a>\n- <a href=\"https://razorpay.com/docs/api/orders/#fetch-payments-for-an-order\" target=\"_blank\">Fetch Payments for an Order</a>\n- <a href=\"https://razorpay.com/docs/api/orders/#update-order\" target=\"_blank\">Update Order</a>"
 		},
 		{
@@ -344,7 +344,7 @@
 					"item": [
 						{
 							"name": "Fetch Payment Downtime Details",
-							"id": "f81a9284-b867-4c7b-b1bc-51e17455ddeb",
+							"id": "f852cccb-93a3-4bbe-a0e5-a2a4acbe484d",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -371,7 +371,7 @@
 						},
 						{
 							"name": "Fetch Payment Downtime Details by ID",
-							"id": "488eee14-cb78-4c65-a81f-693bd6c01f0d",
+							"id": "4ecfa8d3-378c-4501-8b18-6356e62265fd",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -398,12 +398,12 @@
 							"response": []
 						}
 					],
-					"id": "6e4ff84b-c1c2-49fb-9586-186ee4211eb3",
+					"id": "6203bd98-d599-4c4d-94b2-099e05e96adb",
 					"description": "Usually, downtime webhook payloads are delivered within few seconds of the event. However, in some cases, this can be delayed by few minutes due to various reasons.\n\nIf you have not received any webhook notifications due to some technical issues, you can use the Fetch Payment Downtime API to fetch the downtime status.\n\nList of APIs:\n- <a href=\"https://razorpay.com/docs/api/payments/downtime/#fetch-payment-downtime-details\" target=\"_blank\">Fetch Payment Downtime Details</a>\n- <a href=\"https://razorpay.com/docs/api/payments/downtime/#fetch-payment-downtime-details-by-id\" target=\"_blank\">Fetch Payment Downtime Details by ID</a>"
 				},
 				{
 					"name": "Fetch all Payments",
-					"id": "ef1c3823-93bf-4301-a820-c3b7be064e91",
+					"id": "93b18570-6fe2-4f05-8af3-37237cbdc876",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -439,7 +439,7 @@
 				},
 				{
 					"name": "Fetch Payment by ID",
-					"id": "2c1a2680-301f-481e-ba32-7696d6e20b01",
+					"id": "b9f97531-3c78-489b-8298-bbb40e8ffd79",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -466,7 +466,7 @@
 				},
 				{
 					"name": "Fetch Payment based on Order",
-					"id": "d6a57831-4e58-49ea-a759-6ff07a646a0e",
+					"id": "91a6db43-4c05-422f-95ea-197d5441706c",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -494,7 +494,7 @@
 				},
 				{
 					"name": "Fetch Card Details for a Payment",
-					"id": "840010c9-c496-481d-84b6-411b58ea6d7c",
+					"id": "e59563c1-feeb-4bf5-ae7c-b3fd0a4ce2c8",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -522,7 +522,7 @@
 				},
 				{
 					"name": "Update Payment",
-					"id": "ba474e05-e107-4a84-820f-70587945cb53",
+					"id": "7eea1a28-73e3-4a74-b2d1-8caf3b979581",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -558,7 +558,7 @@
 				},
 				{
 					"name": "Capture a Payment",
-					"id": "ccbe7da3-7a33-4701-ae34-f370b2ca05d4",
+					"id": "729b794b-a305-4fc7-b78a-7ee70aba5a5d",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -595,7 +595,7 @@
 				},
 				{
 					"name": "Fetch Expanded Card or EMI Details for Payments",
-					"id": "8673579e-d975-42ef-8cd1-65fbeda87119",
+					"id": "3a535cd4-6792-49f3-9c11-9d3226a2af53",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -628,7 +628,7 @@
 				},
 				{
 					"name": "Capture a Payment",
-					"id": "e4250867-374d-4670-af52-838825053101",
+					"id": "f9ba4ad6-2983-4142-a380-f88f42d8137b",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -663,7 +663,7 @@
 					"response": []
 				}
 			],
-			"id": "52870a79-ab34-4c60-a39f-31969e658d9f",
+			"id": "8bf39aac-ab09-4a9d-822f-6f8d00660786",
 			"description": "You can create payments using the Razorpay Standard Checkout. https://razorpay.com/docs/payment-gateway/.\n\nThe Payments APIs help you to capture payments and fetch them only.\n\n## List of APIs\n- <a href=\"https://razorpay.com/docs/api/payments/#capture-a-payment\" target=\"_blank\">Capture a Payment</a>\n- <a href=\"https://razorpay.com/docs/api/payments/#fetch-a-payment\" target=\"_blank\">Fetch a Payment</a>\n- <a href=\"https://razorpay.com/docs/api/payments/#fetch-multiple-payments\" target=\"_blank\">Fetch Multiple Payments</a>\n- <a href=\"https://razorpay.com/docs/api/payments/#fetch-expanded-card-or-emi-details-for-payments\" target=\"_blank\">Fetch Expanded Card or EMI Details for Payments</a>\n- <a href=\"https://razorpay.com/docs/api/payments/#fetch-payments-based-on-orders\" target=\"_blank\">Fetch Payments Based on Orders</a>\n- <a href=\"https://razorpay.com/docs/api/payments/#fetch-card-details-of-a-payment\" target=\"_blank\">Fetch Card Details of a Payment</a>\n- <a href=\"https://razorpay.com/docs/api/payments/#update-the-payment\" target=\"_blank\">Update the Payment</a>"
 		},
 		{
@@ -671,7 +671,7 @@
 			"item": [
 				{
 					"name": "Create a Normal Refund",
-					"id": "eac56024-4da4-49c2-9c2e-3af78921f3e2",
+					"id": "5d55a33e-b153-425b-a9f7-0bb6ee0ab540",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -708,7 +708,7 @@
 				},
 				{
 					"name": "Create an Instant Refund",
-					"id": "39edec5a-8ac0-4ac2-b62c-75df1a78af3f",
+					"id": "280a9cb4-59e9-4767-b66d-d0c64867e44a",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -745,7 +745,7 @@
 				},
 				{
 					"name": "Fetch Refunds",
-					"id": "294b9c9c-1627-4088-a42e-e1e883fb026a",
+					"id": "230dca39-24ee-465b-a407-7055d5948506",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -771,7 +771,7 @@
 				},
 				{
 					"name": "Fetch Refund by ID",
-					"id": "bb00da3f-1e07-4f6b-af22-e6c461a7f582",
+					"id": "1546cfa4-22ae-4058-a727-7ccc23801677",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -798,7 +798,7 @@
 				},
 				{
 					"name": "Fetch a Specific Refund for a Payment",
-					"id": "01d45877-7301-4b3a-bb27-9591bdf7bd7e",
+					"id": "87bd566d-7b3a-4ba7-b7e9-fdf1c694ffdf",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -836,7 +836,7 @@
 				},
 				{
 					"name": "Fetch All Refunds for a Payment",
-					"id": "960d75e4-25d6-4d41-8deb-c04d400d166d",
+					"id": "d65d45cb-33d5-4a54-bc33-b8cd5b686446",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -873,7 +873,7 @@
 				},
 				{
 					"name": "Update Refund",
-					"id": "477cf4b6-fb4f-4f8b-b966-4d4bdb5fe0ab",
+					"id": "8e45423d-4d84-41ab-90ca-717c1b88df67",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -908,7 +908,7 @@
 					"response": []
 				}
 			],
-			"id": "68f684fe-9ec6-4ea3-91c2-92ec8f075e09",
+			"id": "39318e10-fd2b-43b5-a417-9ca057b4f66a",
 			"description": "You can make full or partial refunds to customers. While issuing refunds, you can choose to process the refunds instantly or at normal speed (within 5-7 working days). Razorpay provides you real-time tracking of the processing speed and the status of the initiated refund.\n\n<table>\n<b>Refunds Can be Made Only on Captured Payments</b> <br>\nYou can initiate refunds only on those payments that are in captured state. A payment in authorized state is auto-refunded if not captured within 5 days of creation.\n</table>\n\n## List of APIs\n- <a href=\"https://razorpay.com/docs/api/refunds/#create-a-normal-refund\" target=\"_blank\">Create a Normal Refund</a>\n- <a href=\"https://razorpay.com/docs/api/refunds/#create-an-instant-refund\" target=\"_blank\">Create an Instant Refund</a>\n- <a href=\"https://razorpay.com/docs/api/refunds/#fetch-multiple-refunds-for-a-payment\" target=\"_blank\">Fetch Multiple Refunds for a Payment</a>\n- <a href=\"https://razorpay.com/docs/api/refunds/#fetch-a-specific-refund-for-a-payment\" target=\"_blank\">Fetch a Specific Refund for a Payment</a>\n- <a href=\"https://razorpay.com/docs/api/refunds/#fetch-all-refunds\" target=\"_blank\">Fetch All Refunds</a>\n- <a href=\"https://razorpay.com/docs/api/refunds/#fetch-refund-by-id\" target=\"_blank\">Fetch Refund by ID</a>\n- <a href=\"https://razorpay.com/docs/api/refunds/#update-refund\" target=\"_blank\">Update Refund</a>"
 		},
 		{
@@ -919,7 +919,7 @@
 					"item": [
 						{
 							"name": "Create Instant Settlement",
-							"id": "bbf38ff7-7f86-412f-a61c-edb6d9435bf0",
+							"id": "61577d15-e55e-410c-a116-19a98997864c",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -956,7 +956,7 @@
 						},
 						{
 							"name": "Fetch all Instant Settlements",
-							"id": "f8eefab4-84f8-47f4-a24b-7be5d54a5b44",
+							"id": "4f5c3284-0363-4b39-84d3-4cc10f6db208",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -992,7 +992,7 @@
 						},
 						{
 							"name": "Fetch Instant Settlement by ID",
-							"id": "0a3fcfab-75e4-4b72-b2f6-7bea0af7e238",
+							"id": "8bb08790-b157-4858-a67d-fd40ed1311f6",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -1019,12 +1019,12 @@
 							"response": []
 						}
 					],
-					"id": "624fb4dd-b3ad-41e4-b090-afd2ae56a4c5",
+					"id": "397cd66a-e3e8-4d2b-b40b-842dbabab2d6",
 					"description": "Razorpay On-demand Settlements helps you reduce your settlement period from T+2 days (default settlement cycle) to a few minutes (from the time of the transaction), thus enabling your business to avoid cash-flow challenges and prepare better for working capital requirements.\n\nList of APIs:\n- <a href=\"https://razorpay.com/docs/api/settlements/#create-an-on-demand-settlement\" target=\"_blank\">Create an On-demand Settlement</a>\n- <a href=\"https://razorpay.com/docs/api/settlements/#fetch-all-on-demand-settlements\" target=\"_blank\">Fetch All On-demand Settlements</a>\n- <a href=\"https://razorpay.com/docs/api/settlements/#fetch-on-demand-settlements-by-id\" target=\"_blank\">Fetch On-demand Settlements by ID</a>"
 				},
 				{
 					"name": "Settlements Recon",
-					"id": "04f8061f-b1dd-46af-bb64-e14fcb114710",
+					"id": "0c3b917a-31df-43f2-a377-5cffc3cae61f",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1062,7 +1062,7 @@
 				},
 				{
 					"name": "Fetch Settlement by ID",
-					"id": "e8bff9c2-67d0-420b-86ee-7ad83594fba8",
+					"id": "9520fbbe-607f-437b-8ff4-04022a018892",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1089,7 +1089,7 @@
 				},
 				{
 					"name": "Fetch All Settlements",
-					"id": "1feccb04-e4af-4b3f-a826-3f9689dc3ece",
+					"id": "edf000fb-bf07-4851-883a-7a0dbc264a92",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1114,7 +1114,7 @@
 					"response": []
 				}
 			],
-			"id": "b0df845d-acbd-41d2-b510-7f585a87c594",
+			"id": "0a348d4a-e895-4139-8ab7-5ef40f68b611",
 			"description": "Settlement is the process in which the money received from your customers is settled to your bank account. Settlements are made to the bank account, the details of which you submitted to us as a part of KYC verification.\n\nSettlements for all payments are done in INR (Indian Rupees), irrespective of the currency in which the payment was made. After Razorpay receives the amount, it is settled to your bank account, after fees deduction. Know more about settlements.\n\n## Settlement Cycle\nBy default, the complete process takes a time of T+2 business days for domestic transactions and T+7 days for international transactions, T being the date of capture of payment. This is called the settlement cycle. The settlement cycle is subject to bank approval and can vary based on your business vertical, risk factors and so on.\n\n## List of APIs\n- <a href=\"https://razorpay.com/docs/api/settlements/#fetch-all-settlements\" target=\"_blank\">Fetch All Settlements</a>\n- <a href=\"https://razorpay.com/docs/api/settlements/#fetch-settlement-using-id\" target=\"_blank\">Fetch Settlement Using ID</a>\n- <a href=\"https://razorpay.com/docs/api/settlements/#settlement-recon\" target=\"_blank\">Settlement Recon</a>"
 		},
 		{
@@ -1122,7 +1122,7 @@
 			"item": [
 				{
 					"name": "Fetch All Disputes",
-					"id": "65c90492-12e0-45c6-9476-41351fbaec31",
+					"id": "7fe6833a-8fc9-48bc-9268-eb93bc6fb4a3",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1148,7 +1148,7 @@
 				},
 				{
 					"name": "Fetch a Dispute by ID",
-					"id": "0b6b7dcd-ca55-4a5c-8376-80c8f7ad58df",
+					"id": "b1dedc04-35b4-41f6-8e5b-c1660ad0657c",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1173,7 +1173,7 @@
 					"response": []
 				}
 			],
-			"id": "7254a9d6-2ed4-4ce3-8738-620ff55c2a23",
+			"id": "14c47824-99b2-4440-a0d0-e6d80054a4a3",
 			"description": "A dispute arises when your customer or the issuing bank questions the validity of a payment. It can be raised due to reasons such as unauthorised charges, failure to deliver promised merchandise or excessive charges levied by you. The chargeback raised by your customer can be filed as a dispute with Razorpay.\n\nManage customer disputes using the Razorpay Disputes APIs.\n\n## List of APIs\n\n*   <a href=\"https://razorpay.com/docs/api/disputes/#fetch-all-disputes\">Fetch all Disputes</a>\n*   <a href=\"https://razorpay.com/docs/api/disputes/#fetch-a-dispute\">Fetch a Dispute by ID</a>"
 		},
 		{
@@ -1181,7 +1181,7 @@
 			"item": [
 				{
 					"name": "Create an Invoice",
-					"id": "f7911172-b6bb-4d21-bf45-2eb50c2b2e87",
+					"id": "4a88ee0f-7133-40d1-81af-5d3193251f5e",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1230,7 +1230,7 @@
 				},
 				{
 					"name": "Fetch Invoices",
-					"id": "a53adc33-c80b-4644-960b-1a29dc66a267",
+					"id": "427936c6-b92a-4793-8eb6-05e51f25e1cf",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1262,7 +1262,7 @@
 				},
 				{
 					"name": "Fetch Invoice by Id",
-					"id": "324a9f6b-21a7-415b-b9cc-dd3c80ee16d0",
+					"id": "3fc43472-acad-4f65-a8ed-ae39ecf99ffd",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1289,7 +1289,7 @@
 				},
 				{
 					"name": "Update an Invoice",
-					"id": "2365cbc3-0baf-4738-9c71-6ade11f30257",
+					"id": "11d1f229-0e0f-4cd3-b806-c7ba89ce046c",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1339,7 +1339,7 @@
 				},
 				{
 					"name": "Issue an Invoice",
-					"id": "b0c65ef1-3028-4ddc-937e-8fe002b38a96",
+					"id": "31498eef-9302-44bd-b4d9-b6839c50a848",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1367,7 +1367,7 @@
 				},
 				{
 					"name": "Send or Resend Notification",
-					"id": "ea1c1d6f-1da2-443c-b20f-d56e79e157c5",
+					"id": "cf24827e-f317-441d-aa71-67c40a28462e",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1396,7 +1396,7 @@
 				},
 				{
 					"name": "Cancel an Invoice",
-					"id": "9ed996ef-fbef-44c7-9c49-0bc2ec1e59d5",
+					"id": "3fdcb56c-4e23-42c4-9f86-bbe51b9cd859",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1424,7 +1424,7 @@
 				},
 				{
 					"name": "Delete an Invoice",
-					"id": "485b9829-0cfc-47d8-aab1-727f62517200",
+					"id": "1274b401-cfb5-4146-8b44-8610050e2551",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1450,7 +1450,7 @@
 					"response": []
 				}
 			],
-			"id": "3cb2fa94-5ce5-4fd2-a7e5-9208e506e9e8",
+			"id": "a618bb05-6211-424e-85ce-51738ccec42e",
 			"description": "Razorpay Invoices enables you to send invoices to your customers and accept payments instantly.\n\nThe invoice contains information regarding the sale such as the name of the ordered products or services, quantity, billing cycle, price breakup, receipt number and customer information.\n\nYou can create, update, cancel and delete invoices using our Invoices APIs.\n\n## List of APIs\n\n- <a href=\"https://razorpay.com/docs/api/invoices/#create-an-invoice\" target=\"_blank\">Create an Invoice</a>\n- <a href=\"https://razorpay.com/docs/api/invoices/#fetch-multiple-invoices\" target=\"_blank\">Fetch Invoices</a>\n- <a href=\"https://razorpay.com/docs/api/invoices/#fetch-an-invoice\" target=\"_blank\">Fetch Invoice by ID</a>\n- <a href=\"https://razorpay.com/docs/api/invoices/#update-an-invoice\" target=\"_blank\">Update an Invoice</a>\n- <a href=\"https://razorpay.com/docs/api/invoices/#issue-an-invoice\" target=\"_blank\">Issue an Invoice</a>\n- <a href=\"https://razorpay.com/docs/api/invoices/#send-notifications\" target=\"_blank\">Send or Resend Notification</a>\n- <a href=\"https://razorpay.com/docs/api/invoices/#cancel-an-invoice\" target=\"_blank\">Cancel an Invoice</a>\n- <a href=\"https://razorpay.com/docs/api/invoices/#delete-an-invoice\" target=\"_blank\">Delete an Invoice</a>"
 		},
 		{
@@ -1458,7 +1458,7 @@
 			"item": [
 				{
 					"name": "Create an Item",
-					"id": "539fcc97-f05f-41b4-8f41-63df95df2c01",
+					"id": "5d609508-d7e9-4776-bee7-4ea80ce955d9",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1499,7 +1499,7 @@
 				},
 				{
 					"name": "Fetch Items",
-					"id": "43aeb9ab-03ac-4d8e-80c4-531745102319",
+					"id": "37d6138f-a741-4342-b9f0-d30b7b1caf67",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1541,7 +1541,7 @@
 				},
 				{
 					"name": "Fetch Item by ID",
-					"id": "20ed3a78-3935-4c96-a542-7f915b713e10",
+					"id": "efea9d2a-6415-463b-bcd6-3e16ae1dc2ce",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1584,7 +1584,7 @@
 				},
 				{
 					"name": "Update an Item",
-					"id": "7b23aaf5-8879-44d3-8afc-662853796d9d",
+					"id": "02e272f0-c606-4ace-a8bd-1d2e26a46c78",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1627,7 +1627,7 @@
 				},
 				{
 					"name": "Delete an Item",
-					"id": "1bda4e6b-95cc-4ad0-b7ba-7af6e56c63ed",
+					"id": "3399c8a3-8ff6-4e87-aa28-a1eae7a12c16",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1669,7 +1669,7 @@
 					"response": []
 				}
 			],
-			"id": "d1d8fe68-4895-43c3-8562-135a164eee5b",
+			"id": "6571db0e-c4a3-40d6-92c2-318e59064b0a",
 			"description": "Items are products or services that you bill customers for by adding them to an invoice. You can create an item using APIs. When an item is created, it will appear on the list of items in the Dashboard.\n\nKnow more about [Items APIs](https://razorpay.com/docs/api/items/).\n\n## **List of APIs**\n\n*   [Create an Item](https://razorpay.com/docs/api/items/#create-an-item)\n*   [Fetch an Item](https://razorpay.com/docs/api/items/#fetch-an-item)\n*   [Fetch Multiple Items](https://razorpay.com/docs/api/items/#fetch-multiple-items)\n*   [Update an Item](https://razorpay.com/docs/api/items/#update-an-item)\n*   [Delete an Item](https://razorpay.com/docs/api/items/#delete-an-item)"
 		},
 		{
@@ -1680,7 +1680,7 @@
 					"item": [
 						{
 							"name": "Create Plan",
-							"id": "b1e30816-e0f9-447e-85f8-86532a7bde71",
+							"id": "87d060d0-bade-48be-bbcb-2f3b699e83b4",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -1717,7 +1717,7 @@
 						},
 						{
 							"name": "Fetch All Plans",
-							"id": "f8b4fd3e-6473-4af6-a38d-afebb32b1aa6",
+							"id": "7fbb2012-766d-44a2-91ca-010e5229da80",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -1743,7 +1743,7 @@
 						},
 						{
 							"name": "Fetch Plans by ID",
-							"id": "f7c0bfd4-636a-4f84-bb34-939d6b2fd603",
+							"id": "b5351656-cf52-4a49-bbde-600eb0f79ca8",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -1769,7 +1769,7 @@
 							"response": []
 						}
 					],
-					"id": "b413e30c-56e8-43df-b3eb-5fbf04fc2b63",
+					"id": "31ba0a09-3f8c-459f-b1af-d47a1807a78f",
 					"description": "A plan is a foundation on which a subscription is built. It acts as a reusable template and contains details of the goods or services offered, the amount to be charged and the frequency at which the customer should be charged (billing cycle). Depending upon your business, you can create multiple plans with different billing cycles and pricing.\n\n## List of APIs\n\n*   [](https://betasite.razorpay.com/docs/postman-api-change/razorpay/api/subscriptions/#fetch-a-plan-by-id)[Create a Plan](https://razorpay.com/docs/api/subscriptions/#create-a-plan)\n*   [](https://betasite.razorpay.com/docs/postman-api-change/razorpay/api/subscriptions/#fetch-a-plan-by-id)[Fetch all Plans](https://razorpay.com/docs/api/subscriptions/#fetch-all-plans)\n*   [Fetch a Plan by ID](https://razorpay.com/docs/api/subscriptions/#fetch-a-plan-by-id)"
 				},
 				{
@@ -1777,7 +1777,7 @@
 					"item": [
 						{
 							"name": "Create Subscription",
-							"id": "f8edab18-33eb-498e-8da3-e367b156b0dd",
+							"id": "c2bc6182-f3ea-47ad-9699-2e3ea4650138",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -1814,7 +1814,7 @@
 						},
 						{
 							"name": "Create Subscription Link",
-							"id": "d0c842fc-f6af-44bf-8842-2db7f6c0ed79",
+							"id": "7a057d1e-75e1-44f0-bc4a-adc30b1c2fdb",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -1851,7 +1851,7 @@
 						},
 						{
 							"name": "Fetch All Subscriptions",
-							"id": "c0d65f41-1cea-4f83-bfa2-37d8fcf72871",
+							"id": "ffcc6a26-9634-48ca-8152-710388ffa2b0",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -1877,7 +1877,7 @@
 						},
 						{
 							"name": "Fetch Subscriptions by ID",
-							"id": "e727dc01-2164-44e6-be3d-8c1ebd08794c",
+							"id": "27385a14-ae62-4a54-870d-181cd7b57587",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -1904,7 +1904,7 @@
 						},
 						{
 							"name": "Cancel Subscription",
-							"id": "6dea06e4-a7fb-40d4-8d51-7e764d50761e",
+							"id": "74b49c23-1b95-4a07-a7de-85aab289ff6f",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -1943,7 +1943,7 @@
 						},
 						{
 							"name": "Update Subscription",
-							"id": "71aad7d8-ae6b-4eb6-9207-4eb376eafa85",
+							"id": "f4a32eb7-7de6-401b-aced-1ddaa04b64e2",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -1981,7 +1981,7 @@
 						},
 						{
 							"name": "Fetch Details of a Pending Update",
-							"id": "c446aa80-f9bb-48d6-9284-f864547b2707",
+							"id": "6f7dc954-7f6d-4ed7-bb22-6336273485e3",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -2009,7 +2009,7 @@
 						},
 						{
 							"name": "Cancel Pending Update",
-							"id": "031d4297-c7c3-43c3-a7e8-a3badc40d526",
+							"id": "17ff6e57-1011-4ccf-9f62-df5d6d981e68",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -2048,7 +2048,7 @@
 						},
 						{
 							"name": "Pause a Subscription",
-							"id": "842b517b-9f5c-4b49-a440-76d20ec66e8c",
+							"id": "3b40b22f-b254-47e3-9da9-1859e88320ae",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -2085,7 +2085,7 @@
 						},
 						{
 							"name": "Resume a Subscription",
-							"id": "939e884e-1f21-4ec5-bbb1-7a0bb342b4e8",
+							"id": "bed37cb2-1e77-4b2e-8553-c6fb9b8c5574",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -2122,7 +2122,7 @@
 						},
 						{
 							"name": "Fetch All Invoices for a Subscription",
-							"id": "076a749d-7e95-46d5-b0c3-9ed95d7f2676",
+							"id": "95daec70-f4e8-4b9a-bba4-a074ffed4561",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -2155,7 +2155,7 @@
 						},
 						{
 							"name": "Delete an Offer Linked to a Subscription",
-							"id": "f4a0f26e-73e7-4080-8c8d-092bcdf01a6f",
+							"id": "05b12e8e-c2c3-4c0a-b05b-9d98f661bc4f",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -2175,7 +2175,7 @@
 							"response": []
 						}
 					],
-					"id": "8a4ea539-5aab-4bda-acd5-bff9448e08c5",
+					"id": "b3c6c283-5168-4aa9-a2cc-31c60fbf0391",
 					"description": "Subscriptions allow you to charge a customer's card periodically. A subscription ties a customer to a particular plan you have created. It contains details like the plan, the start date, total number of billing cycles, free trial period (if any) and upfront amount to be collected.\n\nKnow more about <a href=\"https://razorpay.com/docs/api/subscriptions/#subscriptions\">Subscriptions APIs</a>.\n\n## List of APIs\n\n*   [](https://betasite.razorpay.com/docs/postman-api-change/razorpay/api/subscriptions/#fetch-all-invoices-for-a-subscription)[Create a Subscription](https://razorpay.com/docs/api/subscriptions/#create-a-subscription)\n*   [](https://betasite.razorpay.com/docs/postman-api-change/razorpay/api/subscriptions/#fetch-all-invoices-for-a-subscription)[Create a Subscription Link](https://razorpay.com/docs/api/subscriptions/#create-a-subscription-link)\n*   [](https://betasite.razorpay.com/docs/postman-api-change/razorpay/api/subscriptions/#fetch-all-invoices-for-a-subscription)[Fetch All Subscriptions](https://razorpay.com/docs/api/subscriptions/#fetch-all-subscriptions)\n*   [](https://betasite.razorpay.com/docs/postman-api-change/razorpay/api/subscriptions/#fetch-all-invoices-for-a-subscription)[Fetch Subscription by ID](https://razorpay.com/docs/api/subscriptions/#fetch-subscription-by-id)\n*   [](https://betasite.razorpay.com/docs/postman-api-change/razorpay/api/subscriptions/#fetch-all-invoices-for-a-subscription)[Cancel a Subscription](https://razorpay.com/docs/api/subscriptions/#cancel-a-subscription)\n*   [](https://betasite.razorpay.com/docs/postman-api-change/razorpay/api/subscriptions/#fetch-all-invoices-for-a-subscription)[Update a Subscription](https://razorpay.com/docs/api/subscriptions/#update-a-subscription)\n*   [](https://betasite.razorpay.com/docs/postman-api-change/razorpay/api/subscriptions/#fetch-all-invoices-for-a-subscription)[Fetch Details of a Pending Update](https://razorpay.com/docs/api/subscriptions/#fetch-details-of-a-pending-update)\n*   [](https://betasite.razorpay.com/docs/postman-api-change/razorpay/api/subscriptions/#fetch-all-invoices-for-a-subscription)[Cancel an Update](https://razorpay.com/docs/api/subscriptions/#cancel-an-update)\n*   [](https://betasite.razorpay.com/docs/postman-api-change/razorpay/api/subscriptions/#fetch-all-invoices-for-a-subscription)[Pause a Subscription](https://razorpay.com/docs/api/subscriptions/#pause-a-subscription)\n*   [](https://betasite.razorpay.com/docs/postman-api-change/razorpay/api/subscriptions/#fetch-all-invoices-for-a-subscription)[Resume a Subscription](https://razorpay.com/docs/api/subscriptions/#resume-a-subscription)\n*   [](https://betasite.razorpay.com/docs/postman-api-change/razorpay/api/subscriptions/#fetch-all-invoices-for-a-subscription)[Fetch All Invoices for a Subscription](https://razorpay.com/docs/api/subscriptions/#fetch-all-invoices-for-a-subscription)"
 				},
 				{
@@ -2183,7 +2183,7 @@
 					"item": [
 						{
 							"name": "Create Add-on",
-							"id": "3e972ff3-31b5-4781-b684-bb854433115c",
+							"id": "24ad0147-04c0-4baa-8349-7ffbf52e7ed8",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -2222,7 +2222,7 @@
 						},
 						{
 							"name": "Fetch All Add-ons",
-							"id": "66d4c3c0-7657-4d5c-a1f4-1834dbe2a0ac",
+							"id": "ebef48f5-ccde-4883-9890-b329ce384554",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -2249,7 +2249,7 @@
 						},
 						{
 							"name": "Fetch Add-on by ID",
-							"id": "97a31cf2-2d3e-49e0-aa05-5291f38afa54",
+							"id": "64274a14-a5fc-4ceb-bd09-89c210c61e63",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -2276,7 +2276,7 @@
 						},
 						{
 							"name": "Delete Add-on",
-							"id": "5defe6bb-4f7f-4bec-a62a-142bada359c1",
+							"id": "f97b49a3-f341-48c5-9f35-3a8352a56e65",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -2302,11 +2302,11 @@
 							"response": []
 						}
 					],
-					"id": "2009bd71-7c4d-4f9f-9911-cea9d9fa44c4",
+					"id": "15bf1e8e-626f-465c-9651-a21680b57898",
 					"description": "You can create add-ons to charge the customer an extra amount for a particular billing cycle. Once you create an add-on for a subscription, it is added to the next invoice that is generated. On the next scheduled charge, the customer is charged the add-on amount in addition to their regular subscription amount.\n\nKnow more about <a href=\"https://razorpay.com/docs/api/subscriptions/#add-on\">Add-on APIs</a>.\n\n## List of APIs\n\n*   [Create an Add-on](https://razorpay.com/docs/api/subscriptions/#create-an-add-on)\n*   [Fetch all Add-ons](https://razorpay.com/docs/api/subscriptions/#fetch-all-add-ons)\n*   [Fetch an Add-on by ID](https://razorpay.com/docs/api/subscriptions/#fetch-an-add-on-by-id)\n*   [Delete an Add-on](https://razorpay.com/docs/api/subscriptions/#delete-an-add-on)"
 				}
 			],
-			"id": "dd005b61-9dd8-4f62-ad90-0a314d1573a3",
+			"id": "f610dbfe-9f4c-4648-981a-2ef44841f364",
 			"description": "Enable recurring payment schedule, control the billing cycle and get instant alerts on subscription activity with Razorpay Subscriptions.\n\nYou can create, fetch, query or cancel plans, subscriptions and add-ons using the <a href=\"https://razorpay.com/docs/api/subscriptions\" target=\"_blank\">Subscriptions API</a>.\n\n## List of APIs\n\n- <a href=\"https://razorpay.com/docs/api/subscriptions/#plans\" target=\"_blank\">Plan APIs</a>\n- <a href=\"https://razorpay.com/docs/api/subscriptions/#subscriptions\" target=\"_blank\">Subscription APIs</a>\n- <a href=\"https://razorpay.com/docs/api/subscriptions/#add-on\" target=\"_blank\">Add-on APIs</a>"
 		},
 		{
@@ -2317,7 +2317,7 @@
 					"item": [
 						{
 							"name": "Create a Payment Link",
-							"id": "d3163705-fc6b-430b-9763-7f46b511c089",
+							"id": "83a38d91-05d8-4a73-96f5-f803a5d39a7a",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -2352,7 +2352,7 @@
 						},
 						{
 							"name": "Update a Payment Link",
-							"id": "7dcbd626-49bf-4097-ae31-9d53165dbae3",
+							"id": "8677d754-45de-4cca-834a-f1ff9a6338d2",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -2388,7 +2388,7 @@
 						},
 						{
 							"name": "Cancel a Payment Link",
-							"id": "6e03ad2a-43d2-46b8-9b24-c49ce02f0431",
+							"id": "3cf98e87-66ce-45f2-8a87-1256d3cda7da",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -2431,7 +2431,7 @@
 						},
 						{
 							"name": "Fetch all Payment Links",
-							"id": "11c79e17-1da7-4dca-9902-92050819cefa",
+							"id": "6b19f1e4-3164-4263-861d-048e1c16acac",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -2473,7 +2473,7 @@
 						},
 						{
 							"name": "Resend a Payment Link",
-							"id": "bb41fdeb-6f81-4ffc-a758-43e9c95077d1",
+							"id": "cb166536-9a27-4be2-9eb8-60d53e481499",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -2517,7 +2517,7 @@
 						},
 						{
 							"name": "Fetch a Payment Link",
-							"id": "2aa41e27-0c53-40a0-aaa0-f9617ae827db",
+							"id": "ac1fe7fc-1ab6-40f9-bc24-9f82f3d232b4",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -2558,7 +2558,7 @@
 							"response": []
 						}
 					],
-					"id": "46dc58f4-054b-4fd0-ad73-24a93fef3b19",
+					"id": "92da8fbb-6bc6-4f11-b38f-1019d62b6741",
 					"description": "Standard Payment Links are normal, non-customized Payment Links, which are not customized as per your business preferences. Know more about these [APIs](https://razorpay.com/docs/api/payment-links/).\n\n## List of APIs\n\n*   [Create a Payment Link](https://razorpay.com/docs/api/payment-links/#create-payment-link)\n*   [Update a Payment Link](https://razorpay.com/docs/api/payment-links/#update-payment-link)\n*   [Cancel a Payment Link](https://razorpay.com/docs/api/payment-links/#cancel-payment-link)\n*   [Fetch all Payment Links](https://razorpay.com/docs/api/payment-links/#all-payment-links)\n*   [Fetch a Payment Link](https://razorpay.com/docs/api/payment-links/#specific-payment-links-by-id)\n*   [Resend a Payment Link](https://razorpay.com/docs/api/payment-links/#send-or-resend-notifications)"
 				},
 				{
@@ -2566,7 +2566,7 @@
 					"item": [
 						{
 							"name": "Implement Thematic Changes in Checkout",
-							"id": "93dc3259-45b4-4507-abbd-b1a989822ae5",
+							"id": "f95846e8-19cf-46fd-99eb-4184fa77b992",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -2601,7 +2601,7 @@
 						},
 						{
 							"name": "Change Merchant Name and Description",
-							"id": "aaa5e57d-c6ac-4617-adf6-b64d949344f3",
+							"id": "98b74dcd-155a-4c61-a9f0-5980b51aa098",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -2636,7 +2636,7 @@
 						},
 						{
 							"name": "Customize Payment Methods on Razorpay Checkout",
-							"id": "24051642-d058-4337-ae33-8811cefad3fa",
+							"id": "25547ad7-bb49-4d08-9dfa-d91a0f631326",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -2672,7 +2672,7 @@
 						},
 						{
 							"name": "Prefill Checkout Fields",
-							"id": "687887fb-0521-4656-9db8-f938cc1815f0",
+							"id": "b341f0c3-46a9-44d5-8c90-28066af46624",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -2708,7 +2708,7 @@
 						},
 						{
 							"name": "Set Checkout Fields as Read-Only",
-							"id": "889c0b26-97f5-4c15-bbfb-3fefa9148340",
+							"id": "445b9835-2c93-4487-b091-9ca3560478fd",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -2744,7 +2744,7 @@
 						},
 						{
 							"name": "Rename Labels in Checkout Section",
-							"id": "d7dbfac0-ae13-4c8a-b490-73e4e9bb8763",
+							"id": "d5c72700-7a72-42b5-b977-5fb8d961427d",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -2780,7 +2780,7 @@
 						},
 						{
 							"name": "Rename Labels in Payment Details Section",
-							"id": "04d2a7af-a78c-49ce-82f7-987e30b0361e",
+							"id": "6e26c88e-2413-4aa5-8faf-32e09c9bd6e8",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -2816,7 +2816,7 @@
 						},
 						{
 							"name": "Rename Labels in Payment Details Section - Hindi",
-							"id": "c523c9a0-ee02-4cc1-a0cd-de91b9b096f7",
+							"id": "4d7a6171-3743-4438-9a82-1e2b8df886de",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -2851,7 +2851,7 @@
 							"response": []
 						}
 					],
-					"id": "06ac13da-b45f-4cf2-80f5-b773aaaa0e39",
+					"id": "dd80c599-169c-4ff1-9f79-7c9a7f09ff44",
 					"description": "You can send standard payment links to customers via email and SMS. When customers click on the payment link, they are redirected to a page hosted by us where they can complete the payment.\n\nThe payment request page consists of two sections:\n\n*   Payment Details: Displays details about the payment description, expiry date, payable amount and in case of partial payments, partial amount paid and due.\n*   Checkout: Displays the Phone and Email fields and list the various payment methods available.\n    \n\nYou can customize this hosted page as per your brand and business requirements. For example, you may display only specific payment methods, change the colour of Checkout, and so on.\n\nKnow more about - <a href=\"https://razorpay.com/docs/api/payment-links/customise\">Custom Payment Links</a>.\n\n## **List of APIs**\n\n*   <a href=\"https://razorpay.com/docs/api/payment-links/customise/checkout-theme/\">Implement Thematic Changes in Payment Links Checkout Section</a>\n*   <a href=\"https://razorpay.com/docs/api/payment-links/customise/merchant-details/\">Change Business Name</a>\n*   <a href=\"https://razorpay.com/docs/api/payment-links/customise/payment-methods/\">Customize Payment Methods</a>\n*   <a href=\"https://razorpay.com/docs/api/payment-links/customise/prefill/\">Prefill Checkout Fields</a>\n*   <a href=\"https://razorpay.com/docs/api/payment-links/customise/read-only/\">Set Checkout Fields as Read-Only</a>\n*   <a href=\"https://razorpay.com/docs/api/payment-links/customise/rename-checkout-labels/\">Rename Labels in Checkout Section</a>\n*   <a href=\"https://razorpay.com/docs/api/payment-links/customise/rename-payment-details-labels/\">Rename Labels in Payment Details Section</a>"
 				},
 				{
@@ -2862,7 +2862,7 @@
 							"item": [
 								{
 									"name": "Netbanking",
-									"id": "9f59a764-7126-46de-843a-e9d2ebba8ae4",
+									"id": "ce365da4-7246-4a04-a487-c04337e4dbfe",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -2918,7 +2918,7 @@
 								},
 								{
 									"name": "UPI",
-									"id": "d394cb47-348a-429f-a8f9-c19c311c6934",
+									"id": "f4f39fc4-3f44-47ba-8790-89c619e95419",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -2974,7 +2974,7 @@
 								},
 								{
 									"name": "Either",
-									"id": "5738323f-f647-436b-949f-f51dd6b96a68",
+									"id": "679bc488-f80f-45d5-b9a7-62aedb774bbc",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -3029,12 +3029,12 @@
 									"response": []
 								}
 							],
-							"id": "354f07c3-c582-46d8-bc03-5d829f4fc7db",
+							"id": "af298d7c-d8a5-472c-83e0-b09503f7e56e",
 							"description": "Third-party validation is a process using which you can ensure that customers make payments using only those bank accounts that they had provided at the time of registration.\n\nKnow more about third-party validation using  <a href=\"https://razorpay.com/docs/api/payment-links/advanced-options/third-party-validation/\" target=\"_blank\">Payment Links API</a>."
 						},
 						{
 							"name": "Transfer Payment Link Amount to Linked Account",
-							"id": "35354883-7e5f-4c0d-9ced-251b035c3945",
+							"id": "1c9b45df-fec6-4f20-99c3-ec53b209cfc2",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -3090,7 +3090,7 @@
 						},
 						{
 							"name": "Offers on Payment Links",
-							"id": "04414762-a109-4bc3-bd8d-85227e171020",
+							"id": "47d803ab-340b-43cf-960d-c7b8f1e2d9d9",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -3124,11 +3124,11 @@
 							"response": []
 						}
 					],
-					"id": "eb73b9bc-1db5-4743-8da4-5dae3ab6f103",
+					"id": "c7e8eb22-1c2b-47e0-b914-76fb8fbdace5",
 					"description": "You can perform advanced configuration on Payment Links to help achieve your business requirements:\n\n1.  You can set up Payment Links so that payments made against the link are automatically transferred to a linked account. This saves you the additional step of making a Transfer API call later.\n2.  To attract and retain customers, you can provide promotional offers on Payment Links such as discounts and cashback. Customers can avail these offers while making payments using Payment Links.\n3.  You can use Razorpay Payment Links to perform third-party validation of bank accounts provided by your customers.\n    \n\n## List of APIs\n\n*   [Transfer Payments Received Using Payment Links](https://razorpay.com/docs/api/payment-links/advanced-options/transfers/)\n*   [Offers on Payment Links](https://razorpay.com/docs/api/payment-links/advanced-options/offers/)\n*   [Third-party Validation on Payment Links](https://razorpay.com/docs/api/payment-links/advanced-options/third-party-validation/)"
 				}
 			],
-			"id": "d6c2cbbb-42cf-49b9-8f3b-f1935d13d5a1",
+			"id": "2dde7dad-b245-495c-b5fb-c8aa7d46312e",
 			"description": "Payment Links are URLs that you can send to your customers through SMS and email to collect payments from them. Customers can click on the URL, which opens the payment request page, and complete the payment using any of the available payment methods.\n\nYou can easily set up and use Payment Links with these [APIs](https://razorpay.com/docs/api/payment-links/).\n\n## List of APIs\n\n*   [Standard Payment Links](https://razorpay.com/docs/api/payment-links/)\n*   [Custom Payment Links](https://razorpay.com/docs/api/payment-links/customise/)\n*   [Advanced Options](https://razorpay.com/docs/api/payment-links/advanced-options/)"
 		},
 		{
@@ -3142,7 +3142,7 @@
 							"item": [
 								{
 									"name": "Fetch a Virtual Account By ID",
-									"id": "dfc9bf3e-00bf-454a-9d9a-779428658df2",
+									"id": "cec94887-eb63-46c4-b1cd-7fdbc8c9f546",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -3169,7 +3169,7 @@
 								},
 								{
 									"name": "Fetch All Virtual Accounts",
-									"id": "21215411-4ca5-4857-8c68-5dde48943d7a",
+									"id": "92a43fb1-3fca-4e0b-a467-11fc7a2b45dc",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -3195,7 +3195,7 @@
 								},
 								{
 									"name": "Fetch Payments Made to a Virtual Account",
-									"id": "5434bac7-b2e7-4e61-85d1-7be724ac801d",
+									"id": "6d4020fd-9bb2-4c6a-87ff-0c00e27f96f8",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -3223,7 +3223,7 @@
 								},
 								{
 									"name": "Method is Bank Transfer",
-									"id": "681e68bf-52ab-4c20-b4ca-6c69615a1ad6",
+									"id": "82d7e1ec-389a-4319-90f8-a7019ef90b6d",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -3250,11 +3250,11 @@
 									"response": []
 								}
 							],
-							"id": "089fc5ed-71cc-4018-bc20-5fd458243e21"
+							"id": "12fcec5d-38d2-477a-a8b1-a328862cf9ee"
 						},
 						{
 							"name": "Refund Payments Made to a Virtual Account",
-							"id": "92975dd0-0b02-4049-a469-2c5c7e16d671",
+							"id": "8cdc07b1-0dd0-45ad-a848-47e9b6c9c218",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -3291,7 +3291,7 @@
 						},
 						{
 							"name": "Close a Virtual Account",
-							"id": "2832cf08-00d6-40a2-933e-154a3b543f5f",
+							"id": "c0c4fff6-8458-45f2-99e0-f4b20f30e8db",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -3319,7 +3319,7 @@
 						},
 						{
 							"name": "Update a Virtual Account",
-							"id": "0fe11af5-e007-4b15-a69c-835e3490cbfe",
+							"id": "c09f96c8-b39a-4e44-9e29-39ae26cea54a",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -3356,7 +3356,7 @@
 						},
 						{
 							"name": "Create a Virtual Account",
-							"id": "a73dd877-429a-4b06-8758-00e8c15105bb",
+							"id": "3a73350b-6f8d-41d2-8223-03cec69744c2",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -3391,7 +3391,7 @@
 						},
 						{
 							"name": "Add an Allowed Payer Account",
-							"id": "426e8a0e-64d3-4598-ba52-d8088936863a",
+							"id": "8f9eddd1-b769-499b-850d-d8a8cd71fa3f",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -3428,7 +3428,7 @@
 						},
 						{
 							"name": "Delete an Allowed Payer Account",
-							"id": "a970e2df-63cf-45db-8ef5-ce6b3eb031e1",
+							"id": "36493746-7dc6-4c07-a7ad-382ea0cf4f60",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -3456,7 +3456,7 @@
 							"response": []
 						}
 					],
-					"id": "a3d7f44b-85b4-41b5-adfc-684ad904ba95",
+					"id": "c8d5a849-99f6-4e82-8645-ba9eab2e6569",
 					"description": "Using Razorpay Smart Collect API, you can comply with the regulatory guidelines to ensure that the customers make payments only from their registered bank accounts (TPV). If payments are made from the unregistered accounts (non-TPV), they are automatically refunded to the customers.\n\nWhen you create a virtual account, send the allowed_payers array with the customer's bank account_number and ifsc. This helps to identify TPV transactions and automatically refund non-TPV transactions.\n\nKnow more about <a href=\"https://razorpay.com/docs/api/smart-collect-tpv/\" target=\"_blank\">third-party validation</a>.\n\n<b>List of APIs</b>:\n- <a href=\"https://razorpay.com/docs/api/smart-collect-tpv/#create-virtual-account\" target=\"_blank\">Create Virtual Account</a>\n- <a href=\"https://razorpay.com/docs/api/smart-collect-tpv/#add-an-allowed-payer-account\" target=\"_blank\">Add an Allowed Payer Account</a>\n- <a href=\"https://razorpay.com/docs/api/smart-collect-tpv/#fetch-a-virtual-account-by-id\" target=\"_blank\">Fetch a Virtual Account by ID</a>\n- <a href=\"https://razorpay.com/docs/api/smart-collect-tpv/#fetch-all-virtual-accounts\" target=\"_blank\">Fetch all Virtual Accounts</a>\n- <a href=\"https://razorpay.com/docs/api/smart-collect-tpv/#fetch-payments-for-a-virtual-account\" target=\"_blank\">Fetch Payments for a Virtual Account</a>\n- <a href=\"https://razorpay.com/docs/api/smart-collect-tpv/#fetch-payment-details-using-id-and-transfer-method\" target=\"_blank\">Fetch Payment Details using ID and Transfer Method</a>\n- <a href=\"https://razorpay.com/docs/api/smart-collect-tpv/#delete-an-allowed-payer-account\" target=\"_blank\">Delete an Allowed Payer Account</a>\n- <a href=\"https://razorpay.com/docs/api/smart-collect-tpv/#refund-payments-made-to-a-virtual-account\" target=\"_blank\">Refund Payments made to a Virtual Account</a>\n- <a href=\"https://razorpay.com/docs/api/smart-collect-tpv/#close-a-virtual-account\" target=\"_blank\">Close a Virtual Account</a>"
 				},
 				{
@@ -3467,7 +3467,7 @@
 							"item": [
 								{
 									"name": "Create a Virtual Account",
-									"id": "da3a8a4c-05e5-4831-abdf-964d94b52aa0",
+									"id": "f426e64f-80cd-41ed-bf1d-b1183e978c98",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -3502,7 +3502,7 @@
 								},
 								{
 									"name": "Create a VPA",
-									"id": "b014e267-0d7d-424c-a1ce-06ddef5b7af9",
+									"id": "a03737e9-aa03-41ad-acbe-6ae11a55f51b",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -3537,7 +3537,7 @@
 								},
 								{
 									"name": "Create Virtual Account and VPA",
-									"id": "af4075e9-b346-4cf1-9628-4008b48d9060",
+									"id": "fa652313-275f-4512-a9ed-7cef47c772d8",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -3571,7 +3571,7 @@
 									"response": []
 								}
 							],
-							"id": "7386c3de-0d23-4efa-87ff-dd1c7cf35c72"
+							"id": "83fef4ff-3a79-4818-b155-b47854e0234a"
 						},
 						{
 							"name": "Fetch Operations",
@@ -3581,7 +3581,7 @@
 									"item": [
 										{
 											"name": "Method is Bank Transfer",
-											"id": "ec07e879-ede7-4a81-9536-add0cbcb8714",
+											"id": "7aaf9bf9-a5f0-4df2-95c6-ed9e898378ae",
 											"protocolProfileBehavior": {
 												"disableBodyPruning": true
 											},
@@ -3609,7 +3609,7 @@
 										},
 										{
 											"name": "Method is UPI Transfer",
-											"id": "b66bc91b-9c99-493f-a421-16ef8052e2ea",
+											"id": "165b912e-8821-4d5d-9ae1-083d3e71871d",
 											"protocolProfileBehavior": {
 												"disableBodyPruning": true
 											},
@@ -3636,11 +3636,11 @@
 											"response": []
 										}
 									],
-									"id": "c109f643-1c18-4b07-bf90-fe9f07870dd1"
+									"id": "d4dc79ec-3835-4fe5-a8fe-bda4c1685fcd"
 								},
 								{
 									"name": "Fetch a Virtual Account By ID",
-									"id": "0df0f3ab-f473-42c4-9b7c-ed070f0d4bd0",
+									"id": "c24a75e3-f4c3-47a0-b3b4-e681edcc7c0e",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -3667,7 +3667,7 @@
 								},
 								{
 									"name": "Fetch All Virtual Accounts",
-									"id": "f8cc16c7-49f0-4c91-8b66-04fdd4ceab13",
+									"id": "a6e3e89c-c482-4417-95e7-a42569cb2b33",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -3693,7 +3693,7 @@
 								},
 								{
 									"name": "Fetch Payments Made to a Virtual Account",
-									"id": "550b9925-e294-489e-b4f8-231e30e96b08",
+									"id": "285ad189-c1cc-4a9c-adbf-51d0a6816a94",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -3720,11 +3720,11 @@
 									"response": []
 								}
 							],
-							"id": "b2468adf-f4d2-401d-ba91-8e151f6ae509"
+							"id": "e61660c7-ef9e-4eb0-bced-81ac31542007"
 						},
 						{
 							"name": "Refund Payments Made to a Virtual Account",
-							"id": "e3624a3b-8714-453f-98dc-1c7852ab97c8",
+							"id": "aca7ff16-54a4-45ab-a934-060bbd999b60",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -3761,7 +3761,7 @@
 						},
 						{
 							"name": "Close a Virtual Account",
-							"id": "896081d2-2459-4882-8e9e-6311e88700df",
+							"id": "5a1bbf0a-f159-4fd0-b208-a5e26049c3af",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -3789,7 +3789,7 @@
 						},
 						{
 							"name": "Update a Virtual Account",
-							"id": "a0a33897-d047-438b-9886-027885fc8f98",
+							"id": "fb19433b-493c-4222-a813-2b4faf535967",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -3825,11 +3825,11 @@
 							"response": []
 						}
 					],
-					"id": "b2b21bbe-bfbf-4681-bf3b-82542692b918",
+					"id": "6696af91-a878-4fa9-9cb9-6880359b96e8",
 					"description": "This is the standard version of <a href=\"https://razorpay.com/docs/api/smart-collect\">Smart Collect APIs</a>.\n\n## List of APIs\n\n*   [Create Virtual Account](https://razorpay.com/docs/api/smart-collect/#create-virtual-account)\n*   [Fetch a Virtual Account by ID](https://razorpay.com/docs/api/smart-collect/#fetch-a-virtual-account-by-id)\n*   [Fetch all Virtual Accounts](https://razorpay.com/docs/api/smart-collect/#fetch-all-virtual-accounts)\n*   [Fetch Payments for a Virtual Account](https://razorpay.com/docs/api/smart-collect/#fetch-payments-for-a-virtual-account)\n*   [Fetch Payment Details using ID and Transfer Method](https://razorpay.com/docs/api/smart-collect/#fetch-payment-details-using-id-and-transfer-method)\n    *   [Bank Transfer](https://razorpay.com/docs/api/smart-collect/#bank-transfer)\n    *   [UPI](https://razorpay.com/docs/api/smart-collect/#upi)\n*   [Refund Payments made to a Virtual Account](https://razorpay.com/docs/api/smart-collect/#refund-payments-made-to-a-virtual-account)\n*   [Add Receiver to an Existing Virtual Account](https://razorpay.com/docs/api/smart-collect/#add-receiver-to-an-existing-virtual-account)\n*   [Close a Virtual Account](https://razorpay.com/docs/api/smart-collect/#close-a-virtual-account)"
 				}
 			],
-			"id": "cf382e84-d6fd-4c54-b32f-803824b8aaa0",
+			"id": "e708faf3-ad62-4995-86e9-ea87d734074a",
 			"description": "Razorpay Smart Collect enables you to create virtual accounts to accept large payments from your customers in the form of bank transfers via NEFT, RTGS and IMPS.\n\nVirtual accounts are similar to bank accounts wherein customers can transfer payments. You can create, retrieve and close virtual accounts using the Smart Collect APIs.\n\n## List of APIs\n\n*   <a href=\"https://razorpay.com/docs/api/smart-collect/\">Smart Collect</a>\n*   <a href=\"https://razorpay.com/docs/api/smart-collect-tpv/\">Smart Collect-TPV</a>"
 		},
 		{
@@ -3840,7 +3840,7 @@
 					"item": [
 						{
 							"name": "Transfer via Orders",
-							"id": "9d840e21-574f-4035-9366-151cce5c566c",
+							"id": "0f56ee77-a346-4cfe-a489-260fbc91e5ab",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -3875,7 +3875,7 @@
 						},
 						{
 							"name": "Transfer via Payments",
-							"id": "544ec9c3-8b43-4c6c-9d0c-79d3a9bc822c",
+							"id": "cc34fee2-bc7c-4452-9470-28b48db3935c",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -3912,7 +3912,7 @@
 						},
 						{
 							"name": "Direct Transfer",
-							"id": "b0219265-7d5d-4cee-a101-1e0668882902",
+							"id": "7863b7d9-bc9b-4285-9290-cac99f6f7aa7",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -3946,7 +3946,7 @@
 							"response": []
 						}
 					],
-					"id": "94160149-5db1-49ce-9ec1-60f76473ed0f",
+					"id": "d74f1010-8109-482f-aa57-d584e16aff5d",
 					"description": "You can transfer funds to your linked accounts using the Razorpay Route Transfer APIs. Know more about [transfers and related fees](https://razorpay.com/docs/route/transfer-example).\n\n## [Transfer Requirements🔗](https://razorpay.com/docs/api/route/#transfer-requirements)\n\nBelow are the requirements to initiate a transfer:\n\n*   Your account must have sufficient funds to process the transfer to the linked account. The transfer will fail in case of insufficient funds.\n*   You can only transfer the `captured` payments.\n*   You can create more than one transfer on a `payment_id`. However, the total transfer amount should not exceed the captured payment amount.\n*   You cannot request a transfer on payment once a refund has been initiated.\n    \n\n## [Types of Transfers🔗](https://razorpay.com/docs/api/route/#types-of-transfers)\n\nYou can transfer funds to linked accounts using one of the following methods:\n\n*   [Transfer via Orders](https://razorpay.com/docs/api/route/#create-transfers-from-orders) - You can set up a transfer at the time of order creation.\n*   [Transfer via Payments](https://razorpay.com/docs/api/route/#create-transfers-from-payments) - You can initiate a transfer once the payment has been received from the customer.\n*   [Direct Transfer](https://razorpay.com/docs/api/route/#direct-transfers) - You can initiate a transfer directly from existing funds in your Razorpay account."
 				},
 				{
@@ -3954,7 +3954,7 @@
 					"item": [
 						{
 							"name": "Fetch Transfers for a Payment",
-							"id": "43642887-f15c-47b3-b0b5-7717983ce5c3",
+							"id": "fffe8323-0cd9-4448-a671-b2b06971c820",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -3982,7 +3982,7 @@
 						},
 						{
 							"name": "Fetch Transfers for an Order",
-							"id": "531737c8-ee31-42cb-b768-225a6467187f",
+							"id": "c7b135b3-56bc-4f23-bd9a-bc0ffa9eeb83",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -4016,7 +4016,7 @@
 						},
 						{
 							"name": "Fetch a Transfer",
-							"id": "073074a3-03b1-48f1-9100-124c0f9cb92f",
+							"id": "9a05e568-034b-4472-bf25-1c6cd56b8afa",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -4049,7 +4049,7 @@
 						},
 						{
 							"name": "Fetch Transfers for a Settlement",
-							"id": "96126bb1-b8f0-48b6-acb3-324a7d3c728f",
+							"id": "52d6a568-811b-4e91-9f22-70d2cbf5911f",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -4081,7 +4081,7 @@
 						},
 						{
 							"name": "Fetch Settlement Details",
-							"id": "0417e5a9-8b31-4af4-865a-e0b448c8a881",
+							"id": "92226d09-eb55-4c18-87bf-5ee6e11e5973",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -4113,7 +4113,7 @@
 						},
 						{
 							"name": "Fetch Payments of a Linked Account",
-							"id": "0eaad64b-4ef9-499a-9708-fb0a4376c51b",
+							"id": "0098a4b5-0e21-42b9-a07f-5a43c94610aa",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -4149,7 +4149,7 @@
 							"response": []
 						}
 					],
-					"id": "0b6f24d2-754f-4c30-ba4f-1f42e5e6a8a5",
+					"id": "645dd9f7-763e-4ef0-a1b9-1060e2b869fe",
 					"description": "Know how to fetch details of transfers and settlements using APIs."
 				},
 				{
@@ -4157,7 +4157,7 @@
 					"item": [
 						{
 							"name": "Modify Transfer Settlement Hold",
-							"id": "2ca3cd68-fba7-4018-b39e-aa757b53c542",
+							"id": "429eefa9-a942-40dc-ba4d-93e29c33a262",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -4193,7 +4193,7 @@
 						},
 						{
 							"name": "Hold Settlements For Transfers",
-							"id": "35300ddf-6fbd-4790-b591-4cda733a4f17",
+							"id": "c0bd900d-c7a3-4e9b-93bd-06722a0dfb6f",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -4229,7 +4229,7 @@
 							"response": []
 						}
 					],
-					"id": "71f562f6-cf73-4762-9510-e8ff5919e7e1",
+					"id": "c533d777-5d9c-49aa-92fd-d9c188610a91",
 					"description": "Know how to hold transfer settlements and modify them using APIs."
 				},
 				{
@@ -4237,7 +4237,7 @@
 					"item": [
 						{
 							"name": "Refunds",
-							"id": "26c146cf-7cf2-4d6e-aef3-30624b679df1",
+							"id": "9d097dc0-45c7-4b7a-9e76-200d3b65fe82",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -4274,7 +4274,7 @@
 						},
 						{
 							"name": "Transfer Reversals",
-							"id": "30f42502-a4eb-4efd-8aa7-53608b77fe7e",
+							"id": "6ef1fdb7-db85-4587-b04e-32a622933af9",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -4309,11 +4309,11 @@
 							"response": []
 						}
 					],
-					"id": "7e5caa57-4279-4315-81d9-77690214f37a",
+					"id": "afcac389-0f6c-45db-87db-1caa02434b86",
 					"description": "Know how to refund payments to customers and reverse transfers from linked accounts."
 				}
 			],
-			"id": "ef589593-3e84-4419-97b0-5902543b7ff0",
+			"id": "e747191d-936c-4dd0-92ce-fe80e2db9c7a",
 			"description": "Razorpay Route enables you to split payments received using the Razorpay Payment Gateway or other products (such as Payment Links, Payment Pages, Invoices, Subscriptions and Smart Collect) and transfer the funds to your vendors.\n\nKnow more about [Razorpay Route](https://razorpay.com/docs/route/).\n\n## List of APIs\n\n*   [Create Transfers from Orders](https://razorpay.com/docs/api/route/#create-transfers-from-orders)\n*   [Create Transfers from Payments](https://razorpay.com/docs/api/route/#create-transfers-from-payments)\n*   [Direct Transfers](https://razorpay.com/docs/api/route/#direct-transfers)\n*   [Fetch Transfers for a Payment](https://razorpay.com/docs/api/route/#fetch-transfers-for-a-payment)\n*   [Fetch Transfer for an Order](https://razorpay.com/docs/api/route/#fetch-transfer-for-an-order)\n*   [Fetch a Transfer](https://razorpay.com/docs/api/route/#fetch-a-transfer)\n*   [Fetch Transfers for a Settlement](https://razorpay.com/docs/api/route/#fetch-transfers-for-a-settlement)\n*   [Fetch Settlement Details](https://razorpay.com/docs/api/route/#fetch-settlement-details)\n*   [Fetch Payments of a Linked Account](https://razorpay.com/docs/api/route/#fetch-payments-of-a-linked-account)\n*   [Refund Payments and Reverse Transfer from a Linked Account](https://razorpay.com/docs/api/route/#refund-payments-and-reverse-transfer-from-a-linked)\n*   [Reverse Transfers from all Linked Accounts](https://razorpay.com/docs/api/route/#reverse-transfers-from-all-linked-accounts)\n*   [Hold Settlements For Transfers](https://razorpay.com/docs/api/route/#hold-settlements-for-transfers)\n*   [Modify Settlement Hold for Transfers](https://razorpay.com/docs/api/route/#modify-settlement-hold-for-transfers)"
 		},
 		{
@@ -4324,7 +4324,7 @@
 					"item": [
 						{
 							"name": "Create Contact",
-							"id": "6d9e70d8-28cb-433e-b7c3-2582c90bc8a6",
+							"id": "b4fc18c2-0184-428b-a8cf-d35296a352c4",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -4361,7 +4361,7 @@
 						},
 						{
 							"name": "Fetch all Contacts",
-							"id": "8dc5a8ed-f5e9-4729-9766-0b67e02697ba",
+							"id": "e58669a8-c46d-4cda-a5cd-666c4260028b",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -4398,7 +4398,7 @@
 						},
 						{
 							"name": "Fetch Contact by ID",
-							"id": "7c4cfd27-c215-44b4-aa66-e7522d1e0425",
+							"id": "9a6d4746-86a0-4e1e-8c77-7ed54eda17d8",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -4425,7 +4425,7 @@
 						},
 						{
 							"name": "Update Contact",
-							"id": "6c0266a4-5ec7-4e54-b384-dc01fd7ef130",
+							"id": "14870ac8-a65f-472d-94fc-443b8ecba702",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -4463,7 +4463,7 @@
 						},
 						{
 							"name": "Activate or Deactivate a Contact",
-							"id": "a00ea8a1-d49e-4b14-bc7a-6b5de51024fc",
+							"id": "4a33c591-eae9-4061-b481-529f6253a730",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -4500,7 +4500,7 @@
 							"response": []
 						}
 					],
-					"id": "beb936aa-54cb-4544-8392-e6e653b54ec4",
+					"id": "f9ded9f0-0f5b-43dd-84f2-a10380d3a8a6",
 					"description": "A contact is an entity to whom payouts can be made through supported modes such as UPI, IMPS, NEFT and RTGS.\n\nSome important points:\n\n*   A new contact is created if any combination of the following details is unique: name, email, contact, type and reference_id.\n*   If all the above details match the details of an existing contact, the API returns details of the existing contact.\n*   Use the Update Contact API if you want to make changes to an existing contact.\n    \n\n## **List of APIs**\n\n*   [Create a Contact](https://razorpay.com/docs/api/razorpayx/contacts/#create-a-contact)\n*   [Update a Contact](https://razorpay.com/docs/api/razorpayx/contacts/#update-a-contact)\n*   [Activate or Deactivate a Contact](https://razorpay.com/docs/api/razorpayx/contacts/#activate-or-deactivate-a-contact)\n*   [Fetch all Contacts](https://razorpay.com/docs/api/razorpayx/contacts/#fetch-all-contacts)\n*   [Fetch a Contact by ID](https://razorpay.com/docs/api/razorpayx/contacts/#fetch-a-contact-by-id)"
 				},
 				{
@@ -4516,11 +4516,11 @@
 											""
 										],
 										"type": "text/javascript",
-										"id": "dee9952f-c892-423e-8fb7-71e02c78fdcb"
+										"id": "b16bedf9-ea50-451b-9eb6-d3d59db5b41d"
 									}
 								}
 							],
-							"id": "0430531d-5f6a-43b6-a029-85c325c9a4d8",
+							"id": "508c872f-6308-4503-a821-afca3facc5bd",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -4565,11 +4565,11 @@
 											""
 										],
 										"type": "text/javascript",
-										"id": "6ee993f4-4adc-4fb7-af7a-4144ab2f9995"
+										"id": "fb4cda2a-6160-4fa0-b202-13446a4921fd"
 									}
 								}
 							],
-							"id": "1774a392-ee81-453d-9308-8cfa911b3196",
+							"id": "c64d2935-f1b6-4f81-957a-53a34ecaa665",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -4614,11 +4614,11 @@
 											""
 										],
 										"type": "text/javascript",
-										"id": "1b98f0dd-138e-4f82-afdb-d9dcec63a4ae"
+										"id": "bffd333f-d34b-42b3-a2e5-e838468ce657"
 									}
 								}
 							],
-							"id": "e4191c53-29ff-432b-935e-94eeb8ed7cd3",
+							"id": "836f1c2a-505c-465b-b632-01b28548e385",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -4655,7 +4655,7 @@
 						},
 						{
 							"name": "Fetch all Fund Accounts",
-							"id": "b8883820-0347-416b-9661-ad6580e78e38",
+							"id": "d86bf209-8f9e-4884-b9e3-2513c81b1e5f",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -4680,7 +4680,7 @@
 						},
 						{
 							"name": "Fetch Fund Account by ID",
-							"id": "c0e7eac3-6461-448b-b7c9-2f432c85fe31",
+							"id": "af8b2d54-1d69-49bb-bb4d-83a8b405138b",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -4706,7 +4706,7 @@
 							"response": []
 						}
 					],
-					"id": "90df6913-5337-4be8-a8d3-f293c0ad51dc",
+					"id": "e783c54f-3844-4846-8d44-2f0c6bf2e06f",
 					"description": "Fund accounts are accounts associated with a contact. Payouts are made to fund accounts.\n\nCurrently, RazorpayX supports 4 types of fund accounts:\n\n*   `bank_account`: Make payouts to a beneficiary's bank account via bank transfer using one of the available such as NEFT, IMPS or RTGS.\n*   `vpa` (Virtual Payment Address): Make payouts to a beneficiary's UPI ID via a UPI transfer.\n*   `cards`: Make payouts directly to a beneficiary's card via a bank transfer using one of the available such as NEFT or IMPS.\n*   `wallet`: Make payouts directly to a beneficiary's wallet. Currently, you can make payouts to a beneficiary via an Amazon Pay Gift Card.\n    \n\nKnow more about [Fund Accounts](https://razorpay.com/docs/api/razorpayx/fund-accounts/).\n\n## **List of APIs**\n\n*   [Create a Fund Account](https://razorpay.com/docs/api/razorpayx/fund-accounts/#create-a-fund-account)\n    *   [Bank Account](https://razorpay.com/docs/api/razorpayx/fund-accounts/#bank-account)\n    *   [VPA (UPI ID)](https://razorpay.com/docs/api/razorpayx/fund-accounts/#vpa-upi-id)\n*   [Activate or Deactivate a Fund Account](https://razorpay.com/docs/api/razorpayx/fund-accounts/#activate-or-deactivate-a-fund-account)[](https://razorpay.com/docs/api/razorpayx/fund-accounts/#path-parameters)\n*   [Fetch All Fund Accounts](https://razorpay.com/docs/api/razorpayx/fund-accounts/#fetch-all-fund-accounts)\n*   [Fetch Fund Account Details by ID](https://razorpay.com/docs/api/razorpayx/fund-accounts/#fetch-fund-account-details-by-id)"
 				},
 				{
@@ -4714,7 +4714,7 @@
 					"item": [
 						{
 							"name": "Create Payout-Bank Account",
-							"id": "7b3e71e4-e5ed-405e-994d-b2b4676e1c10",
+							"id": "d33f2b3e-47a7-4d28-8add-4e1322278349",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -4769,7 +4769,7 @@
 						},
 						{
 							"name": "Create Payout-VPA",
-							"id": "74b144c0-f290-4e7d-89b0-e0cfa9e4fb22",
+							"id": "06c25817-2501-4cd1-adeb-8a9b9455447a",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -4824,7 +4824,7 @@
 						},
 						{
 							"name": "Fetch all Payouts",
-							"id": "cfdc6f6e-33c4-442b-96cc-d31c6d6f40d9",
+							"id": "3ed28e9f-488f-432c-b5ca-3bba5894f22d",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -4867,7 +4867,7 @@
 						},
 						{
 							"name": "Fetch Payout by ID",
-							"id": "b7a24f87-5019-4abd-bb5b-e902e7a02329",
+							"id": "6850cc72-1a9a-4bc1-a71e-f5fffe07e92e",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -4894,7 +4894,7 @@
 						},
 						{
 							"name": "Cancel Queued Payouts",
-							"id": "fe59b98d-1152-4ce3-b8f5-6be7979db7a8",
+							"id": "da45c1a6-405f-4ab9-a721-342dd18f9ced",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -4921,7 +4921,7 @@
 							"response": []
 						}
 					],
-					"id": "8c7c44d6-1f11-493c-8fc3-23b321bdee87",
+					"id": "3bda83f7-27d0-4e1d-8836-311d7be18978",
 					"description": "A payout is the transfer of funds from your business account to a contact's fund account.\n\nKnow more about [Payouts](https://razorpay.com/docs/razorpayx/payouts/payout-overview/).\n\n## **List of APIs**\n\n*   [Create a Payout](https://razorpay.com/docs/api/razorpayx/payouts/#create-a-payout)\n    *   [Bank Accounts](https://razorpay.com/docs/api/razorpayx/payouts/#bank-accounts)\n    *   [VPA (UPI ID)](https://razorpay.com/docs/api/razorpayx/payouts/#vpa-upi-id)\n*   [Fetch All Payouts](https://razorpay.com/docs/api/razorpayx/payouts/#fetch-all-payouts)\n*   [Fetch a Payout by ID](https://razorpay.com/docs/api/razorpayx/payouts/#fetch-a-payout-by-id)\n*   [Cancel a Queued Payout](https://razorpay.com/docs/api/razorpayx/payouts/#cancel-a-queued-payout)"
 				},
 				{
@@ -4929,7 +4929,7 @@
 					"item": [
 						{
 							"name": "Composite API - Bank Account",
-							"id": "3d1a4750-ccd4-4a67-9e50-f4c535f34f44",
+							"id": "658b1cb7-f084-4be8-8ee2-11492267689f",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -4970,7 +4970,7 @@
 						},
 						{
 							"name": "Composite API - VPA",
-							"id": "06696e8e-db29-4819-aa86-e5a13f93222c",
+							"id": "b54a7cf9-e22c-465d-b709-fed0031c8cc6",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -5011,7 +5011,7 @@
 						},
 						{
 							"name": "Composite API - Card",
-							"id": "a8a0fad9-26b8-46b5-9d82-6303ac88301d",
+							"id": "85285aa6-28ba-45e6-bb2e-79937b110054",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -5058,7 +5058,7 @@
 							"response": []
 						}
 					],
-					"id": "1f284280-0259-4188-aec8-09e4db3c5ed5",
+					"id": "b1c64bbe-6c73-462a-a497-c98956d2f295",
 					"description": "The composite API allows you to make a payout using a single API call. This reduces the number of calls you would otherwise need to make to create a payout. The composite API also gives you the flexibility to either create a new contact and fund account or use existing contact and fund account details (contact_id and fund_account_id) to make a payout.\n\n  \nKnow more about the [Composite API](https://razorpay.com/docs/api/razorpayx/composite-api/)."
 				},
 				{
@@ -5066,7 +5066,7 @@
 					"item": [
 						{
 							"name": "Create Payout Link (using customer details)",
-							"id": "a8149bbd-4ce0-419a-8892-3732cb706c45",
+							"id": "43948769-ed3c-4b43-9a35-78e6da596f70",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -5108,7 +5108,7 @@
 						},
 						{
 							"name": "Create Payout Link (using customer_id)",
-							"id": "d76f3f32-3232-440c-a50f-d0ebbccb0d6b",
+							"id": "faf92a7f-b546-4662-91ec-fb01667f4265",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -5150,7 +5150,7 @@
 						},
 						{
 							"name": "Fetch Payout Links",
-							"id": "6e5e2eff-b366-44d0-9337-7210d88c6a8f",
+							"id": "fe9352b1-0adb-4d79-8049-44140d79d729",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -5176,7 +5176,7 @@
 						},
 						{
 							"name": "Fetch Payout Link by ID",
-							"id": "99852c19-2622-4d00-ae6f-3301060d39d8",
+							"id": "b5580924-bb99-45b6-ab16-af6870a09b03",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -5203,7 +5203,7 @@
 						},
 						{
 							"name": "Cancel Payout Link",
-							"id": "a23eb733-54cf-4f65-aedd-0f0c54ad8736",
+							"id": "d93b8a3a-2144-48ea-8e8c-bdca21bc8b02",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -5230,7 +5230,7 @@
 							"response": []
 						}
 					],
-					"id": "2398865b-b9b8-4801-9220-6fc3a11d0f30",
+					"id": "23fa5e33-774b-491e-b7d3-60fb990d719a",
 					"description": "Payout Links enable you to make payouts to those contacts whose fund accounts details are not readily available with you. You can use these links to collect the customer's fund account details and then process refunds, reimbursement and cashback to them without additional follow up.\n\nKnow more about [Payout Links API](https://razorpay.com/docs/api/razorpayx/payout-links/).\n\n## **List of APIs**\n\n*   [Create a Payout Link](https://razorpay.com/docs/api/razorpayx/payout-links/#create-a-payout-link)\n*   [Fetch All Payout Links](https://razorpay.com/docs/api/razorpayx/payout-links/#fetch-all-payout-links)\n*   [Fetch Payout Link by ID](https://razorpay.com/docs/api/razorpayx/payout-links/#fetch-payout-link-by-id)\n*   [Cancel a Payout Link](https://razorpay.com/docs/api/razorpayx/payout-links/#cancel-a-payout-link)",
 					"event": [
 						{
@@ -5240,7 +5240,7 @@
 								"exec": [
 									""
 								],
-								"id": "060c2250-79cf-490a-a85a-7a23c39fefed"
+								"id": "19d270a4-3a03-40b9-9d96-3952dd023eee"
 							}
 						},
 						{
@@ -5250,7 +5250,7 @@
 								"exec": [
 									""
 								],
-								"id": "f699e702-945f-4d93-a00d-1b24779c24aa"
+								"id": "2a7026d2-fa50-4cc7-a5c8-578c819a9c31"
 							}
 						}
 					]
@@ -5260,7 +5260,7 @@
 					"item": [
 						{
 							"name": "Fetch all Transactions",
-							"id": "b969e9f1-44c9-44d4-a6ec-57f02081bb7e",
+							"id": "ece84f6b-76b3-4e58-b51d-271d92c21f62",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -5296,7 +5296,7 @@
 						},
 						{
 							"name": "Fetch Transaction by ID",
-							"id": "423d16ad-09e6-4198-acdc-39caf8618e78",
+							"id": "dd88695e-6cf0-4fc9-b1e4-1e1a0308f0f4",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -5322,7 +5322,7 @@
 							"response": []
 						}
 					],
-					"id": "af1d76fe-9d8c-4234-ab74-8a5d11f73e4d",
+					"id": "426be03e-d99a-48da-a472-aab2299235df",
 					"description": "The inflow of funds to your business account, payouts to a contact's fund account and reversals are all recorded as transactions against your business account. You can fetch details of a particular transaction or details of all transactions via [APIs](https://razorpay.com/docs/api/razorpayx/transactions/).\n\n## **List of APIs**\n\n*   [Fetch all Transactions](https://razorpay.com/docs/api/razorpayx/transactions/#fetch-all-transactions)\n*   [Fetch Transaction by ID](https://razorpay.com/docs/api/razorpayx/transactions/#fetch-transaction-by-id)"
 				},
 				{
@@ -5330,7 +5330,7 @@
 					"item": [
 						{
 							"name": "Create Contact",
-							"id": "59e2eee7-df03-41ba-a9c6-4c1dc3de646d",
+							"id": "b90b83a2-d139-4f25-b539-ca2e86b5a66b",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -5367,7 +5367,7 @@
 						},
 						{
 							"name": "Fetch all Contacts",
-							"id": "6e500ad9-25ed-4f23-80d7-e46a50bd1c82",
+							"id": "a536cf43-d21a-4004-8cbd-927b4e352381",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -5428,11 +5428,11 @@
 											""
 										],
 										"type": "text/javascript",
-										"id": "a60ab8d4-b5e1-4d91-806c-798619b43adc"
+										"id": "3c6d5733-5b8c-4da3-9fef-4d17c78d2226"
 									}
 								}
 							],
-							"id": "1e57c141-c13f-430f-b84c-8bfc21aa8b72",
+							"id": "0179eac6-a832-4b2b-a3e0-c6688e52856a",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -5469,7 +5469,7 @@
 						},
 						{
 							"name": "Fetch all Fund Accounts",
-							"id": "eef058a7-f3e7-4476-bd8d-7518202a4ba8",
+							"id": "e92f530d-14d0-4dcc-9538-74f48deb7359",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -5509,11 +5509,11 @@
 											""
 										],
 										"type": "text/javascript",
-										"id": "707d4eb0-ef91-41ee-9269-71254d132917"
+										"id": "2863e26f-4466-4f6a-a263-54dad04631cf"
 									}
 								}
 							],
-							"id": "1a4b06d3-e1e5-4d4f-9a94-1a3c75eda658",
+							"id": "092d5384-19ed-46a1-a5e8-2dff2d22895c",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -5550,7 +5550,7 @@
 						},
 						{
 							"name": "Validate Fund Account",
-							"id": "0cb96e8f-ebc4-46c7-817f-5431b809189b",
+							"id": "be8a096f-3923-4c76-ac2a-b1a664b2646f",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -5593,7 +5593,7 @@
 						},
 						{
 							"name": "Fetch  Account Validation Transactions by ID",
-							"id": "e1f8c306-b244-41eb-9acd-0bb4a894089d",
+							"id": "9f3316c4-7530-48b7-8d47-ab5d1a4e93a9",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -5621,7 +5621,7 @@
 						},
 						{
 							"name": "Fetch  all Account Validation Transactions",
-							"id": "76c77283-32e7-40dc-b3a4-aad2fd152638",
+							"id": "9de2e1be-c96e-4e4f-98cd-eedb0de3f954",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -5647,12 +5647,12 @@
 							"response": []
 						}
 					],
-					"id": "b5164779-b94d-48f7-b4fb-0c0effb59434",
+					"id": "e8e6d1f5-591e-44d5-9e9f-2f1e7eba0b1c",
 					"description": "Account validation is the process of validating your contact's bank account details or virtual payment address (VPA). Know more about this [API](https://razorpay.com/docs/api/razorpayx/account-validation/).\n\n## List of APIs\n\n*   [Validate a Bank Account](https://razorpay.com/docs/api/razorpayx/account-validation/#validate-a-bank-account)\n    *   [Create a Contact](https://razorpay.com/docs/api/razorpayx/account-validation/#create-a-contact)\n    *   [Create Fund Account](https://razorpay.com/docs/api/razorpayx/account-validation/#create-fund-account)\n    *   [Validate Bank Account](https://razorpay.com/docs/api/razorpayx/account-validation/#validate-bank-account)\n*   [Validate a VPA](https://razorpay.com/docs/api/razorpayx/account-validation/#validate-a-vpa)\n    *   [Create a Contact](https://razorpay.com/docs/api/razorpayx/account-validation/#create-a-contact-1)\n    *   [Create Fund Account](https://razorpay.com/docs/api/razorpayx/account-validation/#create-fund-account-1)\n    *   [Validate VPA](https://razorpay.com/docs/api/razorpayx/account-validation/#validate-vpa)\n*   [Fetch all Account Validation Transactions](https://razorpay.com/docs/api/razorpayx/account-validation/#fetch-all-account-validation-transactions)\n*   [Fetch Account Validation Transaction by ID](https://razorpay.com/docs/api/razorpayx/account-validation/#fetch-account-validation-transaction-by-id)"
 				},
 				{
 					"name": "Idempotent Request",
-					"id": "5018e987-dfd2-45d3-b99d-b0b3aab61a1d",
+					"id": "cdfdff0b-1eda-4985-8d14-f060d6f9a406",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -5692,7 +5692,7 @@
 					"response": []
 				}
 			],
-			"id": "1a43ac29-6f51-49ff-b8cb-d886d2003a3b",
+			"id": "a4c8ed1d-a2ec-422d-b989-192e45d6aeb6",
 			"description": "RazorpayX supercharges your business banking experience. We help business owners and finance teams automate manual, repetitive financial tasks and provide insights into money flow.\n\nUsing RazorpayX, you can process:\n\n*   Refunds for customers.\n*   Salary payouts with automated statutory payments such as PF and TDS.\n*   Vendor payouts with automated TDS payments.\n    \n\nYou can make timely payouts on RazorpayX using our developer-friendly [APIs](https://razorpay.com/docs/api/razorpayx/).\n\n## **List of APIs**\n\n*   [Account Validation](https://razorpay.com/docs/api/razorpayx/account-validation/)\n*   [Contacts](https://razorpay.com/docs/api/razorpayx/contacts/)\n*   [Fund Accounts](https://razorpay.com/docs/api/razorpayx/fund-accounts/)\n*   [Payouts](https://razorpay.com/docs/api/razorpayx/payouts/)\n*   [Payout to Cards](https://razorpay.com/docs/api/razorpayx/payouts-cards/)\n*   [Payouts - Composite API](https://razorpay.com/docs/api/razorpayx/composite-api/)\n*   [Payout Idempotency](https://razorpay.com/docs/api/razorpayx/idempotency/)\n*   [Payout Links](https://razorpay.com/docs/api/razorpayx/payout-links/)\n*   [Account Statement](https://razorpay.com/docs/api/razorpayx/transactions/)"
 		},
 		{
@@ -5706,7 +5706,7 @@
 							"item": [
 								{
 									"name": "Create an Account",
-									"id": "068a6814-dba3-4b66-a76c-306eef1dd8fb",
+									"id": "3f83c6f7-2573-4b90-8b8d-012f925f598b",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -5740,7 +5740,7 @@
 								},
 								{
 									"name": "Fetch an Account",
-									"id": "3c9eb006-23a4-4c45-bfd5-356bae704c38",
+									"id": "7cf2b7b6-acf0-4374-a229-8f7bc4b09148",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -5776,7 +5776,7 @@
 								},
 								{
 									"name": "Update an Account",
-									"id": "e79bb3a2-7425-4035-bedb-96c4466025ec",
+									"id": "b6c66bda-5d77-43a0-b176-a7460fa55168",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -5812,7 +5812,7 @@
 								},
 								{
 									"name": "Delete an Account",
-									"id": "01b22dba-15f3-4b47-b0c3-e914b06a84ac",
+									"id": "dd69866e-3416-48f9-9eb5-0e1ee062e792",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -5847,7 +5847,7 @@
 									"response": []
 								}
 							],
-							"id": "5e4dd876-3a52-4c89-bcd3-f82fb3a59c01",
+							"id": "cc02ccf4-beab-4d85-8549-ad8918393173",
 							"description": "You can use the Account APIs to create a sub-merchant account. After an account gets created, an `account_id` is assigned.\n\nYou can create, fetch, and update a sub-merchant account using these APIs."
 						},
 						{
@@ -5855,7 +5855,7 @@
 							"item": [
 								{
 									"name": "Create a Stakeholder",
-									"id": "5c2659bc-7119-4641-b58f-09bc2c64104c",
+									"id": "a9fe928d-48fb-4222-8ccb-583f14e32b14",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -5892,7 +5892,7 @@
 								},
 								{
 									"name": "Fetch a Stakeholder",
-									"id": "459d92b4-fe08-4049-a176-95449959c7f8",
+									"id": "fd232c34-9467-46e0-95b1-71445dc2c759",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -5930,7 +5930,7 @@
 								},
 								{
 									"name": "Fetch all Stakeholders",
-									"id": "3df69b27-a4ba-47c2-a8fa-1190f00b23e5",
+									"id": "941adaa6-e3ff-4f9e-9c6d-ad3ec9466fd1",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -5967,7 +5967,7 @@
 								},
 								{
 									"name": "Update a Stakeholder",
-									"id": "ec6c51ca-78cb-4245-a539-d11d035229e6",
+									"id": "25e37cd0-0236-4933-8f78-f3576b0678af",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -6004,7 +6004,7 @@
 									"response": []
 								}
 							],
-							"id": "33cf4d30-abd4-486e-bf35-41a6860475ec",
+							"id": "32e43385-f950-4085-b1ed-932d474c7c9f",
 							"description": "You can use the Stakeholders APIs to add a stakeholder for an account. Each stakeholder will have their KYC.\n\n**Handy Tip**  \n  \nA stakeholder can be a signatory or an owner of the business.\n\nYou can create, fetch and update stakeholders using [these](https://razorpay.com/docs/api/partners/stakeholder/) APIs."
 						},
 						{
@@ -6012,7 +6012,7 @@
 							"item": [
 								{
 									"name": "Upload Stakeholder Documents",
-									"id": "f61ad7d2-5309-4d0b-b484-ea30edf09f4f",
+									"id": "59c31e06-0844-4f45-9638-9e0ea5eb10c4",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -6057,7 +6057,7 @@
 								},
 								{
 									"name": "Upload Account Documents",
-									"id": "ecb378cb-63d1-4a10-9a61-9da9d30dfee5",
+									"id": "b69ae4c8-91bd-4724-b500-dd9b3b5409e0",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -6100,7 +6100,7 @@
 								},
 								{
 									"name": "Fetch Account Documents",
-									"id": "651096c2-49e5-4054-8f65-df07a1f04fc0",
+									"id": "84d7525b-7dbe-47fd-bc30-3e26e9c3669b",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -6128,7 +6128,7 @@
 								},
 								{
 									"name": "Fetch Stakeholders Documents",
-									"id": "72f27297-0752-431c-aeaa-209cb96d0703",
+									"id": "b2d60bd8-23f2-4728-88a5-fe56f6d9712c",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -6157,7 +6157,7 @@
 									"response": []
 								}
 							],
-							"id": "657843a3-b1d8-48c0-8e0d-6a0780290c80",
+							"id": "80050ac7-8cd9-41eb-8f8b-a0a931c56a94",
 							"description": "Use the Document APIs to upload and fetch documents for the KYC verification process.\n\n**Watch Out!**\n\n*   The maximum supported file size for a JPG/PNG is 4MB.\n*   The maximum supported file size for a PDF is 2MB.\n*   Do not pass file URLs instead of uploading documents.\n*   If you have uploaded the document but mandatory field-level  \n    parameters are not passed in the API, you need to re-execute the  \n    Documents API with the same document and pass the fields.\n    \n\nKnow more about [Documents APIs.](https://razorpay.com/docs/api/partners/upload-document/)"
 						},
 						{
@@ -6165,7 +6165,7 @@
 							"item": [
 								{
 									"name": "Request a Product Configuration",
-									"id": "ac8e033f-0e2e-414e-843a-3e0a3011fdca",
+									"id": "2d5f99e3-75e1-4e8e-8c90-0f9d42c3bd6e",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -6202,7 +6202,7 @@
 								},
 								{
 									"name": "Update a Product Configuration",
-									"id": "7e1e8885-b98d-44a2-afe4-8edd02aec76e",
+									"id": "22e8775c-209a-44f1-8cc5-9b0a913e7c88",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -6240,7 +6240,7 @@
 								},
 								{
 									"name": "Fetch a Product Configuration",
-									"id": "37bb5008-673e-4af0-b90b-d3190dfbf776",
+									"id": "9cecd67d-ef83-4145-ae03-62a81f06c3a6",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -6268,7 +6268,7 @@
 									"response": []
 								}
 							],
-							"id": "b58f1ea7-aa2a-4e5e-b03e-71e61c3369ea",
+							"id": "81e12c8c-8ea2-4542-abac-3b87e2fde403",
 							"description": "You can use the Product Configuration APIs to configure and activate Razorpay products for a sub-merchant account according to their requirements. For example, if you need our Payment Gateway product for all sub-merchants or Payment Gateway for one sub-merchant and Payment Link product for another sub-merchant, you can do so using this API. You can also accept terms and conditions using this API.\n\nYou can create, fetch and update product configuration requests using these APIs.\n\nKnow more about the [Product Configuration APIs](https://razorpay.com/docs/api/partners/product-configuration/)."
 						},
 						{
@@ -6276,7 +6276,7 @@
 							"item": [
 								{
 									"name": "Create a Webhook",
-									"id": "0bfd2f35-9c04-48b2-91cd-295891ac0915",
+									"id": "d9e7b9e8-f49c-406e-940d-d317762375fa",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -6313,7 +6313,7 @@
 								},
 								{
 									"name": "Fetch a Webhook",
-									"id": "884c140b-5156-4288-becb-a21eedccf918",
+									"id": "ab7783c8-6bb7-4f66-9085-31b34e0b0091",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -6342,7 +6342,7 @@
 								},
 								{
 									"name": "Fetch all Webhooks",
-									"id": "19dac506-17a0-47e2-b219-1ced9f51d624",
+									"id": "1ed57eea-5482-4fa1-b54e-c441dca49dc4",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -6370,7 +6370,7 @@
 								},
 								{
 									"name": "Update a Webhook",
-									"id": "b6dab2c3-79fe-4c0c-8fad-f0fff9756a33",
+									"id": "22a91226-0821-411e-a484-dfc9ee2a674b",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -6408,7 +6408,7 @@
 								},
 								{
 									"name": "Delete a Webhook",
-									"id": "de486e6d-468b-4b6b-9adc-489ec0df696a",
+									"id": "e1eef15f-a1cd-4889-ae52-379fd314aa6a",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -6445,7 +6445,7 @@
 									"response": []
 								}
 							],
-							"id": "bee46cc0-8a60-4d83-a540-e78edd08e663",
+							"id": "de32cf9f-9f93-461c-ba54-ed14c666e752",
 							"description": "You can use the Webhooks APIs to receive event notifications or subscribe to events happening in a sub-merchant's account for the integration installed.\n\nYou can create, fetch, update and delete webhooks using these APIs.\n\nKnow more about [Webhook Events](https://razorpay.com/docs/partners/api/#subscribe-to-webhooks) and check the [sample payloads](https://razorpay.com/docs/webhooks/payloads/partners) for Sub-Merchant Onboarding Events."
 						},
 						{
@@ -6453,7 +6453,7 @@
 							"item": [
 								{
 									"name": "[Deprecated] Accept Terms and Conditions",
-									"id": "d1a94c57-8e01-4453-8898-d2fea1fa47bd",
+									"id": "f7da5be7-78ad-4846-bd7c-fc784d9ae816",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -6490,7 +6490,7 @@
 								},
 								{
 									"name": "Fetch Terms and Conditions for a Sub-merchant",
-									"id": "62dceb1d-8cd6-4953-890f-788b8e5541a8",
+									"id": "d533d1ea-e1b7-4642-8635-9b967b90d9ad",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -6517,22 +6517,22 @@
 									"response": []
 								}
 							],
-							"id": "866c19dc-e29c-4a21-8ee3-bae837bd9ec4",
+							"id": "ab4fbb9c-54f9-4b18-b150-e0269a891984",
 							"description": "You can use the Terms and Conditions APIs to accept and fetch terms and conditions for a sub-merchant.\n\n# [Workflow🔗](https://razorpay.com/docs/api/partners/terms-conditions/#workflow)\n\nGiven below is the workflow:\n\n1\\. As a partner, it is your responsibility to show respective terms and conditions to the sub-merchants before you start onboarding to a product. The APIs used for it will be [Fetch Product Terms and Conditions API.](https://razorpay.com/docs/api/partners/terms-conditions/#fetch-terms-and-conditions-for-a-sub-merchant)\n\n2\\. You should display these web pages to your sub-merchants on your interface.\n\n3\\. Record the acceptance of terms and transmit that to Razorpay using either [Request a Product Configuration API](https://razorpay.com/docs/api/partners/product-configuration/#request-a-product-configuration) or [Update a Product Configuration API](https://razorpay.com/docs/api/partners/product-configuration/#update-a-product-configuration)."
 						}
 					],
-					"id": "9b15a691-f08a-44ba-bb70-ce90c22aef90",
+					"id": "3432addf-b42e-47d1-b192-448bcbd0dd2b",
 					"description": "As a Partner, you can use the Sub-Merchant Onboarding APIs to onboard merchants from your platform. The sub-merchants can complete the KYC process in the Partner's platform itself and need not log into Razorpay's platform.\n\nRazorpay Sub-Merchant Onboarding APIs are RESTful. All our responses are returned in JSON.\n\nYou can use Razorpay APIs in two modes, `Test` and `Live`. The [API key](https://razorpay.com/docs/partners/onboarding-api/#generate-api-key) is different for each mode.\n\nTo complete the onboarding process for the sub-merchant, check the [KYC document requirements](https://razorpay.com/docs/partners/onboarding-api/appendix/#kyc-requirements)."
 				}
 			],
-			"id": "6e6a90f8-c3e2-4d12-adf1-fd6d4cd6a052"
+			"id": "9d3f99df-2e88-48cc-8973-3c9ac03c4542"
 		},
 		{
 			"name": "QR Codes",
 			"item": [
 				{
 					"name": "Create a QR Code",
-					"id": "1aa9934e-8018-4689-9908-2fb716eb07da",
+					"id": "7942ad04-4aa2-485e-85cc-3ca0a649f7ef",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -6568,7 +6568,7 @@
 				},
 				{
 					"name": "Close a QR Code",
-					"id": "a25f5724-8006-435f-ba11-29e497eef147",
+					"id": "d20f3c71-4a6c-409e-8b40-e8d72d823ab2",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -6612,7 +6612,7 @@
 				},
 				{
 					"name": "Fetch All QR Codes",
-					"id": "ef113ed7-6e65-4cbf-89f5-bdf4dc6c2ec8",
+					"id": "9c920afc-5ed7-4754-b3dc-6bb17b8b5543",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -6648,7 +6648,7 @@
 				},
 				{
 					"name": "Fetch a QR Code",
-					"id": "cc4728f3-d2a9-47e7-be19-22db4ea9ed60",
+					"id": "e64611a3-8aee-4c00-a8b9-13f965dc5221",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -6691,7 +6691,7 @@
 				},
 				{
 					"name": "Fetch a QR Code for a Customer ID",
-					"id": "2128180d-2196-4214-9c64-a1bc5edb0ede",
+					"id": "5df95ece-70eb-4d19-b46c-9443dd27fab6",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -6733,7 +6733,7 @@
 				},
 				{
 					"name": "Fetch a QR Code for a Payment ID",
-					"id": "f90c8a70-e626-4bbe-bb17-53528c37d30d",
+					"id": "8749d581-e310-4522-af87-38195d7037e7",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -6775,7 +6775,7 @@
 				},
 				{
 					"name": "Fetch Payments for a QR Code",
-					"id": "6cd7c642-6b26-41a5-a9b3-6d942c363e74",
+					"id": "bc26f727-eb40-4210-b14c-5c4b4cb172ae",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -6825,7 +6825,7 @@
 				},
 				{
 					"name": "Create a Normal Refund",
-					"id": "f83344c2-d725-4a85-a3ce-15e801c821eb",
+					"id": "59079ebd-ca97-46cb-b0fd-4a216aa92814",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -6867,7 +6867,7 @@
 					"response": []
 				}
 			],
-			"id": "cf1724f0-fe6e-4261-a712-8c93533eb821",
+			"id": "5e853295-4f12-4650-a895-314d8c69ec8b",
 			"description": "Razorpay QR codes enables you to create QR codes and share them with customers to accept digital payments.\n\nYou can create, close and fetch QR codes using our APIs.\n\nKnow more about [QR Codes APIs](https://razorpay.com/docs/api/payments/qr-codes).\n\n## **List of APIs**\n\n*   [Create a QR Code](https://razorpay.com/docs/api/qr-codes#create-a-qr-code)\n*   [Close a QR Code](https://razorpay.com/docs/api/qr-codes#close-a-qr-code)\n*   [Fetch Multiple QR Codes](https://razorpay.com/docs/api/qr-codes#fetch-multiple-qr-codes)\n*   [Fetch a QR Code](https://razorpay.com/docs/api/qr-codes#fetch-a-qr-code)\n*   [Fetch QR Code for a Customer ID](https://razorpay.com/docs/api/qr-codes#fetch-qr-code-for-a-customer-id)\n*   [Fetch QR Code for a Payment ID](https://razorpay.com/docs/api/qr-codes#fetch-qr-code-for-a-payment-id)\n*   [Fetch Payments for a QR Code](https://razorpay.com/docs/api/qr-codes#fetch-payments-for-a-qr-code)\n*   [Refund a Payment](https://razorpay.com/docs/api/qr-codes#refund-a-payment)"
 		}
 	],
@@ -6894,7 +6894,7 @@
 				"exec": [
 					""
 				],
-				"id": "9de171e0-9ab9-45e5-8b40-86979fa4be74"
+				"id": "9fc7ea62-62ef-4864-9014-d1918b4f7b70"
 			}
 		},
 		{
@@ -6904,7 +6904,7 @@
 				"exec": [
 					""
 				],
-				"id": "343fc363-7dbe-43e6-8e01-01db0cac865a"
+				"id": "3ddafc1b-3af1-42ba-8f4a-02bfec77c025"
 			}
 		}
 	]
